@@ -20,6 +20,15 @@
     addEventListener('hashchange', openFromHash);
   }
 
+  /* ---------- header: full width at rest, pill once scrolled ---------- */
+  const pillnav = $('#pillnav'), sentinel = $('.navsentinel');
+  if (pillnav && sentinel && 'IntersectionObserver' in window) {
+    new IntersectionObserver(
+      ([e]) => pillnav.classList.toggle('is-pinned', !e.isIntersecting),
+      { threshold: 0 },
+    ).observe(sentinel);
+  }
+
   /* ---------- mobile sheet ---------- */
   const burger = $('#burger'), sheet = $('#sheet');
   if (burger) burger.addEventListener('click', () => {

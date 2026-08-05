@@ -51,15 +51,36 @@ button { font: inherit; color: inherit; cursor: pointer; }
 a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 
 /* ---------- nav pill ---------- */
+.navsentinel { position: absolute; top: 0; left: 0; height: 48px; width: 1px; pointer-events: none; }
+
+/* full-width bar at rest, compact pill once you scroll */
 .pillnav {
-  position: fixed; top: 14px; left: 50%; translate: -50% 0; z-index: 60;
+  position: fixed; top: 0; left: 50%; translate: -50% 0; z-index: 60;
   display: flex; align-items: center; gap: clamp(14px, 2.5vw, 34px);
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-pill);
-  padding: 7px 10px 7px 16px; box-shadow: var(--e1);
-  width: min(calc(100% - 2 * var(--pad)), 880px);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: 1px solid transparent; border-bottom-color: var(--line);
+  border-radius: 0; box-shadow: none;
+  padding: 12px var(--pad);
+  width: 100%;
+  transition:
+    width var(--t3) var(--out), padding var(--t3) var(--out), top var(--t3) var(--out),
+    border-radius var(--t3) var(--out), background var(--t2) var(--out),
+    box-shadow var(--t2) var(--out), border-color var(--t2) var(--out);
 }
+.pillnav.is-pinned {
+  top: 14px;
+  width: min(calc(100% - 2 * var(--pad)), 880px);
+  background: var(--card);
+  border-color: var(--line);
+  border-radius: var(--r-pill);
+  padding: 7px 10px 7px 16px;
+  box-shadow: var(--e1);
+}
+@media (prefers-reduced-motion: reduce) { .pillnav { transition: none; } }
 .brand { display: inline-flex; align-items: center; text-decoration: none; flex: none; }
-.brand-logo { height: 42px; width: auto; display: block; }
+.brand-logo { height: 48px; width: auto; display: block; transition: height var(--t3) var(--out); }
+.is-pinned .brand-logo { height: 40px; }
 .pillnav-links { display: flex; gap: clamp(10px, 2vw, 26px); margin-inline: auto; }
 .pillnav-links a { text-decoration: none; font-weight: 520; font-size: 15.5px; color: var(--dim); padding: 6px 2px; position: relative; }
 .pillnav-links a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 2px; height: 2px; background: var(--verde-t); transition: right var(--t2) var(--out); }
@@ -835,3 +856,55 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .faq-teaser-list a { display: block; padding: 15px 0; text-decoration: none; font-weight: 620; font-size: 16.5px; }
 .faq-teaser-list a:hover { color: var(--verde-t); }
 @media (max-width: 900px) { .faq-teaser { grid-template-columns: 1fr; } }
+
+
+/* ================= mobile: legibility and thumbs =================
+   Measured at 390x844 with DPR 3. Fixes: text under 13px, tap targets
+   under 44px, and the lane head overflowing the viewport.            */
+@media (max-width: 560px) {
+  /* nothing smaller than 13px, and data type never below 12.5 */
+  .sign { font-size: 13px; letter-spacing: .1em; }
+  .openlight { font-size: 13px; }
+  .mono { font-size: 13.5px; }
+  .faq-gh .mono { font-size: 13px; }
+  .dest-region { font-size: 13px; }
+  .row-nm em, .lane-price, .foot-col a .mono, .foot-desk .mono { font-size: 13px; }
+  .spec-t, .facts, .dest-facts, .board-t { font-size: 13.5px; }
+  .qa-a p, .dest-note, .road-story, .foot-sub { font-size: 15.5px; }
+
+  /* every interactive thing clears 44px */
+  .nav-call, .nav-wa { width: 44px; height: 44px; }
+  .burger { width: 44px; height: 44px; }
+  .reserve-cta { padding: 12px 18px; font-size: 14.5px; min-height: 44px; display: inline-flex; align-items: center; }
+  .brand { min-height: 44px; }
+  .brand-logo { height: 38px; }
+  .is-pinned .brand-logo { height: 34px; }
+  .chip { min-height: 44px; padding: 10px 16px; }
+  .sort select, .dfield input, .dfield select { min-height: 46px; }
+  .tog { min-height: 44px; }
+  .tog input { width: 20px; height: 20px; }
+  .foot-call { min-height: 44px; display: inline-flex; align-items: center; }
+  .foot-col a, .faq-jump a, .pillnav-links a { min-height: 44px; display: flex; align-items: center; }
+  .foot-col a { justify-content: space-between; }
+  .qa-item summary { min-height: 52px; }
+  .btn-wa, .btn-verde, .btn-paper, .gantry-wa, .gantry-go { min-height: 46px; }
+  .row-go, .loc, .pick { min-height: 46px; }
+
+  /* the lane head could not fit its number and label on one line */
+  .lane-head { flex-wrap: wrap; white-space: normal; row-gap: 2px; }
+  .lane-label { font-size: 19px; }
+  .lane { padding-left: var(--pad); padding-right: var(--pad); }
+
+  /* the last rules that were still winning on specificity */
+  .loc .sign { font-size: 13px; }
+  .spec-t td:nth-child(odd) { font-size: 13px; }
+  .row-nm em, .roadcar em, .lane em, .exitrail em, .foot-desk em, .row-price em { font-size: 13px; }
+  /* inline links inside a sentence are exempt from the 44px rule (WCAG 2.5.8) */
+  .row-go { padding: 8px 14px; min-width: 46px; display: flex; align-items: center; justify-content: center; }
+  .gantry-call, .foot-mail, .foot-legal a, .board-meta a {
+    min-height: 44px; display: inline-flex; align-items: center;
+  }
+
+  /* give the thumb room at the bottom of long scrolls */
+  .reservebar { padding-block: 8px; }
+}

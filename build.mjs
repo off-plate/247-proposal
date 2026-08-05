@@ -43,7 +43,8 @@ ${schema ? `<script type="application/ld+json">${schema}</script>` : ''}
 <body data-page="${path.replace('.html','') || 'index'}">`;
 
 const nav = (active = '') => `
-<nav class="pillnav" aria-label="Main">
+<div class="navsentinel" aria-hidden="true"></div>
+<nav class="pillnav" id="pillnav" aria-label="Main">
   <a class="brand" href="index.html" aria-label="24/7 Car Rental, home">
     <img class="brand-logo" src="img/logo-s.webp" alt="" width="280" height="145" fetchpriority="high">
   </a>
