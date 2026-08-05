@@ -78,10 +78,18 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
   position: fixed; top: 14px; left: 50%; translate: -50% 0; z-index: 60;
   display: flex; align-items: center; gap: clamp(14px, 2.5vw, 34px);
   background: var(--card); border: 1px solid var(--line); border-radius: var(--r-pill);
-  padding: 8px 10px 8px 22px; box-shadow: var(--e1);
+  padding: 7px 10px 7px 16px; box-shadow: var(--e1);
   width: min(calc(100% - 2 * var(--pad)), 880px);
 }
-.brand { font-stretch: 125%; font-weight: 850; font-size: 19px; letter-spacing: .02em; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; text-decoration: none; flex: none; }
+.brand-logo { height: 42px; width: auto; display: block; }
+.brand-logo.dark { display: none; }
+:root[data-theme="dark"] .brand-logo.light { display: none; }
+:root[data-theme="dark"] .brand-logo.dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .brand-logo.light { display: none; }
+  :root:not([data-theme]) .brand-logo.dark { display: block; }
+}
 .pillnav-links { display: flex; gap: clamp(10px, 2vw, 26px); margin-inline: auto; }
 .pillnav-links a { text-decoration: none; font-weight: 520; font-size: 15.5px; color: var(--dim); padding: 6px 2px; position: relative; }
 .pillnav-links a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 2px; height: 2px; background: var(--verde-t); transition: right var(--t2) var(--out); }
@@ -551,7 +559,8 @@ body[data-page^="car-"] main { padding-bottom: 96px; }
 :root[data-theme="dark"] .board { background: #0A0808; }
 body[data-page="fleet"] .board, body[data-page="index"] .board { margin-top: 0; }
 .board-in { max-width: var(--shell); margin: 0 auto; padding: clamp(40px, 5vw, 80px) var(--pad); }
-.board-brand { font-stretch: 125%; font-weight: 850; font-size: clamp(40px, 6vw, 110px); text-transform: uppercase; line-height: .9; margin-bottom: clamp(24px, 3vw, 44px); }
+.board-brand { margin-bottom: clamp(24px, 3vw, 44px); }
+.board-brand img { width: clamp(190px, 22vw, 340px); height: auto; }
 .board-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(30px, 5vw, 120px); }
 @media (max-width: 1000px) { .board-grid { grid-template-columns: 1fr; } }
 .board-t { border-collapse: collapse; font-family: 'MartianMono', monospace; font-size: clamp(12px, 1vw, 15px); width: 100%; table-layout: fixed; }
@@ -623,7 +632,8 @@ select { color-scheme: inherit; }
   .flag-img { order: -1; width: min(100%, 640px); justify-self: center; }
 }
 @media (max-width: 780px) {
-  .pillnav { padding: 8px 8px 8px 18px; gap: 10px; }
+  .pillnav { padding: 6px 8px 6px 12px; gap: 8px; }
+  .brand-logo { height: 34px; }
   .pillnav-links { display: none; }
   .reserve-cta { padding: 8px 14px; font-size: 13px; }
   .burger { display: grid; gap: 5px; background: none; border: 0; width: 38px; height: 38px; place-content: center; }

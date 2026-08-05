@@ -29,8 +29,12 @@ const head = (title, desc, path, ogImg = 'img/cars/porsche-911.webp') => `<!doct
 <link rel="canonical" href="${site.base}/${path}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
-<meta property="og:image" content="${site.base}/${ogImg}">
-<link rel="icon" href="data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23077E4C'/><rect x='6' y='6' width='52' height='52' rx='8' fill='none' stroke='white' stroke-width='2.5'/><text x='32' y='44' font-family='Arial Black,sans-serif' font-size='34' font-weight='900' fill='white' text-anchor='middle'>A</text></svg>`)}">
+<meta property="og:image" content="${site.base}/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/icon.png" sizes="any">
+<link rel="apple-touch-icon" href="img/icon.png">
 <link rel="preload" href="fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/martian-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/app.css">
@@ -40,7 +44,10 @@ const head = (title, desc, path, ogImg = 'img/cars/porsche-911.webp') => `<!doct
 
 const nav = (active = '') => `
 <nav class="pillnav" aria-label="Main">
-  <a class="brand" href="index.html">24/7</a>
+  <a class="brand" href="index.html" aria-label="24/7 Car Rental, home">
+    <img class="brand-logo light" src="img/logo-s.webp" alt="" width="280" height="145" fetchpriority="high">
+    <img class="brand-logo dark" src="img/logo-dark-s.webp" alt="" width="280" height="145">
+  </a>
   <div class="pillnav-links">
     <a href="fleet.html"${active === 'fleet' ? ' aria-current="page"' : ''}>Fleet</a>
     <a href="roads.html"${active === 'roads' ? ' aria-current="page"' : ''}>Roads</a>
@@ -60,7 +67,7 @@ const nav = (active = '') => `
 const footer = () => `
 <footer class="board" id="board">
   <div class="board-in">
-    <p class="board-brand">24/7</p>
+    <p class="board-brand"><img src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289"></p>
     <div class="board-grid">
       <table class="board-t">
         <tr><td><a href="fleet.html">FLEET</a></td><td>19 CARS</td><td class="ok">${fleet.filter(c => c.gear === 'automatic').length} AUTOMATIC</td></tr>
@@ -100,7 +107,7 @@ ${nav()}
     <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Open now</span></p>
     <form action="book.html" method="get" class="gantry-form">
       <label class="gfield"><span class="sign">Where</span>
-        <select name="loc" required>${site.locations.map(l => `<option value="${l.id}">${l.label}${l.airport ? ' · airport' : ''}</option>`).join('')}</select>
+        <select name="loc" required>${site.locations.map(l => `<option value="${l.id}">${l.label}</option>`).join('')}</select>
       </label>
       <div class="gfield gdates"><span class="sign">When</span>
         <span class="gdates-in"><input type="date" name="from" aria-label="Pickup date"><span class="garrow" aria-hidden="true">→</span><input type="date" name="to" aria-label="Return date"></span>
@@ -172,7 +179,7 @@ ${nav('fleet')}
     <img class="stage-img" id="stage-img" src="img/cars/${FLAG.slug}.webp" alt="${FLAG.name}" width="1600" height="752">
     <div class="stage-info">
       <h1 class="stage-name" id="stage-name">${FLAG.name}</h1>
-      <p class="stage-meta" id="stage-meta"><span class="mono">${eur(FLAG.price)}/day</span> · ${FLAG.clsLabel.split(' ·')[0]} · ${FLAG.trans} · ${FLAG.seats}&nbsp;seats</p>
+      <p class="stage-meta" id="stage-meta"><span class="mono">${eur(FLAG.price)}/day</span> · ${FLAG.year} · ${FLAG.gear} · ${FLAG.engine.toFixed(1)}&nbsp;L ${FLAG.fuel} · ${FLAG.seats}&nbsp;seats</p>
       <div class="stage-ctas">
         <a class="btn-verde" id="stage-view" href="car-${FLAG.slug}.html">This car <span aria-hidden="true">→</span></a>
       </div>
@@ -189,16 +196,16 @@ ${nav('fleet')}
         <label class="sort">Sort <select id="sort">
           <option value="price-asc">price, low to high</option>
           <option value="price-desc">price, high to low</option>
-          <option value="power-desc">power</option>
+          <option value="year-desc">newest first</option>
         </select></label>
         <label class="tog"><input type="checkbox" id="f-auto"> automatic</label>
         <label class="tog"><input type="checkbox" id="f-5seats"> 5+ seats</label>
       </div>
     </div>
     <ol class="rows" id="rows">
-      ${fleet.map(c => `<li class="row${c.flagship ? ' is-flag' : ''}" data-slug="${c.slug}" data-cls="${c.cls}" data-price="${c.price}" data-power="${c.power}" data-trans="${c.gear}" data-seats="${c.seats}" data-name="${c.name}" data-meta="${c.clsLabel.split(' ·')[0]} · ${c.trans} · ${c.seats}&nbsp;seats · ${c.boot}&nbsp;L boot">
+      ${fleet.map(c => `<li class="row${c.flagship ? ' is-flag' : ''}" data-slug="${c.slug}" data-cls="${c.cls}" data-price="${c.price}" data-year="${c.year}" data-trans="${c.gear}" data-seats="${c.seats}" data-name="${c.name}" data-meta="${c.year} · ${c.gear} · ${c.engine.toFixed(1)}&nbsp;L ${c.fuel} · ${c.seats}&nbsp;seats">
         <img src="img/cars/${c.slug}-s.webp" alt="" loading="lazy" width="640" height="337">
-        <span class="row-nm">${c.name}<em>${c.clsLabel.split(' ·')[0]} · ${c.trans} · ${c.seats}&nbsp;seats · ${c.boot}&nbsp;L boot</em></span>
+        <span class="row-nm">${c.name}<em>${c.year} · ${c.gear} · ${c.engine.toFixed(1)}&nbsp;L ${c.fuel} · ${c.seats}&nbsp;seats</em></span>
         <span class="row-price mono">${eur(c.price)}<em>/day</em></span>
         <a class="row-go" href="car-${c.slug}.html" aria-label="Open ${c.name}"><span class="x-arrow" aria-hidden="true">→</span></a>
       </li>`).join('\n')}
