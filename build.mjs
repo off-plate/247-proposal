@@ -136,7 +136,7 @@ const footer = () => `
         ${site.instagram.map(i => `<li><a href="https://instagram.com/${i}" rel="noopener" target="_blank">Instagram @${i}</a></li>`).join('')}
         <li><a href="https://24-7rentalcar.com/" rel="noopener" target="_blank">24-7rentalcar.com</a></li>
       </ul>
-      <img class="foot-logo" src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
+      <img class="foot-logo" src="img/logo.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
     </div>
   </div>
 

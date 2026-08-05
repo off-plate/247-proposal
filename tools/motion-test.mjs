@@ -43,10 +43,14 @@ for (const page of SAMPLE) {
   await p.waitForTimeout(700);
   const faded = await p.evaluate(() => {
     const out = [];
-    for (const el of document.querySelectorAll('.lane, .sec-h, .qa-item, .foot-col, .dest-body > *')) {
+    for (const el of document.querySelectorAll('.lane, .sec-h, .faq-gh, .foot-h, .qa-item, .foot-col, .dest-body > *')) {
       const r = el.getBoundingClientRect();
       if (r.top > innerHeight || r.bottom < 0) continue;       // only judge what is on screen
-      if (parseFloat(getComputedStyle(el).opacity) < 0.9) out.push(`${el.tagName}.${(el.className||'').toString().split(' ')[0]}`);
+      const cs = getComputedStyle(el);
+      if (parseFloat(cs.opacity) < 0.9) out.push(`${el.tagName}.${(el.className||'').toString().split(' ')[0]} opacity`);
+      const cp = cs.clipPath;
+      if (cp && cp !== 'none' && /inset\(/.test(cp) && !/inset\((?:0px?\s*){1,2}0%/.test(cp) && /[1-9]\d?%/.test(cp))
+        out.push(`${el.tagName}.${(el.className||'').toString().split(' ')[0]} clipped:${cp}`);
     }
     return [...new Set(out)].slice(0, 4);
   });
