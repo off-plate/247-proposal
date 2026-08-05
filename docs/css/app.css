@@ -138,37 +138,104 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
   display: inline-flex; align-items: center; gap: 8px;
 }
 
-/* ---------- deck ---------- */
+/* ---------- deck: the hour board ---------- */
 .deck {
-  min-height: 100svh; position: relative; overflow-x: clip;
-  display: grid; grid-template-columns: 1fr minmax(340px, 30vw);
-  grid-template-rows: 1fr auto auto; gap: 0 clamp(24px, 4vw, 80px);
-  padding: calc(76px + 4vh) var(--pad) 0;
+  background: #141212; color: #F4F2F0;
+  min-height: 100svh; display: grid; grid-template-rows: 1fr auto auto;
+  padding-top: clamp(92px, 10vh, 132px); overflow: clip; position: relative;
 }
+.deck-in {
+  max-width: var(--shell); width: 100%; margin: 0 auto; padding: 0 var(--pad);
+  display: grid; align-content: center; gap: clamp(22px, 2.8vw, 40px); position: relative;
+}
+.deck-copy { position: relative; z-index: 3; max-width: 62%; }
 .deck-h1 {
-  grid-column: 1; align-self: start; z-index: 3;
   font-stretch: 125%; font-weight: 850; text-transform: uppercase;
-  font-size: clamp(44px, 9vw, 184px); line-height: .92; letter-spacing: -.012em;
+  font-size: clamp(38px, 6.6vw, 122px); line-height: .92; letter-spacing: -.014em;
 }
 .deck-h1 span { display: block; }
-.deck-h1 span:nth-child(2) { margin-left: .55em; }
-.deck-book { grid-column: 2; grid-row: 1 / 3; align-self: start; z-index: 4; }
-.deck-car { grid-column: 1 / -1; grid-row: 2; z-index: 2; margin-top: clamp(-44px, -4.5vw, -130px); pointer-events: none; }
-.deck-car img {
-  width: min(64vw, 1500px); margin-left: auto; margin-right: clamp(0px, 5vw, 150px);
-  filter: drop-shadow(0 44px 38px rgb(23 25 26/.28));
+.deck-h1 span:nth-child(2) { margin-left: .42em; }
+.deck-sub { color: #AEA6A3; margin-top: 20px; max-width: 46ch; font-size: clamp(15.5px, 1.25vw, 18px); }
+
+/* 24 ticks, all lit, because they are open at all of them */
+.hours-label {
+  max-width: var(--shell); width: 100%; margin: 0 auto; padding: 0 var(--pad) 12px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  position: relative; z-index: 5;
 }
+.hours-label .openlight { color: var(--open-board); }
+.hours-label .openlight::before { background: var(--open-board); }
+.hours-note { color: #AEA6A3; font-size: 12.5px; }
+.hours {
+  display: flex; align-items: flex-end; gap: clamp(3px, .5vw, 9px);
+  position: relative; z-index: 5; max-width: var(--shell); width: 100%;
+  margin: 0 auto; padding: 0 var(--pad) clamp(14px, 1.6vw, 22px);
+}
+.hr { display: grid; justify-items: center; gap: 7px; flex: 1 1 0; min-width: 0; }
+.hr i { display: block; width: 100%; height: clamp(16px, 2.2vw, 34px); background: var(--open-board); border-radius: 1px; opacity: .55; }
+.hr em {
+  font-style: normal; font-family: 'MartianMono', monospace; font-size: clamp(9px, .72vw, 12px);
+  color: #AEA6A3; letter-spacing: -.02em;
+}
+.hr.is-now i { opacity: 1; height: clamp(30px, 3.6vw, 56px); }
+.hr.is-now em { color: #F4F2F0; }
+
+.deck-car { position: absolute; right: calc(-1 * var(--pad)); bottom: 0; width: min(50%, 820px); z-index: 1; pointer-events: none; }
+.deck-car img { width: 100%; filter: drop-shadow(0 40px 44px rgb(0 0 0/.55)); }
+
+/* booking sits on the bottom edge, columns rhyming with the board above */
+.deckbar {
+  position: relative; z-index: 4; margin-top: clamp(26px, 3vw, 48px);
+  border-top: 1px solid rgba(244,242,240,.2); background: #141212;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr auto; align-items: end;
+  gap: 0; max-width: var(--shell); width: 100%; margin-inline: auto;
+}
+.db-field { display: grid; gap: 8px; padding: clamp(18px, 2vw, 26px) clamp(16px, 2vw, 30px); border-right: 1px solid rgba(244,242,240,.2); }
+.db-field:first-child { padding-left: var(--pad); }
+.db-field .sign { color: #AEA6A3; }
+.db-field select, .db-field input {
+  background: none; border: 0; color: #F4F2F0; font: 560 clamp(15px, 1.2vw, 18px) 'Archivo';
+  padding: 0; min-width: 0; width: 100%;
+}
+.db-field select option { color: #141212; }
+.db-field input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: .7; cursor: pointer; }
+.db-go { display: flex; gap: 10px; align-items: center; padding: clamp(14px, 1.6vw, 20px) var(--pad) clamp(14px, 1.6vw, 20px) clamp(16px, 2vw, 30px); }
+
+@media (max-width: 1000px) {
+  .deck { padding-top: 84px; }
+  .deck-copy { max-width: 100%; }
+  .deck-car { position: relative; right: auto; bottom: auto; width: 100%; margin-top: -4%; }
+  .deckbar { grid-template-columns: 1fr 1fr; }
+  .db-field:first-child { grid-column: 1 / -1; }
+  .db-go { grid-column: 1 / -1; padding-inline: var(--pad); }
+  .db-go .btn-verde, .db-go .btn-wa { flex: 1; justify-content: center; }
+}
+@media (max-width: 560px) {
+  .hr em { visibility: hidden; }
+  .hr:nth-child(6n + 1) em { visibility: visible; }
+  .hours { gap: 3px; }
+  .deckbar { grid-template-columns: 1fr; }
+  .db-field { border-right: 0; border-bottom: 1px solid rgba(244,242,240,.2); padding-inline: var(--pad); }
+}
+
+/* exit rail: three ways out of the first screen */
 .exitrail {
-  grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--line-2); margin: 24px calc(-1 * var(--pad)) 0; padding: 0 var(--pad);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  max-width: var(--shell); margin: 0 auto; padding: 0 var(--pad);
+  border-bottom: 1px solid var(--line);
 }
 .exitrail a {
   display: flex; align-items: baseline; gap: 14px; text-decoration: none;
-  padding: 20px 8px; border-left: 1px solid var(--line); position: relative;
+  padding: clamp(20px, 2.4vw, 34px) 8px; border-left: 1px solid var(--line);
+  transition: background var(--t1) var(--out);
 }
 .exitrail a:first-child { border-left: 0; padding-left: 0; }
-.exitrail em { font-style: normal; font-family: 'MartianMono', monospace; font-size: 12.5px; font-weight: 560; color: var(--verde-t); text-transform: uppercase; }
-.exitrail strong { font-stretch: 125%; font-weight: 800; font-size: clamp(19px, 2vw, 30px); text-transform: uppercase; }
+.exitrail a:hover { background: var(--card); }
+.exitrail em {
+  font-style: normal; font-family: 'MartianMono', monospace; font-size: 12.5px;
+  font-weight: 560; color: var(--verde-t); text-transform: uppercase; white-space: nowrap;
+}
+.exitrail strong { font-stretch: 125%; font-weight: 800; font-size: clamp(19px, 2vw, 32px); text-transform: uppercase; }
 .exitrail .x-arrow { margin-left: auto; color: var(--dim); }
 
 /* flagship strip: one car, one band, ink */
@@ -621,7 +688,7 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   .btn-wa:active, .btn-verde:active, .reserve-cta:active, .gantry-go:active { translate: 0 1px; }
 
   /* --- scroll: reveals, gated because Firefox is still catching up --- */
-  @supports (animation-timeline: view()) {
+  @supports (animation-timeline: view()) and (animation-range: entry 0% cover 50%) {
     .deck-car img { animation: drive-in linear both; animation-timeline: view(); animation-range: entry 0% cover 42%; }
     @keyframes drive-in { from { translate: -6% 0; } to { translate: 0 0; } }
 
@@ -704,8 +771,8 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   .gdates { flex-wrap: wrap; }
   .gdates-in { flex: 1 1 100%; justify-content: space-between; }
   .gdates-in input { font-size: 14px; }
-  .exitrail { grid-row: 4; grid-template-columns: 1fr; margin-top: 26px; }
-  .exitrail a { border-left: 0; border-top: 1px solid var(--line); padding: 14px 2px; }
+  .exitrail { grid-template-columns: 1fr; }
+  .exitrail a { border-left: 0; border-top: 1px solid var(--line); padding: 16px 0; }
   .exitrail a:first-child { border-top: 0; }
 
   .lane { flex-wrap: wrap; row-gap: 10px; justify-content: space-between; }
@@ -758,10 +825,6 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .gantry .openlight { color: #fff; }
 .gantry .openlight::before { background: #fff; box-shadow: none; animation: none; }
 
-/* clock face marks on the deck: 24 hours, drawn not decorated */
-.hours { display: flex; gap: 3px; align-items: flex-end; height: 26px; margin-top: 18px; }
-.hours i { display: block; width: 3px; background: var(--line-2); border-radius: 2px; height: 40%; }
-.hours i.on { background: var(--verde-t); height: 100%; }
 
 /* two-location strip */
 .desks { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--line); border-block: 1px solid var(--line); }

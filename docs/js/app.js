@@ -29,6 +29,18 @@
     ).observe(sentinel);
   }
 
+  /* ---------- the hour board marks the hour it is in Tirana ---------- */
+  const hours = document.getElementById('hours');
+  if (hours) {
+    const markNow = () => {
+      const h = +new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Tirane', hour: 'numeric', hour12: false })
+        .format(new Date()) % 24;
+      hours.querySelectorAll('.hr').forEach(el => el.classList.toggle('is-now', +el.dataset.h === h));
+    };
+    markNow();
+    setInterval(markNow, 60000);
+  }
+
   /* ---------- mobile sheet ---------- */
   const burger = $('#burger'), sheet = $('#sheet');
   if (burger) burger.addEventListener('click', () => {
