@@ -19,7 +19,7 @@ const CHEAP = fleet.reduce((m, c) => c.price < m.price ? c : m);
 const classes = [...new Set(fleet.map(c => c.cls))];
 
 // ---------- shared shell ----------
-const head = (title, desc, path, ogImg = 'img/cars/porsche-911.webp') => `<!doctype html>
+const head = (title, desc, path, ogImg = 'img/cars/jaguar-xf.webp', schema = '') => `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -38,6 +38,7 @@ const head = (title, desc, path, ogImg = 'img/cars/porsche-911.webp') => `<!doct
 <link rel="preload" href="fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/martian-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/app.css">
+${schema ? `<script type="application/ld+json">${schema}</script>` : ''}
 </head>
 <body data-page="${path.replace('.html','') || 'index'}">`;
 
@@ -49,7 +50,8 @@ const nav = (active = '') => `
   <div class="pillnav-links">
     <a href="fleet.html"${active === 'fleet' ? ' aria-current="page"' : ''}>Fleet</a>
     <a href="roads.html"${active === 'roads' ? ' aria-current="page"' : ''}>Roads</a>
-    <a href="company.html"${active === 'company' ? ' aria-current="page"' : ''}>Company</a>
+    <a href="faq.html"${active === 'faq' ? ' aria-current="page"' : ''}>FAQ</a>
+    <a href="company.html"${active === 'company' ? ' aria-current="page"' : ''}>About</a>
   </div>
   <div class="pillnav-tools">
     <a class="nav-call" href="tel:${TEL}" aria-label="Call ${site.phone}" title="${site.phone}">
@@ -61,7 +63,7 @@ const nav = (active = '') => `
   </div>
 </nav>
 <div class="sheet" id="sheet" hidden>
-  <a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="company.html">Company</a>
+  <a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="faq.html">FAQ</a><a href="company.html">About</a>
   <a href="book.html" class="sheet-go">Book a car →</a>
   ${waLink(WA_GENERIC, 'sheet-wa', 'Ask on WhatsApp')}
 </div>`;
@@ -110,8 +112,8 @@ const footer = () => `
     <nav class="foot-col" aria-label="Good to know">
       <h2>Good to know</h2>
       <ul>
-        ${site.faq.slice(0, 5).map((f, i) => `<li><a href="company.html#q${i + 1}">${f.q}</a></li>`).join('')}
-        <li><a href="company.html" class="foot-more">All ${site.faq.length} answers <span aria-hidden="true">→</span></a></li>
+        ${site.faq.slice(0, 5).map(f => `<li><a href="faq.html">${f.q}</a></li>`).join('')}
+        <li><a href="faq.html" class="foot-more">All ${site.faq.length} answers <span aria-hidden="true">→</span></a></li>
       </ul>
     </nav>
 
@@ -119,11 +121,11 @@ const footer = () => `
       <h2>Before you book</h2>
       <p class="foot-claim">No online payment. No card charged in advance. You pay at pickup.</p>
       <ul>
-        <li><a href="company.html#q4">What the daily price includes</a></li>
-        <li><a href="company.html#q2">Licence and driver rules</a></li>
-        <li><a href="company.html#q3">Taking the car across a border</a></li>
-        <li><a href="company.html#q7">Fuel policy</a></li>
-        <li><a href="company.html#q6">Delivery to your hotel</a></li>
+        <li><a href="faq.html#booking-3">What the daily price includes</a></li>
+        <li><a href="faq.html#driving-1">Licence and driver rules</a></li>
+        <li><a href="faq.html#driving-3">Taking the car across a border</a></li>
+        <li><a href="faq.html#pickup-5">How fuel works</a></li>
+        <li><a href="faq.html#pickup-4">Delivery to your hotel</a></li>
       </ul>
     </nav>
 
@@ -181,7 +183,7 @@ ${nav()}
   <nav class="exitrail" aria-label="Sections">
     <a href="fleet.html"><em>${fleet.length} cars</em><strong>The fleet</strong><span class="x-arrow" aria-hidden="true">→</span></a>
     <a href="roads.html"><em>3 routes</em><strong>Where to drive</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-    <a href="company.html"><em>${site.faq.length} answers</em><strong>Straight answers</strong><span class="x-arrow" aria-hidden="true">→</span></a>
+    <a href="faq.html"><em>${site.faq.length} answers</em><strong>Straight answers</strong><span class="x-arrow" aria-hidden="true">→</span></a>
   </nav>
 </section>
 
@@ -491,11 +493,15 @@ ${nav('company')}
   </ol>
 </section>
 
-<section class="faq" aria-label="Questions">
-  <h2 class="sec-h">Straight answers</h2>
-  <ol class="faq-list">
-    ${site.faq.map((f, i) => `<li class="qa" id="q${i + 1}"><span class="gchip">Q${i + 1}</span><div><strong>${f.q}</strong><p>${f.a}</p></div></li>`).join('')}
-  </ol>
+<section class="faq-teaser">
+  <div>
+    <h2 class="sec-h">Questions get straight answers</h2>
+    <p>Licences, borders, night pickups, which car survives the road to Theth, and what the daily price actually covers. ${site.faq.length} of them, grouped and written plainly.</p>
+    <a class="btn-verde" href="faq.html">Read the answers <span aria-hidden="true">→</span></a>
+  </div>
+  <ul class="faq-teaser-list">
+    ${site.faq.slice(0, 4).map(f => `<li><a href="faq.html">${f.q}</a></li>`).join('')}
+  </ul>
 </section>
 
 <section class="colophon" id="colophon">
@@ -507,6 +513,53 @@ ${nav('company')}
     ${JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-roads.json'))).concat(JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-dest.json')))).map(cr => `<li>${cr.slug}: ${cr.author.replace(/<[^>]+>/g, '')}, ${cr.license}, via <a href="${cr.source_url}" rel="license external">Wikimedia Commons</a></li>`).join('')}
   </ul></details>
 </section>
+</main>
+${footer()}`;
+
+// ---------- FAQ ----------
+const faqSchema = () => JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: site.faq.map(f => ({
+    '@type': 'Question', name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+
+const faqPage = () => `${head('Questions about renting a car in Tirana', 'Licences, borders, deposits, night pickups, mountain roads and what the daily price covers. ' + site.faq.length + ' straight answers from a rental company in Tirana that is open at every hour.', 'faq.html', 'img/cars/jaguar-xf.webp', faqSchema())}
+${nav('faq')}
+<main class="faqwrap">
+  <section class="faq-hero">
+    <h1 class="faq-h1">Questions,<br>answered straight</h1>
+    <p class="faq-lede">Everything renters ask us before they land, and the things they wish they had asked. If your question is not here, send it and a person in Tirana will answer it today.</p>
+    <div class="faq-jump">
+      ${site.faqGroups.map(g => `<a href="#${g.id}">${g.g}</a>`).join('')}
+    </div>
+  </section>
+
+  ${site.faqGroups.map((g, gi) => `
+  <section class="faq-group" id="${g.id}">
+    <h2 class="faq-gh"><span class="mono">${String(gi + 1).padStart(2, '0')}</span>${g.g}</h2>
+    <div class="faq-items">
+      ${g.q.map((f, i) => `<article class="faq-item" id="${g.id}-${i + 1}">
+        <h3>${f.q}</h3>
+        <p>${f.a}</p>
+      </article>`).join('')}
+    </div>
+  </section>`).join('')}
+
+  <section class="faq-ask">
+    <div class="gantry">
+      <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Someone is awake</span></p>
+      <div>
+        <p class="faq-ask-h">Not answered here?</p>
+        <p class="faq-ask-p">Ask it directly. Both offices are staffed around the clock, and questions about dates, borders or which car suits a route get answered the same day.</p>
+      </div>
+      <div class="faq-ask-btns">
+        ${waLink('Hello 24/7 Car Rental, I have a question about renting a car in Albania:', 'gantry-wa', 'Ask on WhatsApp')}
+        <a class="gantry-call" href="tel:${TEL}">Call ${site.phone}</a>
+      </div>
+    </div>
+  </section>
 </main>
 ${footer()}`;
 
@@ -529,6 +582,7 @@ const pages = {
   'book.html': bookPage(),
   'roads.html': roadsPage(),
   'company.html': companyPage(),
+  'faq.html': faqPage(),
   '404.html': notFound(),
 };
 for (const c of fleet) pages[`car-${c.slug}.html`] = carPage(c);

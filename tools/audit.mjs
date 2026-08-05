@@ -18,7 +18,13 @@ for (const p of [
 if (!chromium) { console.error('playwright not found'); process.exit(2); }
 
 const BASE = process.argv[2] || 'http://localhost:8471/docs';
-const PAGES = ['index.html', 'fleet.html', 'book.html', 'roads.html', 'company.html', 'car-porsche-911.html', 'car-fiat-500.html', '404.html'];
+// enumerate what actually exists, so a renamed page can never silently stop being tested
+import { readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+const DOCS = resolve(fileURLToPath(import.meta.url), '../../docs');
+const ALL = readdirSync(DOCS).filter(f => f.endsWith('.html'));
+const CARS = ALL.filter(f => f.startsWith('car-'));
+const PAGES = [...ALL.filter(f => !f.startsWith('car-')), CARS[0], CARS[CARS.length - 1]].filter(Boolean);
 const WIDTHS = [390, 834, 1440, 2560];
 
 const AUDIT_JS = () => {

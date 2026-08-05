@@ -49,36 +49,84 @@
  ],
  "faq": [
   {
-   "q": "Are you really open at 4am?",
-   "a": "Yes. Airport pickups run around the clock, seven days, including the night flights from Istanbul and Rome. Tell us the flight number and the car is there when you clear customs."
+   "q": "How do I actually book a car?",
+   "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour. There is no checkout to fight with and no account to create."
   },
   {
-   "q": "Which licence do I need?",
-   "a": "An EU, UK or US licence is accepted as it is. Licences in other alphabets should come with an International Driving Permit. Bring the physical card, a photo of it is not enough at the desk."
-  },
-  {
-   "q": "Can I take the car to Kosovo, Montenegro or Greece?",
-   "a": "Cross-border travel is arranged case by case and needs the green card insurance document prepared in advance. Ask when you book, not on the day."
+   "q": "Do I pay online?",
+   "a": "No. Nothing is charged in advance and no card details are taken through this website. You settle at pickup, which is also why the confirmation always comes in writing first."
   },
   {
    "q": "Is the price per day the final price?",
-   "a": "The daily rate covers the car, basic insurance and unlimited kilometres inside Albania. Longer rentals are cheaper per day. Ask for the total before you commit and we will send it in writing."
+   "a": "The rates on this site are the published daily rates, per car, in euro. Ask for the total for your exact dates before you commit and it comes back in writing, so there is nothing left to discover at the desk."
   },
   {
-   "q": "What about the roads?",
-   "a": "The SH1 and SH2 are motorway standard. The coast road over Llogara and the routes into the mountains are narrow, steep and worth every minute. Take a diesel automatic and do not book the smallest car for the passes."
+   "q": "Is it cheaper for a longer rental?",
+   "a": "Usually yes. The per-day rate drops as the rental gets longer, so a week is not simply seven times the daily price. Send the dates and ask for the total."
   },
   {
-   "q": "Do you deliver the car to my hotel?",
-   "a": "Inside Tirana, yes, at no extra cost. Outside the city, ask and we will tell you honestly whether it is worth it."
+   "q": "Can I change or cancel?",
+   "a": "Plans move, especially with flights. Tell us as early as you can by WhatsApp and we will confirm the change in writing. Ask for the cancellation terms when you book so you have them from the start."
   },
   {
-   "q": "Fuel policy?",
-   "a": "You get the car full and return it full. The station nearest both offices is open all night, like we are."
+   "q": "Is the car in the photo the car I get?",
+   "a": "Yes. Every one of the 19 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
   },
   {
-   "q": "How do I actually book?",
-   "a": "Send the dates, the car and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour."
+   "q": "Are the cars automatic?",
+   "a": "Eighteen of the nineteen are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
+  },
+  {
+   "q": "Do you have a seven-seater?",
+   "a": "Two: both Hyundai Santa Fe, at 60 euro a day. They are the cars to take on the Lake Koman ferry or into the northern valleys with luggage."
+  },
+  {
+   "q": "Which car should I take for the mountains?",
+   "a": "Something with ground clearance. The Tucson or a Santa Fe handle the track into Theth and the last stretch to the Blue Eye. A low sedan will manage the motorways and the coast road but not the rough final kilometres."
+  },
+  {
+   "q": "Can I add a second driver or a child seat?",
+   "a": "Both are normal requests. Mention them in the same message as your dates and they are arranged before you arrive, with the cost confirmed in writing."
+  },
+  {
+   "q": "What is my licence situation?",
+   "a": "An EU, UK or US licence is used routinely here. Licences printed in a non-Latin alphabet should be accompanied by an International Driving Permit, which you have to obtain in your own country before travelling, not on arrival. Bring the physical card."
+  },
+  {
+   "q": "What are the roads actually like?",
+   "a": "Better than the reputation. The SH1 north to Shkodër and the SH2 are motorway standard. The coast road over the Llogara pass and the routes into the north are narrow, steep, spectacular and slower than any map will tell you. Add time rather than confidence."
+  },
+  {
+   "q": "Can I take the car to Kosovo, Montenegro or Greece?",
+   "a": "Crossing a border needs a green card insurance document prepared in advance, so it has to be arranged when you book and never on the day. Ask before you plan the route."
+  },
+  {
+   "q": "Is parking difficult in Tirana?",
+   "a": "Central Tirana is busy and paid parking around the Blloku district fills up. Most hotels have an arrangement. Outside the capital, parking is rarely a problem at all."
+  },
+  {
+   "q": "Anything about driving here I should know?",
+   "a": "Drive on the right. Headlights are expected outside towns, seatbelts are required, and the alcohol limit is effectively zero if you have held a licence under ten years. Livestock on rural roads is normal and not a joke."
+  },
+  {
+   "q": "Are you really open at 4am?",
+   "a": "Yes. Both offices are staffed around the clock, seven days, which is what the name is about. Night arrivals from Istanbul and Rome are ordinary here, not a special request."
+  },
+  {
+   "q": "Where exactly do I meet you at the airport?",
+   "a": "Send your flight number with the booking and the meeting point comes back in your written confirmation, along with the name of the person who will be there."
+  },
+  {
+   "q": "Can I collect at the airport and return in the city?",
+   "a": "Yes. The two offices are about ten minutes apart and using both is normal. Say which one you want for the return when you book."
+  },
+  {
+   "q": "Can you deliver the car to my hotel?",
+   "a": "Inside Tirana this is a common arrangement. Ask when you book and it is confirmed in writing with any cost stated up front."
+  },
+  {
+   "q": "How does fuel work?",
+   "a": "Confirm the fuel arrangement in your written confirmation so it is agreed before you drive away. The fuel stations nearest both offices are open through the night."
   }
  ],
  "roads": [
@@ -204,6 +252,112 @@
    "car": "volkswagen-golf-7",
    "carWhy": "Fast, flat motorway the whole way.",
    "note": "A castle on a ridge where three rivers and a lake meet, and the best sunset view in northern Albania. The city below is flat, green and full of bicycles."
+  }
+ ],
+ "faqGroups": [
+  {
+   "g": "Booking and paying",
+   "id": "booking",
+   "q": [
+    {
+     "q": "How do I actually book a car?",
+     "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour. There is no checkout to fight with and no account to create."
+    },
+    {
+     "q": "Do I pay online?",
+     "a": "No. Nothing is charged in advance and no card details are taken through this website. You settle at pickup, which is also why the confirmation always comes in writing first."
+    },
+    {
+     "q": "Is the price per day the final price?",
+     "a": "The rates on this site are the published daily rates, per car, in euro. Ask for the total for your exact dates before you commit and it comes back in writing, so there is nothing left to discover at the desk."
+    },
+    {
+     "q": "Is it cheaper for a longer rental?",
+     "a": "Usually yes. The per-day rate drops as the rental gets longer, so a week is not simply seven times the daily price. Send the dates and ask for the total."
+    },
+    {
+     "q": "Can I change or cancel?",
+     "a": "Plans move, especially with flights. Tell us as early as you can by WhatsApp and we will confirm the change in writing. Ask for the cancellation terms when you book so you have them from the start."
+    }
+   ]
+  },
+  {
+   "g": "The cars",
+   "id": "cars",
+   "q": [
+    {
+     "q": "Is the car in the photo the car I get?",
+     "a": "Yes. Every one of the 19 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
+    },
+    {
+     "q": "Are the cars automatic?",
+     "a": "Eighteen of the nineteen are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
+    },
+    {
+     "q": "Do you have a seven-seater?",
+     "a": "Two: both Hyundai Santa Fe, at 60 euro a day. They are the cars to take on the Lake Koman ferry or into the northern valleys with luggage."
+    },
+    {
+     "q": "Which car should I take for the mountains?",
+     "a": "Something with ground clearance. The Tucson or a Santa Fe handle the track into Theth and the last stretch to the Blue Eye. A low sedan will manage the motorways and the coast road but not the rough final kilometres."
+    },
+    {
+     "q": "Can I add a second driver or a child seat?",
+     "a": "Both are normal requests. Mention them in the same message as your dates and they are arranged before you arrive, with the cost confirmed in writing."
+    }
+   ]
+  },
+  {
+   "g": "Driving in Albania",
+   "id": "driving",
+   "q": [
+    {
+     "q": "What is my licence situation?",
+     "a": "An EU, UK or US licence is used routinely here. Licences printed in a non-Latin alphabet should be accompanied by an International Driving Permit, which you have to obtain in your own country before travelling, not on arrival. Bring the physical card."
+    },
+    {
+     "q": "What are the roads actually like?",
+     "a": "Better than the reputation. The SH1 north to Shkodër and the SH2 are motorway standard. The coast road over the Llogara pass and the routes into the north are narrow, steep, spectacular and slower than any map will tell you. Add time rather than confidence."
+    },
+    {
+     "q": "Can I take the car to Kosovo, Montenegro or Greece?",
+     "a": "Crossing a border needs a green card insurance document prepared in advance, so it has to be arranged when you book and never on the day. Ask before you plan the route."
+    },
+    {
+     "q": "Is parking difficult in Tirana?",
+     "a": "Central Tirana is busy and paid parking around the Blloku district fills up. Most hotels have an arrangement. Outside the capital, parking is rarely a problem at all."
+    },
+    {
+     "q": "Anything about driving here I should know?",
+     "a": "Drive on the right. Headlights are expected outside towns, seatbelts are required, and the alcohol limit is effectively zero if you have held a licence under ten years. Livestock on rural roads is normal and not a joke."
+    }
+   ]
+  },
+  {
+   "g": "Pickup and return",
+   "id": "pickup",
+   "q": [
+    {
+     "q": "Are you really open at 4am?",
+     "a": "Yes. Both offices are staffed around the clock, seven days, which is what the name is about. Night arrivals from Istanbul and Rome are ordinary here, not a special request."
+    },
+    {
+     "q": "Where exactly do I meet you at the airport?",
+     "a": "Send your flight number with the booking and the meeting point comes back in your written confirmation, along with the name of the person who will be there."
+    },
+    {
+     "q": "Can I collect at the airport and return in the city?",
+     "a": "Yes. The two offices are about ten minutes apart and using both is normal. Say which one you want for the return when you book."
+    },
+    {
+     "q": "Can you deliver the car to my hotel?",
+     "a": "Inside Tirana this is a common arrangement. Ask when you book and it is confirmed in writing with any cost stated up front."
+    },
+    {
+     "q": "How does fuel work?",
+     "a": "Confirm the fuel arrangement in your written confirmation so it is agreed before you drive away. The fuel stations nearest both offices are open through the night."
+    }
+   ]
   }
  ]
 }
