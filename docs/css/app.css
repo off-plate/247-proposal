@@ -57,8 +57,7 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 .pillnav {
   position: fixed; top: 0; left: 50%; translate: -50% 0; z-index: 60;
   display: flex; align-items: center; gap: clamp(14px, 2.5vw, 34px);
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  background: var(--paper);
   border: 1px solid transparent; border-bottom-color: var(--line);
   border-radius: 0; box-shadow: none;
   padding: 12px var(--pad);
