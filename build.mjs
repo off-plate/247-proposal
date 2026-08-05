@@ -52,37 +52,94 @@ const nav = (active = '') => `
     <a href="company.html"${active === 'company' ? ' aria-current="page"' : ''}>Company</a>
   </div>
   <div class="pillnav-tools">
+    <a class="nav-call" href="tel:${TEL}" aria-label="Call ${site.phone}" title="${site.phone}">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
+    </a>
+    ${waLink(WA_GENERIC, 'nav-wa', 'WhatsApp')}
     <a class="reserve-cta" href="book.html">Book</a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   </div>
 </nav>
 <div class="sheet" id="sheet" hidden>
-  <a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="company.html">Company</a><a href="book.html" class="sheet-go">Reserve →</a>
+  <a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="company.html">Company</a>
+  <a href="book.html" class="sheet-go">Book a car →</a>
+  ${waLink(WA_GENERIC, 'sheet-wa', 'Ask on WhatsApp')}
 </div>`;
 
 // departure-board footer. every status is a real fact.
 const footer = () => `
-<footer class="board" id="board">
-  <div class="board-in">
-    <p class="board-brand"><img src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289"></p>
-    <div class="board-grid">
-      <table class="board-t">
-        <tr><td><a href="fleet.html">FLEET</a></td><td>19 CARS</td><td class="ok">${fleet.filter(c => c.gear === 'automatic').length} AUTOMATIC</td></tr>
-        <tr><td><a href="roads.html">ROADS</a></td><td>3 ROUTES</td><td class="ok">RIVIERA · NORTH · SOUTH</td></tr>
-        <tr><td><a href="company.html">ANSWERS</a></td><td>${site.faq.length} QUESTIONS</td><td class="ok">NO SMALL PRINT</td></tr>
-        <tr><td><a href="book.html">BOOK</a></td><td>WHATSAPP OR PHONE</td><td class="ok" id="board-book">REPLY SAME DAY</td></tr>
-      </table>
-      <table class="board-t">
-        <tr><td>AIRPORT</td><td>TIRANA INTERNATIONAL</td><td class="ok"><span class="openlight">OPEN NOW</span></td></tr>
-        <tr><td>CITY</td><td>RRUGA NJAZI MEKA</td><td class="ok"><span class="openlight">OPEN NOW</span></td></tr>
-        <tr><td>PHONE</td><td><a href="tel:${TEL}">${site.phone}</a></td><td class="ok">ANSWERED 24/7</td></tr>
-        <tr><td>EMAIL</td><td><a href="mailto:${site.email}">${site.email}</a></td><td class="ok">SAME DAY</td></tr>
-      </table>
+<footer class="foot">
+  <div class="foot-top">
+    <div class="foot-act">
+      <p class="foot-h">Talk to a person, any hour</p>
+      <p class="foot-sub">Two offices in Tirana, both staffed around the clock. Send the dates and the car, get a written answer the same day.</p>
+      <div class="foot-btns">
+        ${waLink(WA_GENERIC, 'btn-wa', 'WhatsApp us')}
+        <a class="foot-call" href="tel:${TEL}">${site.phone}</a>
+      </div>
+      <a class="foot-mail" href="mailto:${site.email}">${site.email}</a>
     </div>
-    <div class="board-meta">
-      <p>Rruga Njazi Meka, Tiranë and Tirana International Airport. Instagram ${site.instagram.map(i => '@' + i).join(' and ')}.</p>
-      <p><a href="company.html#colophon">This is a redesign proposal for 24/7 Car Rental, built by Off-Plate</a>. Cars, prices and details are the real ones from 24-7rentalcar.com.</p>
+
+    <div class="foot-desks">
+      ${site.locations.map(l => `<div class="foot-desk">
+        <span class="openlight">Open now</span>
+        <strong>${l.label}</strong>
+        <em>${l.sub}</em>
+        <span class="mono">${site.hours}</span>
+      </div>`).join('')}
     </div>
+  </div>
+
+  <div class="foot-cols">
+    <nav class="foot-col" aria-label="Cars by price">
+      <h2>Cars by price</h2>
+      <ul>
+        ${[...fleet].sort((a, z) => a.price - z.price).slice(0, 6).map(c => `<li><a href="car-${c.slug}.html">${c.name}<span class="mono">${eur(c.price)}</span></a></li>`).join('')}
+        <li><a href="fleet.html" class="foot-more">All ${fleet.length} cars <span aria-hidden="true">→</span></a></li>
+      </ul>
+    </nav>
+
+    <nav class="foot-col" aria-label="Where to go">
+      <h2>Where to go</h2>
+      <ul>
+        ${site.destinations.slice(0, 6).map(d => `<li><a href="roads.html#${d.id}">${d.name}<span class="mono">${d.km} km</span></a></li>`).join('')}
+        <li><a href="roads.html" class="foot-more">All routes and places <span aria-hidden="true">→</span></a></li>
+      </ul>
+    </nav>
+
+    <nav class="foot-col" aria-label="Good to know">
+      <h2>Good to know</h2>
+      <ul>
+        ${site.faq.slice(0, 5).map((f, i) => `<li><a href="company.html#q${i + 1}">${f.q}</a></li>`).join('')}
+        <li><a href="company.html" class="foot-more">All ${site.faq.length} answers <span aria-hidden="true">→</span></a></li>
+      </ul>
+    </nav>
+
+    <nav class="foot-col" aria-label="Before you book">
+      <h2>Before you book</h2>
+      <p class="foot-claim">No online payment. No card charged in advance. You pay at pickup.</p>
+      <ul>
+        <li><a href="company.html#q4">What the daily price includes</a></li>
+        <li><a href="company.html#q2">Licence and driver rules</a></li>
+        <li><a href="company.html#q3">Taking the car across a border</a></li>
+        <li><a href="company.html#q7">Fuel policy</a></li>
+        <li><a href="company.html#q6">Delivery to your hotel</a></li>
+      </ul>
+    </nav>
+
+    <div class="foot-col">
+      <h2>Follow</h2>
+      <ul>
+        ${site.instagram.map(i => `<li><a href="https://instagram.com/${i}" rel="noopener" target="_blank">Instagram @${i}</a></li>`).join('')}
+        <li><a href="https://24-7rentalcar.com/" rel="noopener" target="_blank">24-7rentalcar.com</a></li>
+      </ul>
+      <img class="foot-logo" src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
+    </div>
+  </div>
+
+  <div class="foot-legal">
+    <p>24/7 Car Rental, Rruga Njazi Meka, Tiranë and Tirana International Airport. Rates in euro, per day, as published.</p>
+    <p><a href="company.html#colophon">Redesign proposal by Off-Plate</a>. Cars, prices and contact details are the real ones from 24-7rentalcar.com.</p>
   </div>
 </footer>
 <script src="js/fleet-data.js" defer></script>
@@ -90,6 +147,10 @@ const footer = () => `
 </body></html>`;
 
 const gantryChip = t => `<span class="gchip">${t}</span>`;
+const WA_ICON = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>`;
+const waLink = (msg, cls = 'btn-wa', label = 'WhatsApp') =>
+  `<a class="${cls}" href="https://wa.me/${WA}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">${WA_ICON}<span>${label}</span></a>`;
+const WA_GENERIC = 'Hello 24/7 Car Rental, I would like to ask about renting a car in Tirana.';
 const TIMES = [];
 for (let h = 6; h < 24; h++) for (const m of ['00', '30']) TIMES.push(`${String(h).padStart(2, '0')}:${m}`);
 
@@ -110,7 +171,11 @@ ${nav()}
         <span class="gdates-in"><input type="date" name="from" aria-label="Pickup date"><span class="garrow" aria-hidden="true">→</span><input type="date" name="to" aria-label="Return date"></span>
       </div>
       <button class="gantry-go" type="submit">Show ${fleet.length} cars <span aria-hidden="true">→</span></button>
-      <p class="gantry-alt">or call <a href="tel:${TEL}">${site.phone}</a>, any hour</p>
+      <div class="gantry-alt">
+        <span>or skip the form</span>
+        ${waLink(WA_GENERIC, 'gantry-wa', 'WhatsApp us')}
+        <a class="gantry-call" href="tel:${TEL}">Call ${site.phone}</a>
+      </div>
     </form>
   </aside>
   <nav class="exitrail" aria-label="Sections">
@@ -189,6 +254,10 @@ ${nav('fleet')}
         <button class="chip is-on" data-cls="all">All ${fleet.length}</button>
         ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]}</button>`).join('')}
       </div>
+      <div class="list-ask">
+        <span>Cannot decide?</span>
+        ${waLink('Hello 24/7 Car Rental, I am not sure which car suits my trip. Can you help me choose?', 'btn-wa sm', 'Ask us on WhatsApp')}
+      </div>
       <div class="list-tools">
         <label class="sort">Sort <select id="sort">
           <option value="price-asc">price, low to high</option>
@@ -252,7 +321,8 @@ ${similar.length ? `<section class="similar"><h2 class="sec-h">Nearby in the fle
 
 <div class="reservebar" data-slug="${c.slug}" data-price="${c.price}" data-prestige="0">
   <span class="rb-cluster"><span class="rb-price"><strong class="mono">${eur(c.price)}</strong>/day</span><span class="rb-total mono" id="rb-total"></span></span>
-  <a class="btn-paper rb-call" href="tel:${TEL}">Call</a>
+  ${waLink(`Hello 24/7 Car Rental, is the ${c.name} available? ${c.year}, ${c.gear}, ${eur(c.price)} per day. ${site.base}/car-${c.slug}.html`, 'btn-wa rb-wa', 'WhatsApp')}
+  <a class="btn-paper rb-call" href="tel:${TEL}" aria-label="Call ${site.phone}">Call</a>
   <a class="btn-verde" href="book.html?car=${c.slug}">Book this car <span aria-hidden="true">→</span></a>
 </div>
 ${footer()}`;
@@ -351,6 +421,7 @@ ${nav('roads')}
     <p class="road-story">${a1.story}</p>
     <table class="facts mono"><tr><td>${a1.route}</td><td>${a1.km} km</td><td>${a1.hours}</td><td>best ${a1.best}</td></tr></table>
     <a class="roadcar" href="car-${a1.car}.html"><img src="img/cars/${a1.car}-s.webp" alt=""><span><strong>${carOf(a1.car).name}</strong><em>${a1.carWhy}</em></span><span class="mono">${eur(carOf(a1.car).price)}/day</span></a>
+    <div class="road-cta">${waLink(`Hello, I want to drive ${a1.name} (${a1.route}). Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about this route')}</div>
   </div>
 </section>
 
@@ -360,6 +431,7 @@ ${nav('roads')}
     <p class="road-story">${am.story}</p>
     <dl class="facts-col mono"><dt>Route</dt><dd>${am.route}</dd><dt>Length</dt><dd>${am.km} km</dd><dt>Time</dt><dd>${am.hours}</dd><dt>Best</dt><dd>${am.best}</dd></dl>
     <a class="roadcar" href="car-${am.car}.html"><img src="img/cars/${am.car}-s.webp" alt=""><span><strong>${carOf(am.car).name}</strong><em>${am.carWhy}</em></span><span class="mono">${eur(carOf(am.car).price)}/day</span></a>
+    <div class="road-cta">${waLink(`Hello, I want to drive ${am.name} (${am.route}). Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about this route')}</div>
   </div>
   <img class="ram-img" src="img/road-${am.id}.webp" alt="${am.name}" loading="lazy">
 </section>
@@ -372,9 +444,28 @@ ${nav('roads')}
       <p class="road-story">${st.story}</p>
       <table class="facts mono"><tr><td>${st.route}</td><td>${st.km} km</td><td>${st.hours}</td><td>${st.best}</td></tr></table>
       <a class="roadcar" href="car-${st.car}.html"><img src="img/cars/${st.car}-s.webp" alt=""><span><strong>${carOf(st.car).name}</strong><em>${st.carWhy}</em></span><span class="mono">${eur(carOf(st.car).price)}/day</span></a>
+      <div class="road-cta">${waLink(`Hello, I want to drive ${st.name} (${st.route}). Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about this route')}</div>
     </div>
   </div>
   <img class="rst-img" src="img/road-${st.id}.webp" alt="${st.name}" loading="lazy">
+</section>
+<section class="dests" aria-label="Where to go in Albania">
+  <div class="dests-head">
+    <h2 class="sec-h">Where people actually go</h2>
+    <p>Eight places worth the drive, with the road time from Tirana and a car that can do it. Distances are one way.</p>
+  </div>
+  ${site.destinations.map((d, i) => `
+  <article class="dest" id="${d.id}" style="--i:${i}">
+    <img src="img/${d.img}.webp" alt="${d.name}, Albania" loading="lazy" width="1600" height="1000">
+    <div class="dest-body">
+      <h3 class="dest-name">${d.name}</h3>
+      <p class="dest-region mono">${d.region}</p>
+      <p class="dest-note">${d.note}</p>
+      <table class="dest-facts mono"><tr><td>${d.km} km</td><td>${d.hours}</td></tr></table>
+      <a class="roadcar" href="car-${d.car}.html"><img src="img/cars/${d.car}-s.webp" alt=""><span><strong>${carOf(d.car).name}</strong><em>${d.carWhy}</em></span><span class="mono">${eur(carOf(d.car).price)}/day</span></a>
+      <div class="road-cta">${waLink(`Hello, I want to visit ${d.name} in Albania. Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about ' + d.name)}</div>
+    </div>
+  </article>`).join('')}
 </section>
 </main>
 ${footer()}`;
@@ -403,7 +494,7 @@ ${nav('company')}
 <section class="faq" aria-label="Questions">
   <h2 class="sec-h">Straight answers</h2>
   <ol class="faq-list">
-    ${site.faq.map((f, i) => `<li class="qa"><span class="gchip">Q${i + 1}</span><div><strong>${f.q}</strong><p>${f.a}</p></div></li>`).join('')}
+    ${site.faq.map((f, i) => `<li class="qa" id="q${i + 1}"><span class="gchip">Q${i + 1}</span><div><strong>${f.q}</strong><p>${f.a}</p></div></li>`).join('')}
   </ol>
 </section>
 
@@ -413,7 +504,7 @@ ${nav('company')}
   <p>Type is Archivo and Martian Mono, both variable and open licensed. No framework, no tracker, no analytics, no cookie banner because there are no cookies to consent to. The whole site is hand-built static HTML, CSS and one file of JavaScript.</p>
   <details class="credits"><summary>Photography credits</summary><ul id="credit-list">
     <li>All ${fleet.length} car photographs belong to 24/7 Car Rental and were taken from 24-7rentalcar.com. They are shown here only to demonstrate the redesign.</li>
-    ${JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-roads.json'))).map(cr => `<li>${cr.slug}: ${cr.author.replace(/<[^>]+>/g, '')}, ${cr.license}, via <a href="${cr.source_url}" rel="license external">Wikimedia Commons</a></li>`).join('')}
+    ${JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-roads.json'))).concat(JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-dest.json')))).map(cr => `<li>${cr.slug}: ${cr.author.replace(/<[^>]+>/g, '')}, ${cr.license}, via <a href="${cr.source_url}" rel="license external">Wikimedia Commons</a></li>`).join('')}
   </ul></details>
 </section>
 </main>

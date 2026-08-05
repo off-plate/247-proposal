@@ -89,7 +89,7 @@ const AUDIT_JS = () => {
 
 const browser = await chromium.launch();
 let bad = 0;
-for (const theme of ['light', 'dark']) {
+for (const theme of ['light']) {   // this site ships light only
   for (const w of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 1000 } });
     const page = await ctx.newPage();

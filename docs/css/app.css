@@ -14,6 +14,9 @@
   --ink: #141212;   --dim: #605A57;
   --verde: #A3141B; --verde-t: #AE131B; --verde-2: #861016; --sole: #E8A33A;
   --open: #1B7443;
+  --ink-accent: #F0424B;   /* red that survives on the ink footer, 4.97 */
+  --wa: #1D7D4A;      /* white on it 4.86 */
+  --wa-2: #14603A;    /* white on it 7.03 */
   --open-board: #35B66F;
   --line: rgba(20,18,18,.14); --line-2: rgba(20,18,18,.30);
   --keyline: rgba(255,255,255,.55);
@@ -515,43 +518,46 @@ body[data-page^="car-"] main { padding-bottom: 96px; }
 .g404 { max-width: 560px; }
 .e404 { font-stretch: 110%; font-weight: 850; text-transform: uppercase; font-size: clamp(40px, 5vw, 76px); line-height: .92; margin: 8px 0 22px; overflow-wrap: anywhere; }
 
-/* ---------- departure board footer ---------- */
-.board { background: #141212; color: #F4F2F0; margin-top: clamp(50px, 7vw, 110px); }
-body[data-page="fleet"] .board, body[data-page="index"] .board { margin-top: 0; }
-.board-in { max-width: var(--shell); margin: 0 auto; padding: clamp(40px, 5vw, 80px) var(--pad); }
-.board-brand { margin-bottom: clamp(24px, 3vw, 44px); }
-.board-brand img { width: clamp(190px, 22vw, 340px); height: auto; }
-.board-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(30px, 5vw, 120px); }
-@media (max-width: 1000px) { .board-grid { grid-template-columns: 1fr; } }
-.board-t { border-collapse: collapse; font-family: 'MartianMono', monospace; font-size: clamp(12px, 1vw, 15px); width: 100%; table-layout: fixed; }
-.board-t td { overflow-wrap: anywhere; }
-.board-t td:first-child { width: 26%; }
-.board-t td:last-child { width: 34%; text-align: right; }
-.board-t td { padding: 12px 1.6vw 12px 0; border-top: 1px solid rgba(244,242,240,.18); }
-.board-t a { text-decoration: none; }
-.board-t a:hover { color: var(--sole); }
-.board-t .ok { color: var(--open-board); }
-.board-t .amber { color: var(--sole); }
-.board-meta { margin-top: clamp(24px, 3vw, 40px); color: #AEA6A3; font-size: 14px; display: grid; gap: 6px; }
-.board-meta a { color: inherit; }
-
-@media (min-width: 1800px) {
-  .gantry.deck-book { padding: 34px; }
-  .deck-book .gfield { font-size: 19px; padding: 17px 2px; }
-  .deck-book .gfield select, .deck-book .gfield input { font-size: 19px; }
-  .deck-book .gantry-go { font-size: 17px; padding: 18px; }
-  .deck-book .sign { font-size: 15px; }
+/* ---------- footer ---------- */
+.foot { background: #141212; color: #F4F2F0; margin-top: clamp(50px, 7vw, 110px); }
+body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
+.foot-top {
+  max-width: var(--shell); margin: 0 auto; padding: clamp(44px, 6vw, 88px) var(--pad) clamp(30px, 4vw, 52px);
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 80px); align-items: start;
 }
+.foot-h { font-stretch: 125%; font-weight: 850; text-transform: uppercase; font-size: clamp(28px, 3.4vw, 56px); line-height: .96; }
+.foot-sub { color: #AEA6A3; margin: 14px 0 22px; max-width: 46ch; }
+.foot-btns { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+.foot-call { font-family: 'MartianMono', monospace; font-weight: 600; font-size: clamp(17px, 1.8vw, 24px); color: #F4F2F0; text-decoration: none; border-bottom: 2px solid var(--ink-accent); padding-bottom: 2px; }
+.foot-call:hover { border-color: #F4F2F0; }
+.foot-mail { display: inline-block; margin-top: 16px; color: #AEA6A3; font-size: 15px; }
+.foot-desks { display: grid; gap: 12px; }
+.foot-desk { border: 1px solid rgba(244,242,240,.18); border-radius: var(--r); padding: 20px 22px; display: grid; gap: 5px; }
+.foot-desk strong { font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: clamp(17px, 1.7vw, 23px); }
+.foot-desk em { font-style: normal; color: #AEA6A3; font-size: 14.5px; }
+.foot-desk .mono { color: var(--open-board); font-size: 12.5px; }
+.foot-desk .openlight { color: var(--open-board); }
+.foot-desk .openlight::before { background: var(--open-board); }
 
-/* selects: no raw UA chrome glowing in dark */
-select { color-scheme: inherit; }
-
-/* fleet stage on mobile: solid sign panel, white type, no seam straddle */
-@media (max-width: 1100px) {
-  .stage-floor { background: var(--verde); }
-  .stage-name, .stage-meta, .stage-meta .mono { color: #fff; }
-  .stage .btn-verde { background: #fff; color: var(--verde-2); }
+.foot-cols {
+  max-width: var(--shell); margin: 0 auto; padding: clamp(28px, 3.4vw, 52px) var(--pad);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: clamp(24px, 3vw, 56px);
+  border-top: 1px solid rgba(244,242,240,.18);
 }
+.foot-col h2 { font-stretch: 62%; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: 12.5px; color: #AEA6A3; margin-bottom: 14px; }
+.foot-col ul { list-style: none; padding: 0; display: grid; gap: 9px; }
+.foot-col a { color: #F4F2F0; text-decoration: none; font-size: 15px; display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+.foot-col a:hover { color: var(--ink-accent); }
+.foot-col a .mono { color: #AEA6A3; font-size: 12.5px; flex: none; }
+.foot-more { color: var(--ink-accent) !important; font-weight: 640; }
+.foot-logo { width: 168px; height: auto; margin-top: 22px; opacity: .95; }
+
+.foot-legal {
+  max-width: var(--shell); margin: 0 auto; padding: clamp(20px, 2.4vw, 34px) var(--pad) clamp(34px, 4vw, 56px);
+  border-top: 1px solid rgba(244,242,240,.18); color: #AEA6A3; font-size: 13.5px; display: grid; gap: 6px;
+}
+.foot-legal a { color: inherit; }
+@media (max-width: 900px) { .foot-top { grid-template-columns: 1fr; } }
 
 /* ---------- motion: only where supported, content visible without it ---------- */
 @media (prefers-reduced-motion: no-preference) {
@@ -683,3 +689,67 @@ select { color-scheme: inherit; }
 .desk { background: var(--paper); padding: clamp(22px, 3vw, 40px) var(--pad); display: grid; gap: 6px; }
 .desk strong { font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: clamp(19px, 1.8vw, 28px); }
 .desk em { font-style: normal; color: var(--dim); font-size: 15px; }
+
+
+/* ---------- WhatsApp: one component, many contexts ---------- */
+.btn-wa, .nav-wa, .sheet-wa, .gantry-wa {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  font-weight: 680; white-space: nowrap;
+}
+.btn-wa {
+  background: var(--wa); color: #fff; border: 0; border-radius: var(--r-pill);
+  padding: 14px 24px; font-size: 15.5px; transition: background var(--t1) var(--out);
+}
+.btn-wa:hover { background: var(--wa-2); }
+.btn-wa.sm { padding: 10px 18px; font-size: 14.5px; }
+.nav-wa {
+  width: 40px; height: 40px; padding: 0; justify-content: center; flex: none;
+  border-radius: 50%; background: var(--wa); color: #fff;
+  transition: background var(--t1) var(--out);
+}
+.nav-wa:hover { background: var(--wa-2); }
+.nav-wa span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.sheet-wa { background: var(--wa); color: #fff; justify-content: center; border-radius: var(--r-sm); padding: 13px 14px; font-size: 17px; margin-top: 6px; }
+.gantry-alt {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px;
+  margin-top: 16px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,.32); font-size: 14.5px;
+}
+.gantry-alt > span { opacity: .85; }
+.gantry-wa { background: #fff; color: var(--wa-2); border-radius: var(--r-pill); padding: 9px 16px; font-size: 14px; }
+.gantry-call { color: #fff; text-decoration: underline; text-underline-offset: 3px; font-weight: 620; }
+.list-ask { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 14px; color: var(--dim); font-size: 14.5px; }
+.road-cta { margin-top: 14px; }
+.rb-wa { padding: 12px 18px; font-size: 14.5px; }
+
+/* ---------- destinations ---------- */
+.dests { padding: clamp(56px, 8vw, 120px) 0 clamp(30px, 4vw, 60px); border-top: 1px solid var(--line-2); }
+.dests-head { max-width: var(--shell); margin: 0 auto clamp(28px, 4vw, 56px); padding: 0 var(--pad); }
+.dests-head p { color: var(--dim); max-width: 62ch; margin-top: 12px; }
+.dest {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  max-width: var(--shell); margin: 0 auto; align-items: stretch;
+  border-top: 1px solid var(--line);
+}
+.dest:nth-child(even) > img { order: 2; }
+.dest > img { width: 100%; height: 100%; min-height: 340px; object-fit: cover; }
+.dest-body { padding: clamp(26px, 3.4vw, 56px) var(--pad); display: grid; align-content: center; gap: 10px; }
+.dest-name { font-stretch: 125%; font-weight: 850; text-transform: uppercase; font-size: clamp(26px, 3vw, 50px); line-height: .96; }
+.dest-region { color: var(--verde-t); font-size: 12.5px; text-transform: uppercase; letter-spacing: .1em; }
+.dest-note { color: var(--dim); max-width: 54ch; }
+.dest-facts { border-collapse: collapse; font-size: 13.5px; margin: 6px 0 4px; }
+.dest-facts td { border-top: 1px solid var(--line-2); padding: 9px 26px 9px 0; }
+@media (max-width: 900px) {
+  .dest { grid-template-columns: 1fr; }
+  .dest:nth-child(even) > img { order: 0; }
+  .dest > img { min-height: 220px; aspect-ratio: 16/10; height: auto; }
+}
+
+/* nav phone sits beside WhatsApp: wa.me dead-ends without the app */
+.nav-call {
+  width: 40px; height: 40px; display: grid; place-items: center; flex: none;
+  border: 1px solid var(--line-2); border-radius: 50%; color: var(--ink);
+  transition: border-color var(--t1) var(--out), color var(--t1) var(--out);
+}
+.nav-call:hover { border-color: var(--verde); color: var(--verde-t); }
+.foot-claim { color: #F4F2F0; font-weight: 640; font-size: 15px; margin-bottom: 14px; line-height: 1.45; }
+@media (max-width: 780px) { .nav-call { width: 36px; height: 36px; } .nav-wa { width: 36px; height: 36px; } }
