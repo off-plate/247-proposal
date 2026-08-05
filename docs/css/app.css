@@ -210,6 +210,7 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 
 /* roads teaser */
 .roadstease { position: relative; min-height: 68svh; display: grid; align-items: end; overflow: clip; }
+.dests { overflow: clip; }
 .roadstease > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .roadstease-copy {
   position: relative; z-index: 2; margin: 0 var(--pad) clamp(36px, 5vw, 72px);
@@ -485,6 +486,7 @@ body[data-page^="car-"] main { padding-bottom: 96px; }
 }
 .ram-h { font-stretch: 125%; font-weight: 850; text-transform: uppercase; font-size: clamp(30px, 3.6vw, 66px); line-height: .94; margin-bottom: 14px; }
 .ram-img { border-radius: var(--r); box-shadow: var(--e2); aspect-ratio: 4/4.6; object-fit: cover; width: 100%; }
+.road-amalfi, .road-stelvio { overflow: clip; }
 
 .road-stelvio {
   padding: clamp(40px, 7vw, 110px) var(--pad) clamp(60px, 8vw, 120px);
@@ -580,21 +582,73 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .foot-legal a { color: inherit; }
 @media (max-width: 900px) { .foot-top { grid-template-columns: 1fr; } }
 
-/* ---------- motion: only where supported, content visible without it ---------- */
+/* ================= motion =================
+   Two curves and three durations, nothing else. Every effect is additive: the
+   static layout is the design and motion only enhances it, so an unsupported
+   browser or a reduced-motion preference loses nothing but the movement.      */
+
+/* the one persistent element: the open light, already defined above */
+
 @media (prefers-reduced-motion: no-preference) {
+
+  /* --- page to page: the car carries across --- */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(stage-car), ::view-transition-new(stage-car) {
+    animation-duration: var(--t3); animation-timing-function: var(--out);
+  }
+  ::view-transition-old(root) { animation: fade-out var(--t1) var(--in) both; }
+  ::view-transition-new(root) { animation: fade-in var(--t2) var(--out) both; }
+  @keyframes fade-out { to { opacity: 0; } }
+  @keyframes fade-in { from { opacity: 0; } }
+
+  /* --- on load: the first screen arrives, it does not fade in from nothing --- */
+  .deck-h1 span { animation: rise var(--t3) var(--out) both; }
+  .deck-h1 span:nth-child(2) { animation-delay: 70ms; }
+  .deck-h1 span:nth-child(3) { animation-delay: 140ms; }
+  .deck-book { animation: rise var(--t3) var(--out) both; animation-delay: 210ms; }
+  .exitrail a { animation: rise var(--t2) var(--out) both; }
+  .exitrail a:nth-child(2) { animation-delay: 60ms; }
+  .exitrail a:nth-child(3) { animation-delay: 120ms; }
+  @keyframes rise { from { opacity: 0; translate: 0 18px; } to { opacity: 1; translate: 0 0; } }
+
+  /* --- hover: one gesture, used everywhere --- */
+  .lane-cars img, .sim-card img, .roadcar img { transition: translate var(--t2) var(--out); }
+  .lane:hover .lane-cars img, .sim-card:hover img, .roadcar:hover img { translate: 0 -4px; }
+  .row img { transition: translate var(--t2) var(--out), scale var(--t2) var(--out); }
+  .row:hover img { translate: 4px 0; scale: 1.04; }
+  .dest > img, .ram-img, .rst-img { transition: scale var(--t3) var(--out); }
+  .dest:hover > img { scale: 1.02; }
+  .btn-wa, .btn-verde, .reserve-cta, .gantry-go { transition: background var(--t1) var(--out), translate var(--t1) var(--out); }
+  .btn-wa:active, .btn-verde:active, .reserve-cta:active, .gantry-go:active { translate: 0 1px; }
+
+  /* --- scroll: reveals, gated because Firefox is still catching up --- */
   @supports (animation-timeline: view()) {
     .deck-car img { animation: drive-in linear both; animation-timeline: view(); animation-range: entry 0% cover 42%; }
     @keyframes drive-in { from { translate: -6% 0; } to { translate: 0 0; } }
+
     .flag-img { animation: flag-in linear both; animation-timeline: view(); animation-range: entry 0% cover 46%; }
     @keyframes flag-in { from { translate: 9% 0; } to { translate: 0 0; } }
-    .lane { animation: lane-in linear both; animation-timeline: view(); animation-range: entry 0% entry 82%; }
-    @keyframes lane-in { from { translate: 0 30px; } to { translate: 0 0; } }
+
+    .lane, .desk, .dest-body > *, .prom, .foot-col, .qa-item, .sim-card, .faq-group {
+      animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 70%;
+    }
+    @keyframes reveal { from { opacity: .001; translate: 0 26px; } to { opacity: 1; translate: 0 0; } }
+
+    /* photography settles rather than slides */
+    .dest > img, .roadstease > img, .ram-img, .rst-img, .ra1-img {
+      animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 55%;
+    }
+    @keyframes settle { from { scale: 1.06; } to { scale: 1; } }
+
     .rst-big { animation: big-in linear both; animation-timeline: view(); animation-range: entry 0% cover 60%; }
     @keyframes big-in { from { translate: 0 14%; } to { translate: 0 0; } }
+
+    /* the section headings wipe in from their own left edge */
+    .sec-h, .faq-gh, .foot-h { animation: wipe linear both; animation-timeline: view(); animation-range: entry 10% entry 80%; }
+    @keyframes wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
   }
-  @view-transition { navigation: auto; }
-  ::view-transition-old(stage-car), ::view-transition-new(stage-car) { animation-duration: var(--t3); animation-timing-function: var(--out); }
 }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -752,6 +806,7 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   border-top: 1px solid var(--line);
 }
 .dest:nth-child(even) > img { order: 2; }
+.dest { overflow: clip; }
 .dest > img { width: 100%; height: 100%; min-height: 340px; object-fit: cover; }
 .dest-body { padding: clamp(26px, 3.4vw, 56px) var(--pad); display: grid; align-content: center; gap: 10px; }
 .dest-name { font-stretch: 125%; font-weight: 850; text-transform: uppercase; font-size: clamp(26px, 3vw, 50px); line-height: .96; }
