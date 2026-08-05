@@ -5,6 +5,21 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const eur = n => `${Math.round(n).toLocaleString('en-IE')} €`;
 
+  /* ---------- FAQ deep links: open the accordion the hash points at ---------- */
+  const openFromHash = () => {
+    const id = location.hash.slice(1);
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (el && el.tagName === 'DETAILS' && !el.open) {
+      el.open = true;
+      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  };
+  if (document.querySelector('.qa-item')) {
+    openFromHash();
+    addEventListener('hashchange', openFromHash);
+  }
+
   /* ---------- mobile sheet ---------- */
   const burger = $('#burger'), sheet = $('#sheet');
   if (burger) burger.addEventListener('click', () => {
