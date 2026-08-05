@@ -58,11 +58,11 @@
     }
     const stageImg = $('#stage-img'), stageName = $('#stage-name'), stageMeta = $('#stage-meta'), stageView = $('#stage-view');
     const LANES = {
-      city: ['fiat-500', 'peugeot-208', 'vw-golf'],
-      family: ['skoda-octavia', 'skoda-kodiaq', 'vw-multivan'],
-      ev: ['megane-etech', 'tesla-model3'],
-      premium: ['bmw-5', 'mercedes-e'],
-      fun: ['mazda-mx5', 'porsche-911'],
+      city: ['golf-5', 'hyundai-accent', 'audi-a4'],
+      sedan: ['volkswagen-passat', 'mercedes-benz-c220', 'audi-a6'],
+      suv: ['hyundai-tucson', 'hyundai-santa-fe', 'hyundai-santa-fe-2016'],
+      coupe: ['audi-a5-2014', 'volkswagen-passat-cc', 'volkswagen-passat-cc-2014'],
+      premium: ['jaguar-xf'],
     };
     let cls = 'all', laneSet = null;
     if (location.hash) {
@@ -78,14 +78,14 @@
       items.sort((a, z) => (dir === 'asc' ? 1 : -1) * (+a.dataset[key] - +z.dataset[key]));
       items.forEach(el => {
         const ok = (laneSet ? laneSet.includes(el.dataset.slug) : (cls === 'all' || el.dataset.cls === cls)) &&
-          (!wantAuto || el.dataset.trans === 'auto') &&
+          (!wantAuto || el.dataset.trans === 'automatic') &&
           (!want5 || +el.dataset.seats >= 5);
         el.hidden = !ok;
         rows.appendChild(el);
       });
       const sel = $('.row.is-sel', rows);
       if (!sel || sel.hidden) {
-        const flag = items.find(el => !el.hidden && el.dataset.slug === 'porsche-911');
+        const flag = items.find(el => !el.hidden && el.dataset.slug === 'jaguar-xf');
         const first = flag || items.find(el => !el.hidden);
         if (first) select(first, false);
       }
@@ -166,7 +166,6 @@
 
     const carOf = () => FLEET.find(c => c.slug === b.car);
     const locOf = id => SITE.locations.find(l => l.id === id);
-    const isPrestige = () => carOf()?.cls === 'prestige';
 
     const price = () => {
       const c = carOf(), n = days(b);
@@ -252,11 +251,9 @@
       const n = days(b);
       $('#days-chip').textContent = n > 0 ? `${n} day${n > 1 ? 's' : ''}` : '–';
       const note = $('#season-note');
-      if (b.from) {
-        const m = new Date(b.from).getMonth() + 1;
-        note.textContent = SITE.season.peakMonths.includes(m) ? 'High season: mainstream classes +35 percent, Prestige +20.'
-          : SITE.season.lowMonths.includes(m) ? 'Low season: 25 percent off every class.' : 'Shoulder season: listed prices apply.';
-      }
+      if (note && n > 0) note.textContent = n >= 7
+        ? 'Rentals of a week or more are usually quoted below the daily rate. Ask the office.'
+        : 'Estimate is the published daily rate multiplied by your days.';
       paintPicks(); paint();
     };
     df.addEventListener('change', dateChange); dt.addEventListener('change', dateChange);
@@ -267,11 +264,9 @@
       const n = days(b);
       $$('.pick').forEach(p => {
         p.classList.toggle('is-on', p.dataset.slug === b.car);
-        const prestige = p.dataset.cls === 'prestige';
-        p.classList.toggle('is-blocked', !!b.young && prestige);
         const el = $('.pick-total', p);
         if (n > 0) {
-          const perDay = Math.round(+p.dataset.price * seasonMult(b, prestige));
+          const perDay = +p.dataset.price;
           const total = n >= 7 ? perDay * SITE.week * Math.floor(n / 7) + perDay * (n % 7) : perDay * n;
           el.textContent = `${eur(total)} for ${n} day${n > 1 ? 's' : ''}${n >= 7 ? ', 7th day free' : ''}`;
         } else el.textContent = `${eur(+p.dataset.price)}/day`;
@@ -288,46 +283,6 @@
     });
 
     /* step 3: extras */
-    const paintExtras = () => {
-      const prestige = isPrestige();
-      $$('.extra input[data-extra]').forEach(i => {
-        i.checked = b.extras.includes(i.dataset.extra);
-        if (i.dataset.extra === 'border') {
-          i.disabled = prestige;
-          if (prestige && i.checked) { i.checked = false; b.extras = b.extras.filter(id => id !== 'border'); }
-        }
-        const priceEl = $('.extra-price', i.closest('.extra'));
-        if (priceEl && priceEl.dataset.dayp) {
-          const day = prestige ? +priceEl.dataset.dayp : +priceEl.dataset.day;
-          priceEl.textContent = `${eur(day)}/day${priceEl.dataset.cap ? ', max ' + eur(+priceEl.dataset.cap) : ''}`;
-        }
-      });
-      const sn = $('#seat-n'); if (sn) sn.textContent = b.seatQty || 0;
-      const yg = $('#young');
-      if (yg) {
-        yg.disabled = prestige;
-        if (prestige && (yg.checked || b.young)) { yg.checked = false; b.young = false; }
-      }
-      const warn = $('#young-warn');
-      if (warn) warn.hidden = !prestige;
-      if (warn && prestige) warn.textContent = 'Under-25 drivers cannot take the 911: it needs 28 and three years of licence.';
-    };
-    $$('.extra input[data-extra]').forEach(i => {
-      i.addEventListener('change', () => {
-        b.extras = $$('.extra input[data-extra]').filter(x => x.checked).map(x => x.dataset.extra);
-        paintExtras(); paint();
-      });
-    });
-    $$('.step-btn').forEach(btn => btn.addEventListener('click', () => {
-      b.seatQty = Math.max(0, Math.min(3, (b.seatQty || 0) + (+btn.dataset.seat)));
-      paintExtras(); paint();
-    }));
-    $('#young').addEventListener('change', e => {
-      b.young = e.target.checked;
-      paintExtras(); paintPicks(); paint();
-    });
-    $('#young').checked = !!b.young;
-
     /* nav */
     $('#back').addEventListener('click', () => { step = Math.max(0, step - 1); paint(); });
     $('#next').addEventListener('click', () => {

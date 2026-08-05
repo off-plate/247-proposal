@@ -100,7 +100,7 @@ ${nav()}
     <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Open now</span></p>
     <form action="book.html" method="get" class="gantry-form">
       <label class="gfield"><span class="sign">Where</span>
-        <select name="loc" required>${site.locations.map(l => `<option value="${l.id}">${l.label}${l.airport ? ' (+' + site.airport_fee + ' €)' : ''}</option>`).join('')}</select>
+        <select name="loc" required>${site.locations.map(l => `<option value="${l.id}">${l.label}${l.airport ? ' · airport' : ''}</option>`).join('')}</select>
       </label>
       <div class="gfield gdates"><span class="sign">When</span>
         <span class="gdates-in"><input type="date" name="from" aria-label="Pickup date"><span class="garrow" aria-hidden="true">→</span><input type="date" name="to" aria-label="Return date"></span>
@@ -118,16 +118,16 @@ ${nav()}
 
 <section class="flagstrip" aria-label="The flagship">
   <div class="flag-copy">
-    <p class="flag-name">${FLAG.name}</p>
-    <p class="flag-note">${FLAG.note}</p>
+    <p class="flag-name">The 03:40 arrival</p>
+    <p class="flag-note">Most Tirana flights land at hours other desks are shut. That is the whole point of the name: a car, a person, and a key, at any hour on the clock.</p>
     <div class="flag-stats">
-      <div><strong>${FLAG.year}</strong><span class="sign">Year</span></div>
-      <div><strong>${FLAG.engine.toFixed(1)} L</strong><span class="sign">${FLAG.fuel}</span></div>
-      <div><strong>${eur(FLAG.price)}</strong><span class="sign">per day</span></div>
+      <div><strong>24/7</strong><span class="sign">Both offices</span></div>
+      <div><strong>${fleet.filter(c => c.gear === 'automatic').length}/${fleet.length}</strong><span class="sign">Automatic</span></div>
+      <div><strong>${eur(CHEAP.price)}</strong><span class="sign">From, per day</span></div>
     </div>
-    <a class="flag-cta" href="car-${FLAG.slug}.html">See this car <span aria-hidden="true">→</span></a>
+    <a class="flag-cta" href="fleet.html">See all ${fleet.length} cars <span aria-hidden="true">→</span></a>
   </div>
-  <img class="flag-img" src="img/cars/${FLAG.slug}.webp" alt="${FLAG.name}" loading="lazy" width="1400" height="700">
+  <img class="flag-img" src="img/cars/mercedes-benz-c220.webp" alt="Mercedes-Benz C220, one of the airport cars" loading="lazy" width="1400" height="700">
 </section>
 
 <section class="lanes" aria-label="Fleet by lane">
@@ -136,7 +136,7 @@ ${nav()}
     { cls: 'city', label: 'Cheapest keys', cars: ['golf-5', 'hyundai-accent', 'audi-a4'] },
     { cls: 'sedan', label: 'Sedans', cars: ['volkswagen-passat', 'mercedes-benz-c220', 'audi-a6'] },
     { cls: 'suv', label: 'Seven seats and high up', cars: ['hyundai-tucson', 'hyundai-santa-fe', 'hyundai-santa-fe-2016'] },
-    { cls: 'coupe', label: 'Coupé and cabrio', cars: ['audi-a5-2014', 'volkswagen-passat-cc', 'golf-6-cabrio'] },
+    { cls: 'coupe', label: 'Coupé and cabrio', cars: ['audi-a5-2014', 'volkswagen-passat-cc', 'volkswagen-passat-cc-2014'] },
     { cls: 'premium', label: 'The good one', cars: ['jaguar-xf'] },
   ].map((lane, i) => {
     const cars = lane.cars.map(s => fleet.find(c => c.slug === s));
@@ -196,7 +196,7 @@ ${nav('fleet')}
       </div>
     </div>
     <ol class="rows" id="rows">
-      ${fleet.map(c => `<li class="row${c.flagship ? ' is-flag' : ''}" data-slug="${c.slug}" data-cls="${c.cls}" data-price="${c.price}" data-power="${c.power}" data-trans="${c.trans}" data-seats="${c.seats}" data-name="${c.name}" data-meta="${c.clsLabel.split(' ·')[0]} · ${c.trans} · ${c.seats}&nbsp;seats · ${c.boot}&nbsp;L boot">
+      ${fleet.map(c => `<li class="row${c.flagship ? ' is-flag' : ''}" data-slug="${c.slug}" data-cls="${c.cls}" data-price="${c.price}" data-power="${c.power}" data-trans="${c.gear}" data-seats="${c.seats}" data-name="${c.name}" data-meta="${c.clsLabel.split(' ·')[0]} · ${c.trans} · ${c.seats}&nbsp;seats · ${c.boot}&nbsp;L boot">
         <img src="img/cars/${c.slug}-s.webp" alt="" loading="lazy" width="640" height="337">
         <span class="row-nm">${c.name}<em>${c.clsLabel.split(' ·')[0]} · ${c.trans} · ${c.seats}&nbsp;seats · ${c.boot}&nbsp;L boot</em></span>
         <span class="row-price mono">${eur(c.price)}<em>/day</em></span>
@@ -285,7 +285,7 @@ ${nav()}
     <section class="step" data-step="2" aria-label="Car" hidden>
       <h1 class="step-h">Which car exactly?</h1>
       <div class="pickrail" id="pickrail">
-        ${fleet.map(c => `<button class="pick" data-slug="${c.slug}" data-price="${c.price}" data-cls="${c.cls}" data-name="${c.name}" data-deposit="${c.deposit}">
+        ${fleet.map(c => `<button class="pick" data-slug="${c.slug}" data-price="${c.price}" data-cls="${c.cls}" data-name="${c.name}">
           <img src="img/cars/${c.slug}-s.webp" alt="" loading="lazy"><strong>${c.name}</strong>
           <span class="mono pick-total" data-base="${c.price}">${eur(c.price)}/day</span></button>`).join('')}
       </div>
