@@ -774,7 +774,9 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   display: flex; align-items: baseline; gap: 16px;
 }
 .faq-gh .mono { color: var(--verde-t); font-size: .42em; letter-spacing: .06em; }
-.faq-list { border-top: 1px solid var(--line-2); display: grid; grid-template-columns: 1fr; }
+.faq-cols { display: grid; grid-template-columns: 1fr; gap: 0 clamp(36px, 5vw, 110px); align-items: start; }
+@media (min-width: 900px) { .faq-cols { grid-template-columns: 1fr 1fr; } }
+.faq-list { border-top: 1px solid var(--line-2); display: block; }
 .qa-item { border-bottom: 1px solid var(--line); }
 .qa-item summary {
   list-style: none; cursor: pointer; display: flex; align-items: center; gap: 24px;
@@ -782,8 +784,8 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 }
 .qa-item summary::-webkit-details-marker { display: none; }
 .qa-q {
-  flex: 1; font-weight: 680; font-size: clamp(16.5px, 1.5vw, 22px); line-height: 1.35;
-  max-width: 62ch; transition: color var(--t1) var(--out);
+  flex: 1; font-weight: 680; font-size: clamp(16.5px, 1.25vw, 19.5px); line-height: 1.35;
+  transition: color var(--t1) var(--out);
 }
 .qa-item summary:hover .qa-q { color: var(--verde-t); }
 .qa-item summary:focus-visible { outline: 2.5px solid var(--verde-t); outline-offset: 3px; border-radius: 4px; }
@@ -800,7 +802,7 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .qa-item[open] .qa-q { color: var(--verde-t); }
 
 .qa-a { padding-bottom: clamp(18px, 2vw, 28px); }
-.qa-a p { color: var(--dim); max-width: 78ch; font-size: clamp(15.5px, 1.25vw, 17.5px); }
+.qa-a p { color: var(--dim); font-size: clamp(15px, 1.1vw, 16.5px); }
 
 /* the browser already collapses a closed details. only the reveal is styled. */
 @media (prefers-reduced-motion: no-preference) {

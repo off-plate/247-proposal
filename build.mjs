@@ -539,11 +539,13 @@ ${nav('faq')}
   ${site.faqGroups.map((g, gi) => `
   <section class="faq-group" id="${g.id}">
     <h2 class="faq-gh"><span class="mono">${String(gi + 1).padStart(2, '0')}</span>${g.g}</h2>
-    <div class="faq-list">
-      ${g.q.map((f, i) => `<details class="qa-item" id="${g.id}-${i + 1}"${gi === 0 && i === 0 ? ' open' : ''}>
-        <summary><span class="qa-q">${f.q}</span><span class="qa-mark" aria-hidden="true"></span></summary>
-        <div class="qa-a"><p>${f.a}</p></div>
-      </details>`).join('')}
+    <div class="faq-cols">
+      ${[0, 1].map(col => `<div class="faq-list">
+        ${g.q.map((f, i) => ({ f, i })).filter(({ i }) => (i < Math.ceil(g.q.length / 2)) === (col === 0)).map(({ f, i }) => `<details class="qa-item" id="${g.id}-${i + 1}"${gi === 0 && i === 0 ? ' open' : ''}>
+          <summary><span class="qa-q">${f.q}</span><span class="qa-mark" aria-hidden="true"></span></summary>
+          <div class="qa-a"><p>${f.a}</p></div>
+        </details>`).join('')}
+      </div>`).join('')}
     </div>
   </section>`).join('')}
 
