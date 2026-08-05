@@ -36,6 +36,16 @@ python3 ../Jarvis/.claude/design/slop-lint.py docs
 - **No rating anywhere.** They declare none in schema and Google was not reachable to
   verify one. An unverified rating is not going on a client proposal.
 
+## Light only
+
+The theme system is removed, not hidden: no toggle, no `data-theme`, no
+`prefers-color-scheme` block, no theme JavaScript, `color-scheme: light only`.
+`tools/audit.mjs` is pinned to light so a future run cannot silently pass a dead theme.
+
+The ink surfaces stay: the flagship band and the footer departure board are dark by
+design, not by theme. That is why `img/logo-dark.webp` still exists and is still correct.
+It is the reversed mark for those dark bands, used on all 25 pages. Do not delete it.
+
 ## What is deliberately different from AUTOSOLE
 
 - Booking is an **enquiry**, not a payment funnel: Where, When, Car, You, Send. It ends by
@@ -49,21 +59,26 @@ python3 ../Jarvis/.claude/design/slop-lint.py docs
 
 ## Client questions (never invented, ask before launch)
 
-1. Deposit: amount, and is it cash or a card hold?
-2. Minimum age and minimum licence years?
-3. What exactly does the basic insurance cover, and what is the excess?
-4. Cross-border into Kosovo, Montenegro, Greece: allowed, and at what cost?
-5. Is there a real weekly or monthly discount, and what is it?
-6. Delivery outside Tirana: offered, and priced how?
-7. Mileage: genuinely unlimited?
-8. Cancellation terms?
-9. Should the duplicate unpriced Hyundai Accent listing be deleted or priced?
-10. Do they want a real booking system, or is WhatsApp genuinely their preferred channel?
+1. **Three car photos need reshooting.** The Audi A4 listing shows a close-up of the
+   steering wheel, not the car. The Golf 6 Cabrio shows the interior. The Passat CC 2014
+   is a dark night shot with the headlights on. Every other car has a usable exterior
+   photo. One afternoon with a phone, all 19 cars, same angle and same background, would
+   lift the whole site more than any code change.
+2. Deposit: amount, and is it cash or a card hold?
+3. Minimum age and minimum licence years?
+4. What exactly does the basic insurance cover, and what is the excess?
+5. Cross-border into Kosovo, Montenegro, Greece: allowed, and at what cost?
+6. Is there a real weekly or monthly discount, and what is it?
+7. Delivery outside Tirana: offered, and priced how?
+8. Mileage: genuinely unlimited?
+9. Cancellation terms?
+10. Should the duplicate unpriced Hyundai Accent listing be deleted or priced?
+11. Do they want a real booking system, or is WhatsApp genuinely their preferred channel?
 
 ## Not done yet
 
 - Albanian and Italian translations. Their market is inbound tourism plus locals; English
   only is a real gap for a proposal aimed at Albania.
-- The Golf 6 Cabrio has no clean cut-out (Vision found no subject), so it is kept off the
-  cut-out strips and shown as a flat photo on its own page.
+- The Golf 6 Cabrio has no clean cut-out because its source photo is an interior shot, so
+  it is kept off the cut-out strips and shown flat on its own page. Fixed by a reshoot.
 - Critic panel round has not been run on this build.

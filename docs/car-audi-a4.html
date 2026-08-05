@@ -17,14 +17,12 @@
 <link rel="preload" href="fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/martian-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/app.css">
-<script>try{if(location.hash==='#dark'){document.documentElement.dataset.theme='dark'}else{const t=localStorage.getItem('as-theme');if(t)document.documentElement.dataset.theme=t}}catch(e){}</script>
 </head>
 <body data-page="car-audi-a4">
 
 <nav class="pillnav" aria-label="Main">
   <a class="brand" href="index.html" aria-label="24/7 Car Rental, home">
-    <img class="brand-logo light" src="img/logo-s.webp" alt="" width="280" height="145" fetchpriority="high">
-    <img class="brand-logo dark" src="img/logo-dark-s.webp" alt="" width="280" height="145">
+    <img class="brand-logo" src="img/logo-s.webp" alt="" width="280" height="145" fetchpriority="high">
   </a>
   <div class="pillnav-links">
     <a href="fleet.html" aria-current="page">Fleet</a>
@@ -32,7 +30,6 @@
     <a href="company.html">Company</a>
   </div>
   <div class="pillnav-tools">
-    <button class="themebtn" id="themebtn" aria-label="Switch theme"><span class="tb-dot"></span></button>
     <a class="reserve-cta" href="book.html">Book</a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   </div>

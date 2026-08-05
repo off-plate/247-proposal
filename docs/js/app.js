@@ -5,16 +5,6 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const eur = n => `${Math.round(n).toLocaleString('en-IE')} €`;
 
-  /* ---------- theme ---------- */
-  const themebtn = $('#themebtn');
-  if (themebtn) themebtn.addEventListener('click', () => {
-    const cur = document.documentElement.dataset.theme ||
-      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    try { localStorage.setItem('t247-theme', next); } catch {}
-  });
-
   /* ---------- mobile sheet ---------- */
   const burger = $('#burger'), sheet = $('#sheet');
   if (burger) burger.addEventListener('click', () => {
