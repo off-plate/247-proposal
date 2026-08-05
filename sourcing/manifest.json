@@ -1,0 +1,21 @@
+{
+ "audi-a3-2014": 1.46,
+ "audi-a3-2015": 1.53,
+ "audi-a4-2014": 1.65,
+ "audi-a4": 0.94,
+ "audi-a5-2014": 1.35,
+ "audi-a6": 2.29,
+ "golf-5": 2.14,
+ "hyundai-accent": 2.23,
+ "hyundai-santa-fe-2016": 1.18,
+ "hyundai-santa-fe": 1.72,
+ "hyundai-tucson": 1.51,
+ "jaguar-xf": 2.22,
+ "mercedes-benz-c220": 1.4,
+ "volkswagen-golf-7": 1.44,
+ "volkswagen-passat-cc-2014": 1.43,
+ "volkswagen-passat-cc": 1.18,
+ "volkswagen-passat-sel-2014": 1.27,
+ "volkswagen-passat": 1.37,
+ "golf-6-cabrio": "photo"
+}

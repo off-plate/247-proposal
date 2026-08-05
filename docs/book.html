@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book a car. Four questions, then a human</title>
+<meta name="description" content="Pick up at Tirana airport or the city office, choose your car and dates, and send it. You get a written confirmation the same day, usually within the hour.">
+<link rel="canonical" href="https://off-plate.github.io/247-proposal/book.html">
+<meta property="og:title" content="Book a car. Four questions, then a human">
+<meta property="og:description" content="Pick up at Tirana airport or the city office, choose your car and dates, and send it. You get a written confirmation the same day, usually within the hour.">
+<meta property="og:image" content="https://off-plate.github.io/247-proposal/img/cars/porsche-911.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'12'%20fill%3D'%2523077E4C'%2F%3E%3Crect%20x%3D'6'%20y%3D'6'%20width%3D'52'%20height%3D'52'%20rx%3D'8'%20fill%3D'none'%20stroke%3D'white'%20stroke-width%3D'2.5'%2F%3E%3Ctext%20x%3D'32'%20y%3D'44'%20font-family%3D'Arial%20Black%2Csans-serif'%20font-size%3D'34'%20font-weight%3D'900'%20fill%3D'white'%20text-anchor%3D'middle'%3EA%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preload" href="fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/martian-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css">
+<script>try{if(location.hash==='#dark'){document.documentElement.dataset.theme='dark'}else{const t=localStorage.getItem('as-theme');if(t)document.documentElement.dataset.theme=t}}catch(e){}</script>
+</head>
+<body data-page="book">
+
+<nav class="pillnav" aria-label="Main">
+  <a class="brand" href="index.html">24/7</a>
+  <div class="pillnav-links">
+    <a href="fleet.html">Fleet</a>
+    <a href="roads.html">Roads</a>
+    <a href="company.html">Company</a>
+  </div>
+  <div class="pillnav-tools">
+    <button class="themebtn" id="themebtn" aria-label="Switch theme"><span class="tb-dot"></span></button>
+    <a class="reserve-cta" href="book.html">Book</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</nav>
+<div class="sheet" id="sheet" hidden>
+  <a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="company.html">Company</a><a href="book.html" class="sheet-go">Reserve →</a>
+</div>
+<main class="bookwrap">
+  <ol class="chiprail" id="chiprail" aria-label="Progress">
+    <li class="pchip is-now" data-step="0"><span class="gchip">A1</span>Where</li><li class="pchip" data-step="1"><span class="gchip">A2</span>When</li><li class="pchip" data-step="2"><span class="gchip">A3</span>Car</li><li class="pchip" data-step="3"><span class="gchip">A4</span>You</li><li class="pchip" data-step="4"><span class="gchip">A5</span>Send</li>
+  </ol>
+  <div class="bookgrid">
+    <section class="step is-now" data-step="0" aria-label="Where">
+      <h1 class="step-h">Where do you collect?</h1>
+      <div class="locgrid" id="locgrid">
+        <button class="loc" data-loc="tia"><strong>Tirana International Airport</strong><span class="sign">Nënë Tereza, arrivals hall</span><span class="openlight">Open now</span></button><button class="loc" data-loc="cty"><strong>Rruga Njazi Meka, Tiranë</strong><span class="sign">City office</span><span class="openlight">Open now</span></button>
+      </div>
+      <label class="dfield flight" id="flight-wrap" hidden><span class="sign">Flight number, so the car waits if you land late</span><input type="text" id="flight" placeholder="W6 3021" autocomplete="off"></label>
+      <label class="tog oneway"><input type="checkbox" id="oneway"> Return to the other location <em id="oneway-note" hidden>no extra charge, they are ten minutes apart</em></label>
+      <div class="locgrid" id="locgrid2" hidden></div>
+    </section>
+
+    <section class="step" data-step="1" aria-label="Dates" hidden>
+      <h1 class="step-h">Which dates?</h1>
+      <div class="dategrid">
+        <label class="dfield"><span class="sign">Pickup</span><input type="date" id="d-from"><select id="t-from"><option>06:00</option><option>06:30</option><option>07:00</option><option>07:30</option><option>08:00</option><option>08:30</option><option>09:00</option><option>09:30</option><option selected>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option><option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option><option>22:30</option><option>23:00</option><option>23:30</option></select></label>
+        <span class="garrow big" aria-hidden="true">→</span>
+        <label class="dfield"><span class="sign">Return</span><input type="date" id="d-to"><select id="t-to"><option>06:00</option><option>06:30</option><option>07:00</option><option>07:30</option><option>08:00</option><option>08:30</option><option>09:00</option><option>09:30</option><option selected>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option><option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option><option>22:30</option><option>23:00</option><option>23:30</option></select></label>
+      </div>
+      <p class="daysline"><span class="mono" id="days-chip">–</span><span id="season-note"></span></p>
+    </section>
+
+    <section class="step" data-step="2" aria-label="Car" hidden>
+      <h1 class="step-h">Which car exactly?</h1>
+      <div class="pickrail" id="pickrail">
+        <button class="pick" data-slug="golf-5" data-price="30" data-cls="city" data-name="Golf 5" data-deposit="undefined">
+          <img src="img/cars/golf-5-s.webp" alt="" loading="lazy"><strong>Golf 5</strong>
+          <span class="mono pick-total" data-base="30">30 €/day</span></button><button class="pick" data-slug="hyundai-accent" data-price="35" data-cls="city" data-name="Hyundai Accent" data-deposit="undefined">
+          <img src="img/cars/hyundai-accent-s.webp" alt="" loading="lazy"><strong>Hyundai Accent</strong>
+          <span class="mono pick-total" data-base="35">35 €/day</span></button><button class="pick" data-slug="audi-a3-2014" data-price="40" data-cls="compact" data-name="Audi A3 2014" data-deposit="undefined">
+          <img src="img/cars/audi-a3-2014-s.webp" alt="" loading="lazy"><strong>Audi A3 2014</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat-sel-2014" data-price="40" data-cls="sedan" data-name="Volkswagen Passat Sel 2014" data-deposit="undefined">
+          <img src="img/cars/volkswagen-passat-sel-2014-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat Sel 2014</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a3-2015" data-price="40" data-cls="compact" data-name="Audi A3 2015" data-deposit="undefined">
+          <img src="img/cars/audi-a3-2015-s.webp" alt="" loading="lazy"><strong>Audi A3 2015</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a4-2014" data-price="40" data-cls="sedan" data-name="Audi A4 2014" data-deposit="undefined">
+          <img src="img/cars/audi-a4-2014-s.webp" alt="" loading="lazy"><strong>Audi A4 2014</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat-cc-2014" data-price="40" data-cls="coupe" data-name="Volkswagen Passat CC 2014" data-deposit="undefined">
+          <img src="img/cars/volkswagen-passat-cc-2014-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat CC 2014</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a4" data-price="40" data-cls="sedan" data-name="Audi A4" data-deposit="undefined">
+          <img src="img/cars/audi-a4-s.webp" alt="" loading="lazy"><strong>Audi A4</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat" data-price="40" data-cls="sedan" data-name="Volkswagen Passat" data-deposit="undefined">
+          <img src="img/cars/volkswagen-passat-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat-cc" data-price="40" data-cls="coupe" data-name="Volkswagen Passat CC 2012" data-deposit="undefined">
+          <img src="img/cars/volkswagen-passat-cc-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat CC 2012</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a6" data-price="40" data-cls="sedan" data-name="Audi A6" data-deposit="undefined">
+          <img src="img/cars/audi-a6-s.webp" alt="" loading="lazy"><strong>Audi A6</strong>
+          <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-golf-7" data-price="45" data-cls="compact" data-name="VW Golf VII" data-deposit="undefined">
+          <img src="img/cars/volkswagen-golf-7-s.webp" alt="" loading="lazy"><strong>VW Golf VII</strong>
+          <span class="mono pick-total" data-base="45">45 €/day</span></button><button class="pick" data-slug="mercedes-benz-c220" data-price="45" data-cls="sedan" data-name="Mercedes Benz c220" data-deposit="undefined">
+          <img src="img/cars/mercedes-benz-c220-s.webp" alt="" loading="lazy"><strong>Mercedes Benz c220</strong>
+          <span class="mono pick-total" data-base="45">45 €/day</span></button><button class="pick" data-slug="golf-6-cabrio" data-price="45" data-cls="coupe" data-name="Golf 6 Cabrio" data-deposit="undefined">
+          <img src="img/cars/golf-6-cabrio-s.webp" alt="" loading="lazy"><strong>Golf 6 Cabrio</strong>
+          <span class="mono pick-total" data-base="45">45 €/day</span></button><button class="pick" data-slug="audi-a5-2014" data-price="50" data-cls="coupe" data-name="Audi A5 2014" data-deposit="undefined">
+          <img src="img/cars/audi-a5-2014-s.webp" alt="" loading="lazy"><strong>Audi A5 2014</strong>
+          <span class="mono pick-total" data-base="50">50 €/day</span></button><button class="pick" data-slug="hyundai-tucson" data-price="50" data-cls="suv" data-name="Hyundai Tucson" data-deposit="undefined">
+          <img src="img/cars/hyundai-tucson-s.webp" alt="" loading="lazy"><strong>Hyundai Tucson</strong>
+          <span class="mono pick-total" data-base="50">50 €/day</span></button><button class="pick" data-slug="hyundai-santa-fe-2016" data-price="60" data-cls="suv" data-name="Hyundai Santa Fe 2016" data-deposit="undefined">
+          <img src="img/cars/hyundai-santa-fe-2016-s.webp" alt="" loading="lazy"><strong>Hyundai Santa Fe 2016</strong>
+          <span class="mono pick-total" data-base="60">60 €/day</span></button><button class="pick" data-slug="hyundai-santa-fe" data-price="60" data-cls="suv" data-name="Hyundai Santa Fe" data-deposit="undefined">
+          <img src="img/cars/hyundai-santa-fe-s.webp" alt="" loading="lazy"><strong>Hyundai Santa Fe</strong>
+          <span class="mono pick-total" data-base="60">60 €/day</span></button><button class="pick" data-slug="jaguar-xf" data-price="65" data-cls="premium" data-name="Jaguar XF" data-deposit="undefined">
+          <img src="img/cars/jaguar-xf-s.webp" alt="" loading="lazy"><strong>Jaguar XF</strong>
+          <span class="mono pick-total" data-base="65">65 €/day</span></button>
+      </div>
+    </section>
+
+    <section class="step" data-step="3" aria-label="You" hidden>
+      <h1 class="step-h">Who is driving?</h1>
+      <div class="drv">
+        <label class="dfield full"><span class="sign">Name</span><input type="text" id="drv-name" autocomplete="name" placeholder="As printed on the licence"></label>
+        <label class="dfield"><span class="sign">Email</span><input type="email" id="drv-mail" autocomplete="email" placeholder="you@somewhere.com"></label>
+        <label class="dfield"><span class="sign">Phone or WhatsApp</span><input type="tel" id="drv-tel" autocomplete="tel" placeholder="+44"></label>
+        <label class="dfield full"><span class="sign">Anything we should know</span><input type="text" id="drv-note" placeholder="Child seat, second driver, crossing a border"></label>
+        <p class="drv-note">No card, no deposit taken online. This sends your request to the office and a person confirms it, in writing, the same day.</p>
+      </div>
+    </section>
+
+    <section class="step" data-step="4" aria-label="Send" hidden>
+      <div class="gantry doneboard" id="doneboard">
+        <p class="gantry-top"><span class="gchip">24/7</span><span class="openlight">Request ready</span></p>
+        <p class="done-ref mono" id="done-ref"></p>
+        <table class="done-t mono" id="done-t"></table>
+        <div class="done-send">
+          <a class="gantry-go" id="send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp <span aria-hidden="true">→</span></a>
+          <a class="btn-paper" id="send-call" href="tel:+355685000700">Or call now</a>
+        </div>
+        <p class="done-note">This demo opens WhatsApp with the details filled in. Nothing is charged and no card is taken. On the live site this would also drop an email into the office inbox.</p>
+      </div>
+    </section>
+
+    <aside class="gantry sumboard" aria-label="Your reservation so far">
+      <p class="gantry-top"><span class="gchip">Σ</span><span class="sign">Your request</span></p>
+      <table class="sum-t mono" id="sum-t">
+        <tr data-k="loc"><td>ROUTE</td><td>choose</td></tr>
+        <tr data-k="dates"><td>DATES</td><td>–</td></tr>
+        <tr data-k="car"><td>CAR</td><td>–</td></tr>
+        <tr data-k="days"><td>DAYS</td><td>not set</td></tr>
+        <tr data-k="total" class="sum-total"><td>ESTIMATE</td><td>0 €</td></tr>
+      </table>
+    </aside>
+  </div>
+  <div class="stepnav">
+    <button class="btn-paper" id="back" hidden>← Back</button>
+    <button class="btn-verde" id="next" disabled>Continue <span aria-hidden="true">→</span></button>
+  </div>
+</main>
+
+<footer class="board" id="board">
+  <div class="board-in">
+    <p class="board-brand">24/7</p>
+    <div class="board-grid">
+      <table class="board-t">
+        <tr><td><a href="fleet.html">FLEET</a></td><td>19 CARS</td><td class="ok">18 AUTOMATIC</td></tr>
+        <tr><td><a href="roads.html">ROADS</a></td><td>3 ROUTES</td><td class="ok">RIVIERA · NORTH · SOUTH</td></tr>
+        <tr><td><a href="company.html">ANSWERS</a></td><td>8 QUESTIONS</td><td class="ok">NO SMALL PRINT</td></tr>
+        <tr><td><a href="book.html">BOOK</a></td><td>WHATSAPP OR PHONE</td><td class="ok" id="board-book">REPLY SAME DAY</td></tr>
+      </table>
+      <table class="board-t">
+        <tr><td>AIRPORT</td><td>TIRANA INTERNATIONAL</td><td class="ok"><span class="openlight">OPEN NOW</span></td></tr>
+        <tr><td>CITY</td><td>RRUGA NJAZI MEKA</td><td class="ok"><span class="openlight">OPEN NOW</span></td></tr>
+        <tr><td>PHONE</td><td><a href="tel:+355685000700">+355 68 500 0700</a></td><td class="ok">ANSWERED 24/7</td></tr>
+        <tr><td>EMAIL</td><td><a href="mailto:info@24-7rentalcar.com">info@24-7rentalcar.com</a></td><td class="ok">SAME DAY</td></tr>
+      </table>
+    </div>
+    <div class="board-meta">
+      <p>Rruga Njazi Meka, Tiranë and Tirana International Airport. Instagram @24_7carrental and @247.car.rental.</p>
+      <p><a href="company.html#colophon">This is a redesign proposal for 24/7 Car Rental, built by Off-Plate</a>. Cars, prices and details are the real ones from 24-7rentalcar.com.</p>
+    </div>
+  </div>
+</footer>
+<script src="js/fleet-data.js" defer></script>
+<script src="js/app.js" defer></script>
+</body></html>

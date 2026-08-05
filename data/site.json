@@ -1,0 +1,52 @@
+{
+  "brand": "24/7",
+  "brandFull": "24/7 Car Rental",
+  "base": "https://off-plate.github.io/247-proposal",
+  "phone": "+355 68 500 0700",
+  "tel": "+355685000700",
+  "wa": "355685000700",
+  "email": "info@24-7rentalcar.com",
+  "instagram": ["24_7carrental", "247.car.rental"],
+  "hours": "24 hours, Monday to Sunday",
+  "locations": [
+    {"id": "tia", "label": "Tirana International Airport", "sub": "Nënë Tereza, arrivals hall", "airport": true},
+    {"id": "cty", "label": "Rruga Njazi Meka, Tiranë", "sub": "City office", "airport": false}
+  ],
+  "promises": [
+    {"t": "Actually 24 hours", "d": "A 03:40 landing is a normal pickup time here, not a problem to solve at the desk. The name is the opening hours, not a slogan."},
+    {"t": "The car in the photo", "d": "Nineteen cars, each one photographed and priced on its own page. You book that car, not a category with 'or similar' printed next to it."},
+    {"t": "Airport or city, same key", "d": "Collect at arrivals, drop in town. Two locations, ten minutes apart, no fee for using both."},
+    {"t": "Automatic as standard", "d": "Eighteen of nineteen cars are automatic, which matters on Albanian mountain roads more than anywhere you have driven before."},
+    {"t": "A person on the phone", "d": "One number, answered by someone in Tirana who can move a car. Not a queue, not a chatbot."}
+  ],
+  "faq": [
+    {"q": "Are you really open at 4am?", "a": "Yes. Airport pickups run around the clock, seven days, including the night flights from Istanbul and Rome. Tell us the flight number and the car is there when you clear customs."},
+    {"q": "Which licence do I need?", "a": "An EU, UK or US licence is accepted as it is. Licences in other alphabets should come with an International Driving Permit. Bring the physical card, a photo of it is not enough at the desk."},
+    {"q": "Can I take the car to Kosovo, Montenegro or Greece?", "a": "Cross-border travel is arranged case by case and needs the green card insurance document prepared in advance. Ask when you book, not on the day."},
+    {"q": "Is the price per day the final price?", "a": "The daily rate covers the car, basic insurance and unlimited kilometres inside Albania. Longer rentals are cheaper per day. Ask for the total before you commit and we will send it in writing."},
+    {"q": "What about the roads?", "a": "The SH1 and SH2 are motorway standard. The coast road over Llogara and the routes into the mountains are narrow, steep and worth every minute. Take a diesel automatic and do not book the smallest car for the passes."},
+    {"q": "Do you deliver the car to my hotel?", "a": "Inside Tirana, yes, at no extra cost. Outside the city, ask and we will tell you honestly whether it is worth it."},
+    {"q": "Fuel policy?", "a": "You get the car full and return it full. The station nearest both offices is open all night, like we are."},
+    {"q": "How do I actually book?", "a": "Send the dates, the car and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour."}
+  ],
+  "roads": [
+    {
+      "id": "riviera", "name": "The Albanian Riviera", "route": "Vlorë to Sarandë over Llogara",
+      "km": 120, "hours": "3 h without stops, 6 h with", "best": "May, June, September",
+      "car": "golf-6-cabrio", "carWhy": "The one drive that earns a roof you can drop.",
+      "story": "The road climbs to a thousand metres at Llogara, turns a corner, and the whole Ionian coast is suddenly below you. Then it drops through Dhërmi and Himarë to water that has no business being that colour. This is the drive people fly here for."
+    },
+    {
+      "id": "north", "name": "North to the Accursed Mountains", "route": "Tirana to Theth, via Shkodër",
+      "km": 250, "hours": "5 h", "best": "June to September, closed in winter",
+      "car": "hyundai-tucson", "carWhy": "The last hour to Theth is not a sedan road.",
+      "story": "The SH1 runs fast and flat to Shkodër, then the country stands up. The final climb into Theth is a mountain pass with a valley of stone houses at the end of it. Ground clearance is not optional on this one."
+    },
+    {
+      "id": "berat", "name": "Berat and Gjirokastër", "route": "Tirana to Berat to Gjirokastër",
+      "km": 230, "hours": "4 h", "best": "April, May, October",
+      "car": "volkswagen-passat", "carWhy": "Long, smooth kilometres. Take the comfortable boot.",
+      "story": "Two Ottoman towns, both UNESCO listed, both built as stacked stone windows on a hillside. Easy roads the whole way, which makes this the trip to hand to someone who is nervous about driving abroad."
+    }
+  ]
+}
