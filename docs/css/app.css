@@ -143,35 +143,36 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
   display: grid; grid-template-columns: minmax(0, 1.72fr) minmax(280px, 1fr);
   gap: clamp(14px, 1.4vw, 22px); align-items: start;
 }
-.deck-panel { grid-column: 1; background: var(--card-2); border-radius: var(--r); padding: clamp(30px, 3.6vw, 58px); }
+.deck-panel { grid-column: 1; background: var(--card-2); border-radius: var(--r); padding: clamp(26px, 2.4vw, 38px); }
 .deck-h1 {
   font-stretch: 125%; font-weight: 850; text-transform: uppercase;
-  font-size: clamp(32px, 3.9vw, 66px); line-height: .96; letter-spacing: -.012em; max-width: 17ch;
+  font-size: clamp(28px, 2.7vw, 46px); line-height: 1; letter-spacing: -.008em; max-width: 19ch;
 }
-.deck-sub { color: var(--dim); margin-top: 18px; max-width: 56ch; font-size: clamp(15.5px, 1.15vw, 17.5px); }
-.deck-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(22px, 2.4vw, 32px); }
+.deck-sub { color: var(--dim); margin-top: 14px; max-width: 54ch; font-size: clamp(15px, 1.05vw, 16.5px); }
+.deck-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(18px, 1.8vw, 24px); }
 .btn-ink {
   background: var(--ink); color: var(--paper); border: 0; text-decoration: none;
   font-weight: 700; font-size: 15.5px; padding: 14px 26px; border-radius: var(--r-pill);
   display: inline-flex; align-items: center; gap: 8px; transition: background var(--t1) var(--out);
 }
 .btn-ink:hover { background: #2C2828; }
-.deck-shot { grid-column: 1; margin: 0; border-radius: var(--r); overflow: clip; background: var(--card-2); }
-.deck-shot img { width: 100%; height: clamp(230px, 27vw, 400px); object-fit: cover; display: block; }
-.deck-facts { grid-column: 2; grid-row: 1 / span 2; display: grid; gap: clamp(12px, 1.2vw, 18px); align-content: start; }
+.deck-shot { grid-column: 1; margin: 0; border-radius: var(--r); overflow: clip; background: var(--card-2); min-height: 0; }
+.deck-shot img { width: 100%; height: clamp(215px, 21.5vw, 306px); object-fit: cover; object-position: center 42%; display: block; }
+.deck-facts { grid-column: 2; grid-row: 1 / span 2; display: grid; gap: clamp(13px, 1.35vw, 19px); align-content: start; }
 .fact {
   background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
-  padding: clamp(18px, 1.8vw, 26px); position: relative;
+  padding: clamp(24px, 2.5vw, 39px); position: relative;
+  display: grid; gap: 5px;
   transition: border-color var(--t1) var(--out);
 }
 .fact:hover { border-color: var(--verde); }
 .fact-k {
-  position: absolute; top: clamp(16px, 1.6vw, 22px); right: clamp(18px, 1.8vw, 26px);
+  position: absolute; top: clamp(17px, 1.6vw, 23px); right: clamp(18px, 1.7vw, 24px);
   font-weight: 800; font-size: clamp(15px, 1.25vw, 18px); color: var(--verde-t);
   font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.01em; white-space: nowrap;
 }
-.fact h2 { font-weight: 750; font-size: clamp(16px, 1.3vw, 18.5px); margin-bottom: 6px; padding-right: 5em; }
-.fact p { color: var(--dim); font-size: 14.5px; }
+.fact h2 { font-weight: 750; font-size: clamp(16px, 1.25vw, 18.5px); padding-right: 4.5em; }
+.fact p { color: var(--dim); font-size: 14.5px; max-width: 30ch; }
 .deckbar {
   grid-column: 1 / -1; margin-top: clamp(6px, .8vw, 12px);
   background: var(--card); border: 1px solid var(--line); border-radius: var(--r);

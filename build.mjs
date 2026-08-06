@@ -174,15 +174,15 @@ ${nav()}
     </div>
 
     <figure class="deck-shot">
-      <img src="img/hero-car.webp" alt="${FLAG.name}, the top of the fleet" width="800" height="500" fetchpriority="high">
+      <img src="img/hero-car.webp" alt="${FLAG.name}, the top of the fleet" width="610" height="295" fetchpriority="high">
     </figure>
 
     <div class="deck-facts">
       ${[
-        { k: '24h', t: 'Open at any hour', d: 'Airport and city desk, seven days, including the night arrivals.' },
-        { k: String(fleet.length), t: 'The car you picked', d: 'Every car has its own photo and price. No category, no or-similar.' },
-        { k: eur(CHEAP.price), t: 'From, per day', d: 'All ' + fleet.length + ' rates published in full, ' + fleet.filter(c => c.gear === 'automatic').length + ' of them automatic.' },
-        { k: '0 €', t: 'Taken in advance', d: 'No online payment. You settle at pickup, after a written confirmation.' },
+        { k: '24h', t: 'Open at any hour', d: 'Airport and city desk, every day.' },
+        { k: String(fleet.length), t: 'The car you picked', d: 'Own photo and price. Never a category.' },
+        { k: eur(CHEAP.price), t: 'From, per day', d: fleet.filter(c => c.gear === 'automatic').length + ' of ' + fleet.length + ' are automatic.' },
+        { k: '0 €', t: 'Taken in advance', d: 'You settle at pickup, not online.' },
       ].map(f => `<article class="fact">
         <span class="fact-k">${f.k}</span>
         <h2>${f.t}</h2>
