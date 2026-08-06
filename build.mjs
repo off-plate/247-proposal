@@ -10,7 +10,6 @@ const site  = JSON.parse(readFileSync(join(ROOT, 'data/site.json'), 'utf8'));
 const D = join(ROOT, 'docs');
 mkdirSync(join(D, 'fonts'), { recursive: true });
 cpSync(join(ROOT, 'assets/fonts/archivo-var.woff2'), join(D, 'fonts/archivo-var.woff2'));
-cpSync(join(ROOT, 'assets/fonts/martian-var.woff2'), join(D, 'fonts/martian-var.woff2'));
 
 const eur = n => `${n.toLocaleString('en-IE')} €`;
 const TEL = site.tel, WA = site.wa;
@@ -36,7 +35,6 @@ const head = (title, desc, path, ogImg = 'img/cars/jaguar-xf.webp', schema = '')
 <link rel="icon" href="img/icon.png" sizes="any">
 <link rel="apple-touch-icon" href="img/icon.png">
 <link rel="preload" href="fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/martian-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/app.css">
 ${schema ? `<script type="application/ld+json">${schema}</script>` : ''}
 </head>
