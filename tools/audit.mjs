@@ -90,7 +90,13 @@ const AUDIT_JS = () => {
       cr: Math.round(cr * 100) / 100, need,
     });
   }
-  return { fails, overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+  const de = document.documentElement;
+  const before = window.scrollX;
+  window.scrollTo(99999, window.scrollY);
+  const reachable = Math.round(window.scrollX);
+  window.scrollTo(before, window.scrollY);
+  const wider = de.scrollWidth - de.clientWidth;
+  return { fails, overflow: Math.max(reachable, wider) };
 };
 
 const browser = await chromium.launch();

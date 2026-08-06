@@ -161,27 +161,51 @@ for (let h = 6; h < 24; h++) for (const m of ['00', '30']) TIMES.push(`${String(
 const deck = () => `${head('24/7 Car Rental Tirana. Open at every hour, including yours', 'Car rental in Tirana, open 24 hours at the airport and in the city. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' a day, ' + fleet.filter(c => c.gear === 'automatic').length + ' of them automatic.', '')}
 ${nav()}
 <main>
-<section class="deck">
-  <h1 class="deck-h1"><span>Albania</span> <span>at any</span> <span>hour</span></h1>
-  <div class="deck-car"><img src="img/cars/${FLAG.slug}.webp" alt="${FLAG.name}, the top of the fleet" width="1400" height="700" fetchpriority="high"></div>
-  <aside class="gantry deck-book" aria-label="Start a booking">
-    <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Open now</span></p>
-    <form action="book.html" method="get" class="gantry-form">
-      <label class="gfield"><span class="sign">Where</span>
+<section class="deck" aria-label="24/7 Car Rental Tirana">
+  <div class="deck-grid">
+
+    <div class="deck-panel">
+      <h1 class="deck-h1">A car in Tirana at the hour you actually land</h1>
+      <p class="deck-sub">Both desks are staffed around the clock, so a 04:00 arrival is an ordinary pickup and not a problem to solve. ${fleet.length} cars, each one photographed and priced, from ${eur(CHEAP.price)} a day.</p>
+      <div class="deck-btns">
+        <a class="btn-verde" href="fleet.html">See all ${fleet.length} cars <span aria-hidden="true">→</span></a>
+        <a class="btn-ink" href="how.html">How it works</a>
+      </div>
+    </div>
+
+    <figure class="deck-shot">
+      <img src="img/hero-car.webp" alt="${FLAG.name}, the top of the fleet" width="800" height="500" fetchpriority="high">
+    </figure>
+
+    <div class="deck-facts">
+      ${[
+        { k: '24h', t: 'Open at any hour', d: 'Airport and city desk, seven days, including the night arrivals.' },
+        { k: String(fleet.length), t: 'The car you picked', d: 'Every car has its own photo and price. No category, no or-similar.' },
+        { k: eur(CHEAP.price), t: 'From, per day', d: 'All ' + fleet.length + ' rates published in full, ' + fleet.filter(c => c.gear === 'automatic').length + ' of them automatic.' },
+        { k: '0 €', t: 'Taken in advance', d: 'No online payment. You settle at pickup, after a written confirmation.' },
+      ].map(f => `<article class="fact">
+        <span class="fact-k">${f.k}</span>
+        <h2>${f.t}</h2>
+        <p>${f.d}</p>
+      </article>`).join('')}
+    </div>
+
+    <form action="book.html" method="get" class="deckbar">
+      <label class="db-field"><span class="sign">Collect at</span>
         <select name="loc" required>${site.locations.map(l => `<option value="${l.id}">${l.label}</option>`).join('')}</select>
       </label>
-      <div class="gfield gdates"><span class="sign">When</span>
-        <span class="gdates-in"><input type="date" name="from" aria-label="Pickup date"><span class="garrow" aria-hidden="true">→</span><input type="date" name="to" aria-label="Return date"></span>
-      </div>
-      <button class="gantry-go" type="submit">Show ${fleet.length} cars <span aria-hidden="true">→</span></button>
-      <div class="gantry-alt">
-        <span>or skip the form</span>
-        ${waLink(WA_GENERIC, 'gantry-wa', 'WhatsApp us')}
-        <a class="gantry-call" href="tel:${TEL}">Call ${site.phone}</a>
+      <label class="db-field"><span class="sign">From</span><input type="date" name="from" aria-label="Pickup date"></label>
+      <label class="db-field"><span class="sign">Until</span><input type="date" name="to" aria-label="Return date"></label>
+      <div class="db-go">
+        <button class="btn-verde" type="submit">Check dates <span aria-hidden="true">→</span></button>
+        ${waLink(WA_GENERIC, 'btn-wa', 'WhatsApp')}
       </div>
     </form>
-  </aside>
-  <nav class="exitrail" aria-label="Sections">
+
+  </div>
+</section>
+
+<nav class="exitrail" aria-label="Sections">
     <a href="how.html"><em>5 steps</em><strong>How it works</strong><span class="x-arrow" aria-hidden="true">→</span></a>
     <a href="fleet.html"><em>${fleet.length} cars</em><strong>The fleet</strong><span class="x-arrow" aria-hidden="true">→</span></a>
     <a href="roads.html"><em>3 routes</em><strong>Where to drive</strong><span class="x-arrow" aria-hidden="true">→</span></a>

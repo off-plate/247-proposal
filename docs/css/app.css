@@ -137,28 +137,73 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 }
 
 /* ---------- deck ---------- */
-.deck {
-  min-height: 100svh; position: relative; overflow-x: clip;
-  display: grid; grid-template-columns: 1fr minmax(340px, 30vw);
-  grid-template-rows: 1fr auto auto; gap: 0 clamp(24px, 4vw, 80px);
-  padding: calc(76px + 4vh) var(--pad) 0;
+.deck { padding: calc(88px + 3vh) 0 clamp(30px, 4vw, 56px); }
+.deck-grid {
+  max-width: var(--shell); margin: 0 auto; padding: 0 var(--pad);
+  display: grid; grid-template-columns: minmax(0, 1.72fr) minmax(280px, 1fr);
+  gap: clamp(14px, 1.4vw, 22px); align-items: start;
 }
+.deck-panel { grid-column: 1; background: var(--card-2); border-radius: var(--r); padding: clamp(30px, 3.6vw, 58px); }
 .deck-h1 {
-  grid-column: 1; align-self: start; z-index: 3;
   font-stretch: 125%; font-weight: 850; text-transform: uppercase;
-  font-size: clamp(44px, 9vw, 184px); line-height: .92; letter-spacing: -.012em;
+  font-size: clamp(32px, 3.9vw, 66px); line-height: .96; letter-spacing: -.012em; max-width: 17ch;
 }
-.deck-h1 span { display: block; }
-.deck-h1 span:nth-child(2) { margin-left: .55em; }
-.deck-book { grid-column: 2; grid-row: 1 / 3; align-self: start; z-index: 4; }
-.deck-car { grid-column: 1 / -1; grid-row: 2; z-index: 2; margin-top: clamp(-44px, -4.5vw, -130px); pointer-events: none; }
-.deck-car img {
-  width: min(64vw, 1500px); margin-left: auto; margin-right: clamp(0px, 5vw, 150px);
-  filter: drop-shadow(0 44px 38px rgb(23 25 26/.28));
+.deck-sub { color: var(--dim); margin-top: 18px; max-width: 56ch; font-size: clamp(15.5px, 1.15vw, 17.5px); }
+.deck-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(22px, 2.4vw, 32px); }
+.btn-ink {
+  background: var(--ink); color: var(--paper); border: 0; text-decoration: none;
+  font-weight: 700; font-size: 15.5px; padding: 14px 26px; border-radius: var(--r-pill);
+  display: inline-flex; align-items: center; gap: 8px; transition: background var(--t1) var(--out);
 }
+.btn-ink:hover { background: #2C2828; }
+.deck-shot { grid-column: 1; margin: 0; border-radius: var(--r); overflow: clip; background: var(--card-2); }
+.deck-shot img { width: 100%; height: clamp(230px, 27vw, 400px); object-fit: cover; display: block; }
+.deck-facts { grid-column: 2; grid-row: 1 / span 2; display: grid; gap: clamp(12px, 1.2vw, 18px); align-content: start; }
+.fact {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(18px, 1.8vw, 26px); position: relative;
+  transition: border-color var(--t1) var(--out);
+}
+.fact:hover { border-color: var(--verde); }
+.fact-k {
+  position: absolute; top: clamp(16px, 1.6vw, 22px); right: clamp(18px, 1.8vw, 26px);
+  font-weight: 800; font-size: clamp(15px, 1.25vw, 18px); color: var(--verde-t);
+  font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.01em; white-space: nowrap;
+}
+.fact h2 { font-weight: 750; font-size: clamp(16px, 1.3vw, 18.5px); margin-bottom: 6px; padding-right: 5em; }
+.fact p { color: var(--dim); font-size: 14.5px; }
+.deckbar {
+  grid-column: 1 / -1; margin-top: clamp(6px, .8vw, 12px);
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr auto; align-items: end;
+}
+.db-field { display: grid; gap: 8px; padding: clamp(16px, 1.7vw, 24px) clamp(16px, 1.8vw, 28px); border-right: 1px solid var(--line); min-width: 0; }
+.db-field .sign { color: var(--dim); }
+.db-field select, .db-field input {
+  background: none; border: 0; color: var(--ink); font: 560 clamp(15px, 1.1vw, 17px) 'Archivo';
+  padding: 0; min-width: 0; width: 100%;
+}
+.db-field input::-webkit-calendar-picker-indicator { opacity: .55; cursor: pointer; }
+.db-go { display: flex; gap: 10px; align-items: center; padding: clamp(12px, 1.4vw, 18px) clamp(16px, 1.8vw, 24px); }
+@media (max-width: 1100px) {
+  .deck-grid { grid-template-columns: 1fr; }
+  .deck-panel, .deck-shot, .deck-facts, .deckbar { grid-column: 1; }
+  .deck-facts { grid-row: auto; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .deckbar { grid-template-columns: 1fr 1fr; }
+  .db-field:first-child { grid-column: 1 / -1; }
+  .db-go { grid-column: 1 / -1; }
+  .db-go .btn-verde, .db-go .btn-wa { flex: 1; justify-content: center; }
+}
+@media (max-width: 560px) {
+  .deckbar { grid-template-columns: 1fr; }
+  .db-field { border-right: 0; border-bottom: 1px solid var(--line); }
+  .fact h2 { padding-right: 4.2em; }
+}
+
 .exitrail {
-  grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--line-2); margin: 24px calc(-1 * var(--pad)) 0; padding: 0 var(--pad);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: var(--shell); margin: 0 auto; padding: 0 var(--pad);
+  border-block: 1px solid var(--line-2);
 }
 .exitrail a {
   display: flex; align-items: baseline; gap: 14px; text-decoration: none;
@@ -166,7 +211,14 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 }
 .exitrail a:first-child { border-left: 0; padding-left: 0; }
 .exitrail em { font-style: normal; font-size: 12.5px; font-weight: 560; color: var(--verde-t); text-transform: uppercase; }
-.exitrail strong { font-stretch: 125%; font-weight: 800; font-size: clamp(19px, 2vw, 30px); text-transform: uppercase; }
+.exitrail strong { font-stretch: 125%; font-weight: 800; font-size: clamp(15px, 1.4vw, 24px); text-transform: uppercase; }
+@media (max-width: 1080px) { .exitrail { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) {
+  .exitrail { grid-template-columns: 1fr; }
+  .exitrail a { border-left: 0; border-top: 1px solid var(--line); padding: 16px 0; }
+  .exitrail a:first-child { border-top: 0; }
+  .exitrail strong { font-size: 19px; }
+}
 .exitrail .x-arrow { margin-left: auto; color: var(--dim); }
 
 /* flagship strip: one car, one band, ink */
@@ -206,9 +258,9 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 .lane .x-arrow { color: var(--dim); }
 
 /* roads teaser */
-.roadstease { position: relative; min-height: 68svh; display: grid; align-items: end; overflow: clip; }
+.roadstease { position: relative; min-height: 68svh; display: grid; align-items: end; overflow: hidden; }
 .dests { overflow: clip; }
-.roadstease > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.roadstease > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: center; }
 .roadstease-copy {
   position: relative; z-index: 2; margin: 0 var(--pad) clamp(36px, 5vw, 72px);
   background: var(--card); border-radius: var(--r); box-shadow: var(--e2);
@@ -620,10 +672,10 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   /* --- scroll: reveals, gated because Firefox is still catching up --- */
   @supports (animation-timeline: view()) {
     .deck-car img { animation: drive-in linear both; animation-timeline: view(); animation-range: entry 0% cover 42%; }
-    @keyframes drive-in { from { translate: -6% 0; } to { translate: 0 0; } }
+    @keyframes drive-in { from { scale: 1.03; } to { scale: 1; } }
 
     .flag-img { animation: flag-in linear both; animation-timeline: view(); animation-range: entry 0% cover 46%; }
-    @keyframes flag-in { from { translate: 9% 0; } to { translate: 0 0; } }
+    @keyframes flag-in { from { scale: 1.04; opacity: .55; } to { scale: 1; opacity: 1; } }
 
     /* No blanket fade-up-on-scroll. Applying one opacity+translate reveal to every
        block on the page is the documented 2026 AI tell (Bushell, "Death to Scroll
@@ -633,13 +685,13 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 
     /* the lane bands deal themselves outward, like keys pushed across a counter */
     .lane { animation: deal linear both; animation-timeline: view(); animation-range: entry 5% entry 60%; }
-    @keyframes deal { from { translate: -18px 0; } to { translate: 0 0; } }
+    @keyframes deal { from { opacity: .35; } to { opacity: 1; } }
 
     /* photography settles rather than slides */
-    .dest > img, .roadstease > img, .ram-img, .rst-img, .ra1-img {
+    .dest > img, .ram-img, .rst-img, .ra1-img {
       animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 55%;
     }
-    @keyframes settle { from { scale: 1.06; } to { scale: 1; } }
+    @keyframes settle { from { scale: 1.05; } to { scale: 1; } }
 
     .rst-big { animation: big-in linear both; animation-timeline: view(); animation-range: entry 0% cover 60%; }
     @keyframes big-in { from { translate: 0 14%; } to { translate: 0 0; } }
@@ -701,7 +753,7 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   .gdates { flex-wrap: wrap; }
   .gdates-in { flex: 1 1 100%; justify-content: space-between; }
   .gdates-in input { font-size: 14px; }
-  .exitrail { grid-row: 4; grid-template-columns: 1fr; margin-top: 26px; }
+  .exitrail { grid-template-columns: 1fr; }
   .exitrail a { border-left: 0; border-top: 1px solid var(--line); padding: 14px 2px; }
   .exitrail a:first-child { border-top: 0; }
 
