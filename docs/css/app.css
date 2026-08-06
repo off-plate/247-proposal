@@ -14,9 +14,10 @@
   --ink: #141212;   --dim: #605A57;
   --verde: #A3141B; --verde-t: #AE131B; --verde-2: #861016; --sole: #E8A33A;
   --open: #1B7443;
+  --ink-accent: #F0424B;   /* red that survives on the ink footer, 4.97 */
   --wa: #1D7D4A;      /* white on it 4.86 */
   --wa-2: #14603A;    /* white on it 7.03 */
-  --open-board: #12673A;   /* the open green on a light panel, 5.66 */
+  --open-board: #35B66F;
   --line: rgba(20,18,18,.14); --line-2: rgba(20,18,18,.30);
   --keyline: rgba(255,255,255,.55);
   --r: 14px; --r-sm: 9px; --r-pill: 999px;
@@ -137,85 +138,42 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
   display: inline-flex; align-items: center; gap: 8px;
 }
 
-/* ---------- deck: the hour board ---------- */
+/* ---------- deck ---------- */
 .deck {
-  background: var(--paper); color: var(--ink);
-  min-height: 92svh; display: grid; grid-template-rows: 1fr auto; grid-template-columns: minmax(0, 1fr);
-  padding-top: clamp(88px, 9vh, 120px); overflow: clip; position: relative;
+  min-height: 100svh; position: relative; overflow-x: clip;
+  display: grid; grid-template-columns: 1fr minmax(340px, 30vw);
+  grid-template-rows: 1fr auto auto; gap: 0 clamp(24px, 4vw, 80px);
+  padding: calc(76px + 4vh) var(--pad) 0;
 }
-.deck-in {
-  max-width: var(--shell); width: 100%; margin: 0 auto; padding: 0 var(--pad);
-  display: grid; align-content: center; gap: clamp(16px, 1.8vw, 26px); position: relative;
-}
-.deck-copy { position: relative; z-index: 3; max-width: 62%; }
 .deck-h1 {
+  grid-column: 1; align-self: start; z-index: 3;
   font-stretch: 125%; font-weight: 850; text-transform: uppercase;
-  font-size: clamp(40px, 7.4vw, 148px); line-height: .9; letter-spacing: -.016em;
+  font-size: clamp(44px, 9vw, 184px); line-height: .92; letter-spacing: -.012em;
 }
 .deck-h1 span { display: block; }
-.deck-h1 span:nth-child(2) { margin-left: .42em; }
-.deck-sub { color: var(--dim); max-width: 44ch; font-size: clamp(16px, 1.3vw, 19px); }
-
-/* 24 ticks, all lit, because they are open at all of them */
-
-.deck-car { position: absolute; right: calc(-1 * var(--pad)); bottom: -8%; width: min(58%, 1000px); z-index: 1; pointer-events: none; }
-.deck-car img { width: 100%; filter: drop-shadow(0 38px 40px rgb(20 18 18/.28)); }
-
-/* booking sits on the bottom edge, columns rhyming with the board above */
-.deckbar {
-  position: relative; z-index: 4; margin-top: clamp(26px, 3vw, 48px);
-  border-top: 1px solid var(--line-2); background: var(--card);
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr auto; align-items: end;
-  gap: 0; max-width: var(--shell); width: 100%; margin-inline: auto;
+.deck-h1 span:nth-child(2) { margin-left: .55em; }
+.deck-book { grid-column: 2; grid-row: 1 / 3; align-self: start; z-index: 4; }
+.deck-car { grid-column: 1 / -1; grid-row: 2; z-index: 2; margin-top: clamp(-44px, -4.5vw, -130px); pointer-events: none; }
+.deck-car img {
+  width: min(64vw, 1500px); margin-left: auto; margin-right: clamp(0px, 5vw, 150px);
+  filter: drop-shadow(0 44px 38px rgb(23 25 26/.28));
 }
-.db-field { display: grid; gap: 8px; padding: clamp(18px, 2vw, 26px) clamp(16px, 2vw, 30px); border-right: 1px solid var(--line); }
-.db-field:first-child { padding-left: var(--pad); }
-.db-field .sign { color: var(--dim); }
-.db-field select, .db-field input {
-  background: none; border: 0; color: var(--ink); font: 560 clamp(15px, 1.2vw, 18px) 'Archivo';
-  padding: 0; min-width: 0; width: 100%;
-}
-
-.db-field input::-webkit-calendar-picker-indicator { opacity: .55; cursor: pointer; }
-.db-go { display: flex; gap: 10px; align-items: center; padding: clamp(14px, 1.6vw, 20px) var(--pad) clamp(14px, 1.6vw, 20px) clamp(16px, 2vw, 30px); }
-
-@media (max-width: 1000px) {
-  .deck { padding-top: 84px; }
-  .deck-copy { max-width: 100%; }
-  .deck-car { position: relative; right: auto; bottom: auto; width: 100%; margin-top: -4%; }
-  .deckbar { grid-template-columns: 1fr 1fr; }
-  .db-field:first-child { grid-column: 1 / -1; }
-  .db-go { grid-column: 1 / -1; padding-inline: var(--pad); }
-  .db-go .btn-verde, .db-go .btn-wa { flex: 1; justify-content: center; }
-}
-@media (max-width: 560px) {
-    .deckbar { grid-template-columns: 1fr; }
-  .db-field { border-right: 0; border-bottom: 1px solid var(--line); padding-inline: var(--pad); }
-}
-
-/* exit rail: three ways out of the first screen */
 .exitrail {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  max-width: var(--shell); margin: 0 auto; padding: 0 var(--pad);
-  border-bottom: 1px solid var(--line);
+  grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line-2); margin: 24px calc(-1 * var(--pad)) 0; padding: 0 var(--pad);
 }
 .exitrail a {
   display: flex; align-items: baseline; gap: 14px; text-decoration: none;
-  padding: clamp(20px, 2.4vw, 34px) 8px; border-left: 1px solid var(--line);
-  transition: background var(--t1) var(--out);
+  padding: 20px 8px; border-left: 1px solid var(--line); position: relative;
 }
 .exitrail a:first-child { border-left: 0; padding-left: 0; }
-.exitrail a:hover { background: var(--card); }
-.exitrail em {
-  font-style: normal; font-family: 'MartianMono', monospace; font-size: 12.5px;
-  font-weight: 560; color: var(--verde-t); text-transform: uppercase; white-space: nowrap;
-}
-.exitrail strong { font-stretch: 125%; font-weight: 800; font-size: clamp(19px, 2vw, 32px); text-transform: uppercase; }
+.exitrail em { font-style: normal; font-family: 'MartianMono', monospace; font-size: 12.5px; font-weight: 560; color: var(--verde-t); text-transform: uppercase; }
+.exitrail strong { font-stretch: 125%; font-weight: 800; font-size: clamp(19px, 2vw, 30px); text-transform: uppercase; }
 .exitrail .x-arrow { margin-left: auto; color: var(--dim); }
 
 /* flagship strip: one car, one band, ink */
 .flagstrip {
-  background: var(--paper); color: var(--ink); display: grid; overflow: clip;
+  background: var(--card); color: var(--ink); display: grid; overflow: clip; border-block: 1px solid var(--line);
   grid-template-columns: minmax(320px, 1fr) 1.4fr; align-items: center;
   gap: clamp(20px, 3vw, 60px); padding: clamp(48px, 7vw, 120px) var(--pad); overflow: clip;
 }
@@ -583,8 +541,7 @@ body[data-page^="car-"] main { padding-bottom: 96px; }
 .e404 { font-stretch: 110%; font-weight: 850; text-transform: uppercase; font-size: clamp(40px, 5vw, 76px); line-height: .92; margin: 8px 0 22px; overflow-wrap: anywhere; }
 
 /* ---------- footer ---------- */
-.foot { background: var(--paper); color: var(--ink); margin-top: clamp(50px, 7vw, 110px); border-top: 1px solid var(--line-2); }
-.flagstrip { border-block: 1px solid var(--line); }
+.foot { background: var(--card); color: var(--ink); margin-top: clamp(50px, 7vw, 110px); border-top: 1px solid var(--line-2); }
 body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .foot-top {
   max-width: var(--shell); margin: 0 auto; padding: clamp(44px, 6vw, 88px) var(--pad) clamp(30px, 4vw, 52px);
@@ -597,17 +554,17 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .foot-call:hover { border-color: var(--ink); }
 .foot-mail { display: inline-block; margin-top: 16px; color: var(--dim); font-size: 15px; }
 .foot-desks { display: grid; gap: 12px; }
-.foot-desk { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 20px 22px; display: grid; gap: 5px; }
+.foot-desk { border: 1px solid var(--line); border-radius: var(--r); padding: 20px 22px; display: grid; gap: 5px; }
 .foot-desk strong { font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: clamp(17px, 1.7vw, 23px); }
 .foot-desk em { font-style: normal; color: var(--dim); font-size: 14.5px; }
-.foot-desk .mono { color: var(--open-board); font-size: 12.5px; }
-.foot-desk .openlight { color: var(--open-board); }
-.foot-desk .openlight::before { background: var(--open-board); }
+.foot-desk .mono { color: var(--open); font-size: 12.5px; }
+.foot-desk .openlight { color: var(--open); }
+.foot-desk .openlight::before { background: var(--open); }
 
 .foot-cols {
   max-width: var(--shell); margin: 0 auto; padding: clamp(28px, 3.4vw, 52px) var(--pad);
   display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: clamp(24px, 3vw, 56px);
-  border-top: 1px solid var(--line-2);
+  border-top: 1px solid var(--line);
 }
 .foot-col h2 { font-stretch: 62%; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: 12.5px; color: var(--dim); margin-bottom: 14px; }
 .foot-col ul { list-style: none; padding: 0; display: grid; gap: 9px; }
@@ -664,7 +621,7 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   .btn-wa:active, .btn-verde:active, .reserve-cta:active, .gantry-go:active { translate: 0 1px; }
 
   /* --- scroll: reveals, gated because Firefox is still catching up --- */
-  @supports (animation-timeline: view()) and (animation-range: entry 0% cover 50%) {
+  @supports (animation-timeline: view()) {
     .deck-car img { animation: drive-in linear both; animation-timeline: view(); animation-range: entry 0% cover 42%; }
     @keyframes drive-in { from { translate: -6% 0; } to { translate: 0 0; } }
 
@@ -747,8 +704,8 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   .gdates { flex-wrap: wrap; }
   .gdates-in { flex: 1 1 100%; justify-content: space-between; }
   .gdates-in input { font-size: 14px; }
-  .exitrail { grid-template-columns: 1fr; }
-  .exitrail a { border-left: 0; border-top: 1px solid var(--line); padding: 16px 0; }
+  .exitrail { grid-row: 4; grid-template-columns: 1fr; margin-top: 26px; }
+  .exitrail a { border-left: 0; border-top: 1px solid var(--line); padding: 14px 2px; }
   .exitrail a:first-child { border-top: 0; }
 
   .lane { flex-wrap: wrap; row-gap: 10px; justify-content: space-between; }
@@ -801,6 +758,10 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .gantry .openlight { color: #fff; }
 .gantry .openlight::before { background: #fff; box-shadow: none; animation: none; }
 
+/* clock face marks on the deck: 24 hours, drawn not decorated */
+.hours { display: flex; gap: 3px; align-items: flex-end; height: 26px; margin-top: 18px; }
+.hours i { display: block; width: 3px; background: var(--line-2); border-radius: 2px; height: 40%; }
+.hours i.on { background: var(--verde-t); height: 100%; }
 
 /* two-location strip */
 .desks { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--line); border-block: 1px solid var(--line); }

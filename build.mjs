@@ -161,34 +161,32 @@ for (let h = 6; h < 24; h++) for (const m of ['00', '30']) TIMES.push(`${String(
 const deck = () => `${head('24/7 Car Rental Tirana. Open at every hour, including yours', 'Car rental in Tirana, open 24 hours at the airport and in the city. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' a day, ' + fleet.filter(c => c.gear === 'automatic').length + ' of them automatic.', '')}
 ${nav()}
 <main>
-<section class="deck" aria-label="24/7 Car Rental Tirana">
-  <div class="deck-in">
-    <div class="deck-copy">
-      <h1 class="deck-h1"><span>Albania,</span> <span>at any</span> <span>hour</span></h1>
-      <p class="deck-sub">Open 24 hours at Tirana airport and in the city. ${fleet.length} cars you can see before you book, from ${eur(CHEAP.price)} a day.</p>
-    </div>
-
-    <div class="deck-car"><img src="img/cars/${FLAG.slug}.webp" alt="${FLAG.name}, the top of the fleet" width="1400" height="700" fetchpriority="high"></div>
-  </div>
-
-  <form action="book.html" method="get" class="deckbar">
-    <label class="db-field"><span class="sign">Collect at</span>
-      <select name="loc" required>${site.locations.map(l => `<option value="${l.id}">${l.label}</option>`).join('')}</select>
-    </label>
-    <label class="db-field"><span class="sign">From</span><input type="date" name="from" aria-label="Pickup date"></label>
-    <label class="db-field"><span class="sign">Until</span><input type="date" name="to" aria-label="Return date"></label>
-    <div class="db-go">
-      <button class="btn-verde" type="submit">Show ${fleet.length} cars <span aria-hidden="true">→</span></button>
-      ${waLink(WA_GENERIC, 'btn-wa', 'WhatsApp')}
-    </div>
-  </form>
+<section class="deck">
+  <h1 class="deck-h1"><span>Albania</span> <span>at any</span> <span>hour</span></h1>
+  <div class="deck-car"><img src="img/cars/${FLAG.slug}.webp" alt="${FLAG.name}, the top of the fleet" width="1400" height="700" fetchpriority="high"></div>
+  <aside class="gantry deck-book" aria-label="Start a booking">
+    <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Open now</span></p>
+    <form action="book.html" method="get" class="gantry-form">
+      <label class="gfield"><span class="sign">Where</span>
+        <select name="loc" required>${site.locations.map(l => `<option value="${l.id}">${l.label}</option>`).join('')}</select>
+      </label>
+      <div class="gfield gdates"><span class="sign">When</span>
+        <span class="gdates-in"><input type="date" name="from" aria-label="Pickup date"><span class="garrow" aria-hidden="true">→</span><input type="date" name="to" aria-label="Return date"></span>
+      </div>
+      <button class="gantry-go" type="submit">Show ${fleet.length} cars <span aria-hidden="true">→</span></button>
+      <div class="gantry-alt">
+        <span>or skip the form</span>
+        ${waLink(WA_GENERIC, 'gantry-wa', 'WhatsApp us')}
+        <a class="gantry-call" href="tel:${TEL}">Call ${site.phone}</a>
+      </div>
+    </form>
+  </aside>
+  <nav class="exitrail" aria-label="Sections">
+    <a href="fleet.html"><em>${fleet.length} cars</em><strong>The fleet</strong><span class="x-arrow" aria-hidden="true">→</span></a>
+    <a href="roads.html"><em>3 routes</em><strong>Where to drive</strong><span class="x-arrow" aria-hidden="true">→</span></a>
+    <a href="faq.html"><em>${site.faq.length} answers</em><strong>Straight answers</strong><span class="x-arrow" aria-hidden="true">→</span></a>
+  </nav>
 </section>
-
-<nav class="exitrail" aria-label="Sections">
-  <a href="fleet.html"><em>${fleet.length} cars</em><strong>The fleet</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-  <a href="roads.html"><em>3 routes, 8 places</em><strong>Where to drive</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-  <a href="faq.html"><em>${site.faq.length} answers</em><strong>Straight answers</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-</nav>
 
 <section class="flagstrip" aria-label="The flagship">
   <div class="flag-copy">

@@ -42,7 +42,7 @@ const AUDIT_JS = () => {
     let n = el;
     while (n && n !== document.documentElement) {
       const c = parse(getComputedStyle(n).backgroundColor);
-      if (c && c[3] > 0.9) { c.explicit = true; return c; }
+      if (c && c[3] > 0.9) return c;
       // element with a background-image (photo) cannot be judged here; mark skip
       if (getComputedStyle(n).backgroundImage !== 'none' && n !== el) return null;
       n = n.parentElement;
@@ -64,7 +64,7 @@ const AUDIT_JS = () => {
     if (r.width < 2 || r.height < 2) continue;
     const fg = parse(cs.color); if (!fg) continue;
     let bg = bgOf(el);
-    if (bg && !bg.explicit && Math.abs(lum(bg) - lum(parse(getComputedStyle(document.body).backgroundColor) || [255,255,255,1])) < 0.001) {
+    if (bg && Math.abs(lum(bg) - lum(parse(getComputedStyle(document.body).backgroundColor) || [255,255,255,1])) < 0.001) {
       // ancestor walk hit the page background; check the painted stack for an overlapping layer
       el.scrollIntoView({ block: 'center', behavior: 'instant' });
       const rr = el.getBoundingClientRect();
