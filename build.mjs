@@ -110,7 +110,7 @@ const footer = () => `
       <nav class="foot-col" aria-label="Albania">
         <h2>Albania</h2>
         <ul>
-          ${site.destinations.slice(0, 5).map(d => `<li><a href="roads.html#${d.id}">${d.name}<span class="foot-fig">${d.km} km</span></a></li>`).join('')}
+          ${site.destinations.slice(0, 5).map(d => `<li><a href="roads.html#${d.id}">${d.name}<span class="foot-fig">${d.hours}</span></a></li>`).join('')}
           <li><a href="roads.html" class="foot-more">All routes and places <span aria-hidden="true">&rarr;</span></a></li>
         </ul>
       </nav>
@@ -157,7 +157,7 @@ const waLink = (msg, cls = 'btn-wa', label = 'WhatsApp') =>
   `<a class="${cls}" href="https://wa.me/${WA}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">${WA_ICON}<span>${label}</span></a>`;
 const WA_GENERIC = 'Hello 24/7 Car Rental, I would like to ask about renting a car in Tirana.';
 const TIMES = [];
-for (let h = 6; h < 24; h++) for (const m of ['00', '30']) TIMES.push(`${String(h).padStart(2, '0')}:${m}`);
+for (let h = 0; h < 24; h++) for (const m of ['00', '30']) TIMES.push(`${String(h).padStart(2, '0')}:${m}`);
 
 // ---------- index ----------
 // Structure follows the reference Michael supplied. Every figure in it comes from data/.
@@ -249,7 +249,7 @@ ${nav()}
   </div>
   <div class="taglist">
     ${site.roads.map(r => `<a class="tag tag-road" href="roads.html#${r.id}">${r.name}<em>${r.km} km</em></a>`).join('')}
-    ${site.destinations.map(d => `<a class="tag" href="roads.html#${d.id}">${d.name}<em>${d.km} km</em></a>`).join('')}
+    ${site.destinations.map(d => `<a class="tag" href="roads.html#${d.id}">${d.name}<em>${d.hours}</em></a>`).join('')}
   </div>
 </section>
 
@@ -398,7 +398,7 @@ const bookPage = () => `${head('Book a car. Four questions, then a human', 'Pick
 ${nav()}
 <main class="bookwrap">
   <ol class="chiprail" id="chiprail" aria-label="Progress">
-    ${['Where', 'When', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip">A${i + 1}</span>${s}</li>`).join('')}
+    ${['Where', 'When', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip">${i + 1}</span>${s}</li>`).join('')}
   </ol>
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
@@ -457,11 +457,11 @@ ${nav()}
     <aside class="gantry sumboard" aria-label="Your reservation so far">
       <p class="gantry-top">${gantryChip('Σ')}<span class="sign">Your request</span></p>
       <table class="sum-t mono" id="sum-t">
-        <tr data-k="loc"><td>ROUTE</td><td>choose</td></tr>
-        <tr data-k="dates"><td>DATES</td><td>–</td></tr>
-        <tr data-k="car"><td>CAR</td><td>–</td></tr>
-        <tr data-k="days"><td>DAYS</td><td>not set</td></tr>
-        <tr data-k="total" class="sum-total"><td>ESTIMATE</td><td>0 €</td></tr>
+        <tr data-k="loc"><td>Route</td><td>choose</td></tr>
+        <tr data-k="dates"><td>Dates</td><td>not set</td></tr>
+        <tr data-k="car"><td>Car</td><td>not set</td></tr>
+        <tr data-k="days"><td>Days</td><td>not set</td></tr>
+        <tr data-k="total" class="sum-total"><td>Estimate</td><td>not set</td></tr>
       </table>
     </aside>
   </div>
@@ -570,7 +570,7 @@ ${nav('company')}
 <section class="colophon" id="colophon">
   <h2 class="sec-h">Colophon</h2>
   <p>This is an unsolicited redesign proposal for <a href="https://24-7rentalcar.com/">24-7rentalcar.com</a>, built by <a href="https://off-plate.com">Off-Plate</a>. Every car, price, specification, phone number and location on this site was taken from their live website on 5 August 2026. The car photographs are theirs. Nothing here is invented: where a fact was missing, the question is listed rather than answered.</p>
-  <p>Type is Archivo and Martian Mono, both variable and open licensed. No framework, no tracker, no analytics, no cookie banner because there are no cookies to consent to. The whole site is hand-built static HTML, CSS and one file of JavaScript.</p>
+  <p>Type is Switzer, one variable file under the Fontshare licence, used at two weights. No framework, no tracker, no analytics, no cookie banner because there are no cookies to consent to. The whole site is hand-built static HTML, CSS and one file of JavaScript.</p>
   <details class="credits"><summary>Photography credits</summary><ul id="credit-list">
     <li>All ${fleet.length} car photographs belong to 24/7 Car Rental and were taken from 24-7rentalcar.com. They are shown here only to demonstrate the redesign.</li>
     ${JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-roads.json'))).concat(JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-dest.json')))).map(cr => `<li>${cr.slug}: ${cr.author.replace(/<[^>]+>/g, '')}, ${cr.license}, via <a href="${cr.source_url}" rel="license external">Wikimedia Commons</a></li>`).join('')}

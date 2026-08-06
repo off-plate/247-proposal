@@ -32,6 +32,22 @@
   "flagship": false
  },
  {
+  "slug": "hyundai-accent-2",
+  "name": "Hyundai Accent",
+  "fullOption": false,
+  "cls": "city",
+  "clsLabel": "City",
+  "price": 35,
+  "year": 2012,
+  "fuel": "diesel",
+  "engine": 1.6,
+  "gear": "automatic",
+  "seats": 4,
+  "doors": 5,
+  "note": "The second of two identical Accents. If one is out, the other usually is not.",
+  "flagship": false
+ },
+ {
   "slug": "audi-a3-2014",
   "name": "Audi A3 2014",
   "fullOption": true,

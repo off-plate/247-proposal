@@ -10,6 +10,10 @@ for (const p of [
   resolve(homedir(), 'Claude Helpers/maps-leads/node_modules/playwright/index.js'),
 ]) { try { chromium = req(p).chromium; break; } catch {} }
 
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+const FLEET = JSON.parse(readFileSync(resolve(fileURLToPath(import.meta.url), '../../data/fleet.json'), 'utf8'));
+const FLEET_N = FLEET.length, FLEET_AUTO = FLEET.filter(c => c.gear === 'automatic').length;
 const BASE = (process.argv[2] || 'http://localhost:8472/docs').replace(/\/$/, '');
 const SHOTDIR = process.argv[3];
 const browser = await chromium.launch();
@@ -33,13 +37,13 @@ await page.selectOption('#sort', 'price-desc');
 first = await page.$eval('.row:not([hidden])', e => e.dataset.slug);
 first === 'jaguar-xf' ? ok('dearest first is Jaguar XF at 65 €') : fail(`desc first: ${first}`);
 const total = await page.$$eval('.row', e => e.length);
-total === 19 ? ok('19 cars listed, matching their live site') : fail(`row count ${total}`);
+total === FLEET_N ? ok(`${FLEET_N} cars listed, matching their live site`) : fail(`row count ${total}, expected ${FLEET_N}`);
 await page.click('.chip[data-cls="suv"]');
 const suvs = await page.$$eval('.row:not([hidden])', e => e.length);
 suvs === 3 ? ok('SUV filter shows 3') : fail(`SUV filter ${suvs}`);
 await page.click('.tog input#f-auto'); await page.click('.chip[data-cls="all"]');
 const autos = await page.$$eval('.row:not([hidden])', e => e.length);
-autos === 18 ? ok('automatic filter shows 18 of 19') : fail(`automatic ${autos}`);
+autos === FLEET_AUTO ? ok(`automatic filter shows ${FLEET_AUTO} of ${FLEET_N}`) : fail(`automatic ${autos}, expected ${FLEET_AUTO}`);
 
 /* ---- enquiry flow ---- */
 await reset(`${BASE}/book.html?car=hyundai-santa-fe-2016`);

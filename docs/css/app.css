@@ -701,9 +701,9 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
     .rst-big { animation: big-in linear both; animation-timeline: view(); animation-range: entry 0% cover 60%; }
     @keyframes big-in { from { translate: 0 14%; } to { translate: 0 0; } }
 
-    /* the section headings wipe in from their own left edge */
-    .sec-h, .faq-gh, .foot-h { animation: wipe linear both; animation-timeline: view(); animation-range: entry 10% entry 80%; }
-    @keyframes wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+    /* The heading wipe is gone. A view()-driven clip-path left FAQ groups 03 and 04
+       rendering as blank bands, and no gate caught it because the elements were at
+       full opacity the whole time. Nothing that carries text gets clipped by scroll. */
   }
 }
 
@@ -1163,7 +1163,7 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
 .hz-hero::before {
   content: ''; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-lg);
   background:
-    linear-gradient(180deg, rgba(10,9,8,.80) 0%, rgba(10,9,8,.46) 7%, rgba(10,9,8,0) 17%),
+    linear-gradient(180deg, rgba(10,9,8,.88) 0%, rgba(10,9,8,.62) 6%, rgba(10,9,8,.20) 12%, rgba(10,9,8,0) 20%),
     linear-gradient(0deg, rgba(10,9,8,.92) 0%, rgba(10,9,8,.74) 14%, rgba(10,9,8,.38) 32%, rgba(10,9,8,.06) 54%, rgba(10,9,8,0) 68%);
 }
 .hz-hero-copy { display: grid; justify-items: start; padding: 0 clamp(22px, 3vw, 56px) clamp(26px, 2.6vw, 40px); color: #fff; }
@@ -1452,3 +1452,93 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
 /* similar-car rail: without a fixed bed the three cut-outs sit at three heights */
 .sim-card { display: grid; align-content: start; gap: 5px; border-radius: var(--r); }
 .sim-card img { background: #EDEAE6; border-radius: var(--r-sm); aspect-ratio: 16/9; object-fit: contain; padding: 7% 5%; width: 100%; margin-bottom: 8px; }
+
+/* --- nav, second pass. The right-hand cluster is a plain phone link, the WhatsApp
+   circle and one filled pill, which is the reference's text / text / pill rhythm.
+   .nav-call was a 40px circle with border-radius 50%; adding the phone number to it
+   stretched that radius into an ellipse around the text, in both nav states. --- */
+.nav-call {
+  width: auto; height: auto; display: inline-flex; align-items: center; gap: 9px;
+  border: 0; border-radius: var(--r-pill); padding: 8px 10px 8px 4px;
+  color: inherit; transition: color var(--t1) var(--out);
+}
+.nav-call:hover { color: var(--verde-t); }
+.nav-num { font-weight: 500; font-size: 15px; letter-spacing: -.012em; }
+.nav-wa { width: 40px; height: 40px; border-radius: 50%; }
+
+.pillnav { gap: clamp(12px, 2vw, 28px); padding-block: 13px; }
+.pillnav-links { gap: clamp(14px, 2.2vw, 34px); }
+.pillnav-links a { font-size: 16px; font-weight: 550; padding-block: 8px; }
+.pillnav-tools { gap: 12px; }
+.brand-logo { height: 54px; }
+
+/* the pill hugs its content instead of holding an 880px box with a hole in the middle */
+.pillnav.is-pinned {
+  width: max-content; max-width: calc(100% - 2 * var(--pad));
+  padding: 6px 6px 6px 20px; gap: clamp(12px, 1.6vw, 26px);
+}
+.is-pinned .brand-logo { height: 32px; }
+.is-pinned .pillnav-links { margin-inline: 0; }
+.is-pinned .reserve-cta { padding: 10px 20px; }
+
+/* over the hero photo the bar sits inside the rounded frame, not flush to its edge */
+body[data-page="index"] .pillnav:not(.is-pinned) {
+  padding-inline: calc(var(--pad) + clamp(16px, 1.8vw, 38px));
+}
+body[data-page="index"] .pillnav:not(.is-pinned) .nav-call:hover { color: #fff; }
+
+@media (max-width: 900px) {
+  .nav-call { width: 40px; height: 40px; padding: 0; justify-content: center; }
+}
+@media (max-width: 780px) {
+  .brand-logo { height: 36px; }
+  .pillnav { padding-block: 8px; }
+  body[data-page="index"] .pillnav:not(.is-pinned) { padding-inline: 18px; }
+}
+
+/* --- the other 26 pages, brought onto the homepage voice --- */
+/* every remaining uppercase tracked label. Switzer has no width axis and the spec says
+   sentence case throughout; these were left behind by the first pass. */
+.spec-t td:nth-child(odd), .facts-col dt, .dest-region, .gantry-go, .sum-t td:first-child,
+.done-t td:first-child, .board-t td, .exitrail em, .lane-no, .hero-cls, .step-n, .faq-gh .mono {
+  text-transform: none; font-stretch: normal; letter-spacing: 0;
+}
+.spec-t td:nth-child(odd) { font-size: .88em; color: var(--dim); }
+.facts-col dt { font-size: 13px; }
+.gantry-go { font-weight: 700; font-size: 15.5px; letter-spacing: -.01em; }
+
+/* red is the brand and the hover state, not a decoration. These were four decorative
+   uses of the one accent: a whole red paragraph, five red numbered chips, a giant red
+   number, and a red tracked kicker under every destination heading. */
+.man-body p:last-child { color: var(--ink); font-weight: 700; }
+.prom .gchip { background: var(--card-2); color: var(--ink); border: 1px solid var(--line); }
+.qa .gchip { background: var(--card-2); color: var(--ink); }
+.rst-big { color: var(--card-2); }
+.dest-region { color: var(--dim); font-size: 14px; }
+.step-n, .lane-no, .hero-cls, .exitrail em, .faq-gh .mono { color: var(--dim); }
+.rb-total { color: var(--dim); }
+
+/* car page action bar: at 390px the price wrapped to two lines and the Book pill ran
+   off the right edge with its arrow clipped. Nothing in it may wrap. */
+@media (max-width: 640px) {
+  .reservebar {
+    width: calc(100% - 20px); padding: 8px 8px 8px 16px; gap: 8px;
+    border-radius: var(--r-pill); flex-wrap: nowrap;
+  }
+  .rb-cluster { flex: none; }
+  .rb-price { display: flex; align-items: baseline; gap: 3px; white-space: nowrap; font-size: 13px; }
+  .rb-price strong { font-size: 17px; }
+  .rb-total { display: none; }
+  .reservebar .btn-wa, .reservebar .rb-call { padding: 10px 12px; font-size: 0; gap: 0; }
+  .reservebar .btn-wa span, .reservebar .rb-call { min-width: 0; }
+  .reservebar .rb-call { font-size: 13px; padding: 11px 14px; }
+  .reservebar .btn-verde {
+    margin-left: auto; padding: 11px 16px; font-size: 13.5px;
+    white-space: nowrap; flex: none;
+  }
+}
+/* the booking summary hid three of its five rows on mobile. The rows are the whole
+   point of the panel: they are what tells you what you are about to send. */
+@media (max-width: 1100px) {
+  .sumboard .sum-t tr { display: table-row; }
+}

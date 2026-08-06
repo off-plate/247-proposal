@@ -32,7 +32,7 @@
   },
   {
    "t": "The car in the photo",
-   "d": "Nineteen cars, each one photographed and priced on its own page. You book that car, not a category with 'or similar' printed next to it."
+   "d": "Twenty cars, each one photographed and priced on its own page. You book that car, not a category with 'or similar' printed next to it."
   },
   {
    "t": "Airport or city, same key",
@@ -40,7 +40,7 @@
   },
   {
    "t": "Automatic as standard",
-   "d": "Eighteen of nineteen cars are automatic, which matters on Albanian mountain roads more than anywhere you have driven before."
+   "d": "Nineteen of the twenty cars are automatic, which matters on Albanian mountain roads more than anywhere you have driven before."
   },
   {
    "t": "A person on the phone",
@@ -70,11 +70,11 @@
   },
   {
    "q": "Is the car in the photo the car I get?",
-   "a": "Yes. Every one of the 19 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
+   "a": "Yes. Every one of the 20 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
   },
   {
    "q": "Are the cars automatic?",
-   "a": "Eighteen of the nineteen are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
+   "a": "Eighteen of the twenty are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
   },
   {
    "q": "Do you have a seven-seater?",
@@ -287,11 +287,11 @@
    "q": [
     {
      "q": "Is the car in the photo the car I get?",
-     "a": "Yes. Every one of the 19 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
+     "a": "Yes. Every one of the 20 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
     },
     {
      "q": "Are the cars automatic?",
-     "a": "Eighteen of the nineteen are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
+     "a": "Eighteen of the twenty are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
     },
     {
      "q": "Do you have a seven-seater?",
@@ -383,7 +383,7 @@
    "n": "04",
    "t": "Drive it",
    "d": "Basic insurance and unlimited kilometres inside Albania are in the daily rate. The motorways north and south are fast, the coast road over Llogara and the routes into the mountains are slower and better than any map suggests.",
-   "aside": "18 of 19 cars are automatic"
+   "aside": "19 of 20 cars are automatic"
   },
   {
    "n": "05",
