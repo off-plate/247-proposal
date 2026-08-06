@@ -569,10 +569,10 @@ ${nav('company')}
 
 <section class="colophon" id="colophon">
   <h2 class="sec-h">Colophon</h2>
-  <p>This is an unsolicited redesign proposal for <a href="https://24-7rentalcar.com/">24-7rentalcar.com</a>, built by <a href="https://off-plate.com">Off-Plate</a>. Every car, price, specification, phone number and location on this site was taken from their live website on 5 August 2026. The car photographs are theirs. Nothing here is invented: where a fact was missing, the question is listed rather than answered.</p>
+  <p>This is an unsolicited redesign proposal for <a href="https://24-7rentalcar.com/">24-7rentalcar.com</a>, built by <a href="https://off-plate.com">Off-Plate</a>. Every car, price, specification, phone number and location on this site was taken from their live website on 5 August 2026. Nothing here is invented: where a fact was missing, the question is listed rather than answered. The car photographs are the exception and are labelled as such: they are stand-in shots of the same models, not their cars, because their own photography is between 446 and 735 pixels wide.</p>
   <p>Type is Switzer, one variable file under the Fontshare licence, used at two weights. No framework, no tracker, no analytics, no cookie banner because there are no cookies to consent to. The whole site is hand-built static HTML, CSS and one file of JavaScript.</p>
   <details class="credits"><summary>Photography credits</summary><ul id="credit-list">
-    <li>All ${fleet.length} car photographs belong to 24/7 Car Rental and were taken from 24-7rentalcar.com. They are shown here only to demonstrate the redesign.</li>
+    <li>The car photographs in this demo are stand-ins: one photograph of the same model, sourced from Wikimedia Commons and Wikipedia, for each of the ${fleet.length} cars. They are <strong>not</strong> the actual cars 24/7 Car Rental rents. On a live site every car would carry its own photograph, which is the whole point of listing cars individually rather than by category.</li>
     ${JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-roads.json'))).concat(JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-dest.json')))).map(cr => `<li>${cr.slug}: ${cr.author.replace(/<[^>]+>/g, '')}, ${cr.license}, via <a href="${cr.source_url}" rel="license external">Wikimedia Commons</a></li>`).join('')}
   </ul></details>
 </section>
