@@ -359,5 +359,51 @@
     }
    ]
   }
+ ],
+ "steps": [
+  {
+   "n": "01",
+   "t": "Tell us what and when",
+   "d": "Send the dates, the car you picked from the fleet, and your flight number if you are landing. WhatsApp or phone, whichever you already have open. There is no account to create and no checkout to fight with.",
+   "aside": "Takes about a minute"
+  },
+  {
+   "n": "02",
+   "t": "We answer in writing",
+   "d": "You get the total for your exact dates, where to meet us, and the name of the person who will be there. In writing, the same day and usually within the hour, so nothing is left to discover at the desk.",
+   "aside": "Same day, usually under an hour"
+  },
+  {
+   "n": "03",
+   "t": "Collect at any hour",
+   "d": "Tirana airport arrivals or the city office on Rruga Njazi Meka, ten minutes apart. Both are staffed around the clock, so a 03:40 landing is an ordinary pickup here and not a special request. Give us the flight number and the car waits if you are late.",
+   "aside": "Both desks, 24 hours"
+  },
+  {
+   "n": "04",
+   "t": "Drive it",
+   "d": "Basic insurance and unlimited kilometres inside Albania are in the daily rate. The motorways north and south are fast, the coast road over Llogara and the routes into the mountains are slower and better than any map suggests.",
+   "aside": "18 of 19 cars are automatic"
+  },
+  {
+   "n": "05",
+   "t": "Bring it back",
+   "d": "Return it to either office, whichever suits the end of your trip, at whatever hour your flight leaves. Tell us in advance if you want to swap which one and it costs nothing.",
+   "aside": "Airport or city, your choice"
+  }
+ ],
+ "bring": [
+  {
+   "t": "A driving licence",
+   "d": "EU, UK or US licences are used routinely here. A licence printed in a non-Latin alphabet should come with an International Driving Permit, which you have to get in your own country before you travel. Bring the physical card."
+  },
+  {
+   "t": "A card or cash for the desk",
+   "d": "Nothing is charged in advance and no card details go through the website. You settle at pickup, which is exactly why the confirmation always comes in writing first."
+  },
+  {
+   "t": "Your flight number",
+   "d": "Only if you are landing. It is what lets us hold the car when a flight slips, which on the night arrivals from Istanbul and Rome is not unusual."
+  }
  ]
 }

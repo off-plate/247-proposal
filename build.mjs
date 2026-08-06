@@ -49,6 +49,7 @@ const nav = (active = '') => `
     <img class="brand-logo" src="img/logo-s.webp" alt="" width="280" height="145" fetchpriority="high">
   </a>
   <div class="pillnav-links">
+    <a href="how.html"${active === 'how' ? ' aria-current="page"' : ''}>How it works</a>
     <a href="fleet.html"${active === 'fleet' ? ' aria-current="page"' : ''}>Fleet</a>
     <a href="roads.html"${active === 'roads' ? ' aria-current="page"' : ''}>Roads</a>
     <a href="faq.html"${active === 'faq' ? ' aria-current="page"' : ''}>FAQ</a>
@@ -64,7 +65,7 @@ const nav = (active = '') => `
   </div>
 </nav>
 <div class="sheet" id="sheet" hidden>
-  <a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="faq.html">FAQ</a><a href="company.html">About</a>
+  <a href="how.html">How it works</a><a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="faq.html">FAQ</a><a href="company.html">About</a>
   <a href="book.html" class="sheet-go">Book a car →</a>
   ${waLink(WA_GENERIC, 'sheet-wa', 'Ask on WhatsApp')}
 </div>`;
@@ -122,6 +123,7 @@ const footer = () => `
       <h2>Before you book</h2>
       <p class="foot-claim">No online payment. No card charged in advance. You pay at pickup.</p>
       <ul>
+        <li><a href="how.html">How renting works, step by step</a></li>
         <li><a href="faq.html#booking-3">What the daily price includes</a></li>
         <li><a href="faq.html#driving-1">Licence and driver rules</a></li>
         <li><a href="faq.html#driving-3">Taking the car across a border</a></li>
@@ -182,6 +184,7 @@ ${nav()}
     </form>
   </aside>
   <nav class="exitrail" aria-label="Sections">
+    <a href="how.html"><em>5 steps</em><strong>How it works</strong><span class="x-arrow" aria-hidden="true">→</span></a>
     <a href="fleet.html"><em>${fleet.length} cars</em><strong>The fleet</strong><span class="x-arrow" aria-hidden="true">→</span></a>
     <a href="roads.html"><em>3 routes</em><strong>Where to drive</strong><span class="x-arrow" aria-hidden="true">→</span></a>
     <a href="faq.html"><em>${site.faq.length} answers</em><strong>Straight answers</strong><span class="x-arrow" aria-hidden="true">→</span></a>
@@ -566,6 +569,56 @@ ${nav('faq')}
 </main>
 ${footer()}`;
 
+// ---------- how it works ----------
+const howPage = () => `${head('How renting from us actually works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing the same day, collect at Tirana airport or the city office at any hour.', 'how.html')}
+${nav('how')}
+<main class="howwrap">
+  <section class="how-hero">
+    <h1 class="how-h1">No checkout.<br>A person instead.</h1>
+    <p class="how-lede">There is no payment form on this website and that is deliberate. You send two lines, a person in Tirana answers with the real total, and the car is waiting when you land. Here is the whole thing, start to finish.</p>
+    <div class="how-cta">
+      ${waLink(WA_GENERIC, 'btn-wa', 'Start on WhatsApp')}
+      <a class="btn-paper" href="tel:${TEL}">Call ${site.phone}</a>
+    </div>
+  </section>
+
+  <ol class="steps">
+    ${site.steps.map(s => `<li class="step-row">
+      <span class="step-n mono">${s.n}</span>
+      <div class="step-body">
+        <h2>${s.t}</h2>
+        <p>${s.d}</p>
+      </div>
+      <span class="step-aside mono">${s.aside}</span>
+    </li>`).join('')}
+  </ol>
+
+  <section class="bring">
+    <h2 class="sec-h">What to bring</h2>
+    <div class="bring-grid">
+      ${site.bring.map(x => `<article class="bring-card">
+        <h3>${x.t}</h3>
+        <p>${x.d}</p>
+      </article>`).join('')}
+    </div>
+  </section>
+
+  <section class="how-ask">
+    <div class="gantry">
+      <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Someone is awake</span></p>
+      <div>
+        <p class="faq-ask-h">Ready when you are</p>
+        <p class="faq-ask-p">Send the dates and the car and you will have the total back today. If you would rather ask a question first, that is what the number is for.</p>
+      </div>
+      <div class="faq-ask-btns">
+        ${waLink('Hello 24/7 Car Rental, I would like to book a car. My dates are:', 'gantry-wa', 'Send my dates')}
+        <a class="gantry-call" href="tel:${TEL}">Call ${site.phone}</a>
+      </div>
+    </div>
+  </section>
+</main>
+${footer()}`;
+
 // ---------- 404 ----------
 const notFound = () => `${head('Wrong turn', 'This page is not here. The desk is still open though.', '404.html')}
 ${nav()}
@@ -586,6 +639,7 @@ const pages = {
   'roads.html': roadsPage(),
   'company.html': companyPage(),
   'faq.html': faqPage(),
+  'how.html': howPage(),
   '404.html': notFound(),
 };
 for (const c of fleet) pages[`car-${c.slug}.html`] = carPage(c);
