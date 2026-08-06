@@ -556,10 +556,12 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .foot-desk strong { font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: clamp(17px, 1.7vw, 23px); }
 .foot-desk em { font-style: normal; color: var(--dim); font-size: 14.5px; }
 .foot-desk .mono { color: var(--open); font-size: 12.5px; }
-.foot-desk .openlight {
-  display: inline-flex; align-items: center; color: var(--open);
-  font-stretch: 62%; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .14em; font-size: 13px; white-space: nowrap;
+.foot-desk .openlight { color: var(--open); }
+
+.foot-cols {
+  max-width: var(--shell); margin: 0 auto; padding: clamp(28px, 3.4vw, 52px) var(--pad);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: clamp(24px, 3vw, 56px);
+  border-top: 1px solid var(--line);
 }
 .foot-col h2 { font-stretch: 62%; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: 12.5px; color: var(--dim); margin-bottom: 14px; }
 .foot-col ul { list-style: none; padding: 0; display: grid; gap: 9px; }
@@ -731,9 +733,11 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 
 /* ---------- the open light: this brand's signature ---------- */
 .openlight {
-  display: inline-flex; align-items: center; gap: 9px;
+  display: inline-flex; align-items: center;
   font-stretch: 62%; font-weight: 700; text-transform: uppercase;
   letter-spacing: .14em; font-size: 12.5px; white-space: nowrap;
+}
+@media (prefers-reduced-motion: no-preference) {
 }
 .board .openlight { color: var(--open-board); }
 .gantry .openlight { color: #fff; }
