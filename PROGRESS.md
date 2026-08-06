@@ -9,17 +9,60 @@ loaded with their real content.
 
 ---
 
-## Status 2026-08-05
+## Status 2026-08-07
 
-25 pages. Audit CLEAN, flow test CLEAN, slop-lint 0 errors / 6 accepted warnings.
+27 pages. All gates green.
 
 ```bash
 python3 -m http.server 8472        # from project root; pages at /docs/*.html
 node build.mjs
-node tools/audit.mjs http://localhost:8472/docs
-node tools/flow-test.mjs
+node tools/css-guard.mjs                           # structural, catches deleted layout rules
+node tools/audit.mjs   http://localhost:8472/docs  # contrast + overflow, 4 widths
+node tools/flow-test.mjs http://localhost:8472/docs
+node tools/faq-test.mjs  http://localhost:8472/docs
+node tools/nav-test.mjs  http://localhost:8472/docs
+node tools/motion-test.mjs http://localhost:8472/docs
 python3 ../Jarvis/.claude/design/slop-lint.py docs
 ```
+
+## The reference rebuild, 7 August 2026
+
+Michael supplied a reference screenshot and asked for the same fonts, approach and sections,
+keeping only our own navigation items. `DESIGN-SPEC-HOME.md` holds the full plan, the computed
+contrast ratios and the section-by-section mapping. The short version of what is load-bearing:
+
+- **Type is Switzer**, one variable file, 43 KB, two weights, sentence case, on all 27 pages.
+  Archivo is gone and `css-guard.mjs` now fails if the name comes back. The old
+  condensed-uppercase display voice is retired: Switzer has no width axis, so any
+  `font-stretch` left in the file is inert and the override block near the end of `app.css`
+  is what actually sets the display voice.
+- **`--verde` is `#C21F24`**, measured as the dominant red in their own logo file (5395 px).
+  The two values this project used before, `#A3141B` in the stylesheet and `#C01824` in this
+  document, were never sampled from anything. Do not reintroduce either.
+- **Ink is the button colour.** Red is rationed to hover, active nav state and links. It does
+  not touch price figures.
+- **`--shell` is 2200px.** The reference is a 1440px comp with wide margins; copied literally
+  it strands content in the middle of a 2560px screen, which is a documented rejection.
+- **Asset versioning**: `build.mjs` hashes `app.css` and `app.js` and appends `?v=`. Without it
+  a deployed change looks like a change that never shipped, which cost several rounds.
+- The homepage hero and its booking bar are **siblings**, not parent and child. The bar
+  overlaps by a negative margin on desktop and sits under the photo below 980px. Making the
+  bar a child of the hero puts it on top of the photograph at mobile widths.
+
+### What the reference showed that this site does not have
+
+Five figures in the reference are invented, and each is handled rather than copied:
+
+| Reference | Here | Why |
+|---|---|---|
+| Star ratings on every car card | The year | They declare no rating and none could be verified |
+| "Start from $70/day" | "40 € / day" | They publish a flat daily rate, not a tier structure |
+| 40% and 65% promo cards | 30 € and 65 €, the two ends of the fleet | They run no discount |
+| Client logo strip | Section deleted | Borrowed logos would be fake |
+| "Vehicle Available 3,490" | "24 hours" | 19 in display type advertises being small |
+
+The newsletter input became the contact block for the same reason: no mailing list exists, and
+an input that discards what you type is worse than no input.
 
 ## Where every fact came from
 
@@ -99,7 +142,12 @@ look the research flagged.
 
 ## Client questions (never invented, ask before launch)
 
-1. **Three car photos need reshooting.** The Audi A4 listing shows a close-up of the
+1. **A hero photograph of a car on a road.** The hero currently uses a Wikimedia CC shot of
+   the Llogara pass, credited in the colophon, because every car photograph they own is
+   between 446 and 735 px wide. The largest is 735x312. At a 2200px hero that is a 3x upscale.
+   One afternoon on the coast road with a real camera would replace it with something of
+   theirs, and it is the single highest-value photograph they could commission.
+2. **Three car photos need reshooting.** The Audi A4 listing shows a close-up of the
    steering wheel, not the car. The Golf 6 Cabrio shows the interior. The Passat CC 2014
    is a dark night shot with the headlights on. Every other car has a usable exterior
    photo. One afternoon with a phone, all 19 cars, same angle and same background, would
@@ -119,6 +167,7 @@ look the research flagged.
 
 ## Not done yet
 
+- A second review round on the reference rebuild. Round one ran on 7 August.
 - Albanian and Italian translations. Their market is inbound tourism plus locals; English
   only is a real gap for a proposal aimed at Albania.
 - The Golf 6 Cabrio has no clean cut-out because its source photo is an interior shot, so

@@ -14,8 +14,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/icon.png" sizes="any">
 <link rel="apple-touch-icon" href="img/icon.png">
-<link rel="preload" href="fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css">
+<link rel="preload" href="fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css?v=4f719626">
 
 </head>
 <body data-page="index">
@@ -24,6 +24,7 @@
 <nav class="pillnav" id="pillnav" aria-label="Main">
   <a class="brand" href="index.html" aria-label="24/7 Car Rental, home">
     <img class="brand-logo" src="img/logo-s.webp" alt="" width="280" height="145" fetchpriority="high">
+    <img class="brand-logo brand-rev" src="img/logo-dark.webp" alt="" width="280" height="145">
   </a>
   <div class="pillnav-links">
     <a href="how.html">How it works</a>
@@ -33,11 +34,12 @@
     <a href="company.html">About</a>
   </div>
   <div class="pillnav-tools">
-    <a class="nav-call" href="tel:+355685000700" aria-label="Call +355 68 500 0700" title="+355 68 500 0700">
+    <a class="nav-call" href="tel:+355685000700" title="+355 68 500 0700">
       <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
+      <span class="nav-num">+355 68 500 0700</span>
     </a>
     <a class="nav-wa" href="https://wa.me/355685000700?text=Hello%2024%2F7%20Car%20Rental%2C%20I%20would%20like%20to%20ask%20about%20renting%20a%20car%20in%20Tirana." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>WhatsApp</span></a>
-    <a class="reserve-cta" href="book.html">Book</a>
+    <a class="reserve-cta" href="book.html">Book a car</a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   </div>
 </nav>
@@ -46,198 +48,300 @@
   <a href="book.html" class="sheet-go">Book a car →</a>
   <a class="sheet-wa" href="https://wa.me/355685000700?text=Hello%2024%2F7%20Car%20Rental%2C%20I%20would%20like%20to%20ask%20about%20renting%20a%20car%20in%20Tirana." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>Ask on WhatsApp</span></a>
 </div>
-<main>
-<section class="deck" aria-label="24/7 Car Rental Tirana">
-  <div class="deck-grid">
+<main class="home">
 
-    <div class="deck-panel">
-      <h1 class="deck-h1">A car in Tirana at the hour you actually land</h1>
-      <p class="deck-sub">Both desks are staffed around the clock, so a 04:00 arrival is an ordinary pickup and not a problem to solve. 19 cars, each one photographed and priced, from 30 € a day.</p>
-      <div class="deck-btns">
-        <a class="btn-verde" href="fleet.html">See all 19 cars <span aria-hidden="true">→</span></a>
-        <a class="btn-ink" href="how.html">How it works</a>
-      </div>
+<section class="hz-top" aria-label="Car rental in Tirana">
+  <div class="hz-hero">
+    <img class="hz-hero-img" src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albanian Riviera" width="2400" height="1051" fetchpriority="high">
+    <div class="hz-hero-copy">
+      <h1>A car in Tirana at the hour you actually land</h1>
     </div>
+  </div>
 
-    <figure class="deck-shot">
-      <img src="img/hero-car.webp" alt="Jaguar XF, the top of the fleet" width="610" height="295" fetchpriority="high">
-    </figure>
-
-    <div class="deck-facts">
-      <article class="fact">
-        <span class="fact-k">24h</span>
-        <h2>Open at any hour</h2>
-        <p>Airport and city desk, every day.</p>
-      </article><article class="fact">
-        <span class="fact-k">19</span>
-        <h2>The car you picked</h2>
-        <p>Own photo and price. Never a category.</p>
-      </article><article class="fact">
-        <span class="fact-k">30 €</span>
-        <h2>From, per day</h2>
-        <p>18 of 19 are automatic.</p>
-      </article><article class="fact">
-        <span class="fact-k">0 €</span>
-        <h2>Taken in advance</h2>
-        <p>You settle at pickup, not online.</p>
-      </article>
-    </div>
-
-    <form action="book.html" method="get" class="deckbar">
-      <label class="db-field"><span class="sign">Collect at</span>
-        <select name="loc" required><option value="tia">Tirana International Airport</option><option value="cty">Rruga Njazi Meka, Tiranë</option></select>
+  <form class="hz-bar" action="book.html" method="get">
+    <div class="hz-bar-fields">
+      <label class="hz-f">
+        <span class="hz-f-k">Collect at</span>
+        <select name="loc"><option value="tia">Tirana International Airport</option><option value="cty">Rruga Njazi Meka, Tiranë</option></select>
       </label>
-      <label class="db-field"><span class="sign">From</span><input type="date" name="from" aria-label="Pickup date"></label>
-      <label class="db-field"><span class="sign">Until</span><input type="date" name="to" aria-label="Return date"></label>
-      <div class="db-go">
-        <button class="btn-verde" type="submit">Check dates <span aria-hidden="true">→</span></button>
-        <a class="btn-wa" href="https://wa.me/355685000700?text=Hello%2024%2F7%20Car%20Rental%2C%20I%20would%20like%20to%20ask%20about%20renting%20a%20car%20in%20Tirana." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>WhatsApp</span></a>
-      </div>
-    </form>
-
-  </div>
-</section>
-
-<nav class="exitrail" aria-label="Sections">
-    <a href="how.html"><em>5 steps</em><strong>How it works</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-    <a href="fleet.html"><em>19 cars</em><strong>The fleet</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-    <a href="roads.html"><em>3 routes</em><strong>Where to drive</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-    <a href="faq.html"><em>20 answers</em><strong>Straight answers</strong><span class="x-arrow" aria-hidden="true">→</span></a>
-  </nav>
-</section>
-
-<section class="flagstrip" aria-label="The flagship">
-  <div class="flag-copy">
-    <p class="flag-name">The 03:40 arrival</p>
-    <p class="flag-note">Most Tirana flights land at hours other desks are shut. That is the whole point of the name: a car, a person, and a key, at any hour on the clock.</p>
-    <div class="flag-stats">
-      <div><strong>24/7</strong><span class="sign">Both offices</span></div>
-      <div><strong>18/19</strong><span class="sign">Automatic</span></div>
-      <div><strong>30 €</strong><span class="sign">From, per day</span></div>
+      <label class="hz-f">
+        <span class="hz-f-k">Return to</span>
+        <select name="ret"><option value="tia" selected>Tirana International Airport</option><option value="cty">Rruga Njazi Meka, Tiranë</option></select>
+      </label>
+      <label class="hz-f">
+        <span class="hz-f-k">Pick-up</span>
+        <span class="hz-f-in"><input type="date" name="from" aria-label="Pick-up date"><select name="tfrom" aria-label="Pick-up time"><option>06:00</option><option>06:30</option><option>07:00</option><option>07:30</option><option>08:00</option><option>08:30</option><option>09:00</option><option>09:30</option><option selected>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option><option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option><option>22:30</option><option>23:00</option><option>23:30</option></select></span>
+      </label>
+      <label class="hz-f">
+        <span class="hz-f-k">Return</span>
+        <span class="hz-f-in"><input type="date" name="to" aria-label="Return date"><select name="tto" aria-label="Return time"><option>06:00</option><option>06:30</option><option>07:00</option><option>07:30</option><option>08:00</option><option>08:30</option><option>09:00</option><option>09:30</option><option selected>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option><option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option><option>22:30</option><option>23:00</option><option>23:30</option></select></span>
+      </label>
     </div>
-    <a class="flag-cta" href="fleet.html">See all 19 cars <span aria-hidden="true">→</span></a>
+    <div class="hz-bar-foot">
+      <span class="hz-open"><span class="openlight">Open now</span> Both desks, every hour of every day</span>
+      <span class="hz-chips">
+        <span class="hz-chips-k">Gearbox</span>
+        <label class="hz-chip"><input type="radio" name="gear" value="any" checked><span>Any</span></label>
+        <label class="hz-chip"><input type="radio" name="gear" value="automatic"><span>Automatic (18)</span></label>
+        <label class="hz-chip"><input type="radio" name="gear" value="manual"><span>Manual (1)</span></label>
+      </span>
+      <span class="hz-bar-go">
+        <a class="btn-wa hz-bar-wa" href="https://wa.me/355685000700?text=Hello%2024%2F7%20Car%20Rental%2C%20I%20would%20like%20to%20ask%20about%20renting%20a%20car%20in%20Tirana." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>WhatsApp</span></a>
+        <button class="hz-search" type="submit">Search <span class="x-arrow" aria-hidden="true">&rarr;</span></button>
+      </span>
+    </div>
+  </form>
+</section>
+
+<section class="hz-picks" aria-label="Cars">
+  <div class="hz-head">
+    <h2>A car from every corner of the fleet</h2>
+    <a class="hz-pill" href="fleet.html">All 19 cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
-  <img class="flag-img" src="img/cars/mercedes-benz-c220.webp" alt="Mercedes-Benz C220, one of the airport cars" loading="lazy" width="1400" height="700">
-</section>
-
-<section class="lanes" aria-label="Fleet by lane">
-  <h2 class="sec-h">Every key on the board</h2>
-  <a class="lane" href="fleet.html#city" style="--i:0">
-    <span class="lane-head"><span class="lane-no mono">01</span><strong class="lane-label">Cheapest keys</strong></span>
-    <span class="lane-cars"><img src="img/cars/golf-5-s.webp" alt="Golf 5" loading="lazy" width="640" height="337"><img src="img/cars/hyundai-accent-s.webp" alt="Hyundai Accent" loading="lazy" width="640" height="337"><img src="img/cars/audi-a4-s.webp" alt="Audi A4" loading="lazy" width="640" height="337"></span>
-    <span class="lane-tail"><span class="lane-price mono">from 30 €/day</span><span class="x-arrow" aria-hidden="true">→</span></span></a>
-<a class="lane" href="fleet.html#sedan" style="--i:1">
-    <span class="lane-head"><span class="lane-no mono">02</span><strong class="lane-label">Sedans</strong></span>
-    <span class="lane-cars"><img src="img/cars/volkswagen-passat-s.webp" alt="Volkswagen Passat" loading="lazy" width="640" height="337"><img src="img/cars/mercedes-benz-c220-s.webp" alt="Mercedes Benz c220" loading="lazy" width="640" height="337"><img src="img/cars/audi-a6-s.webp" alt="Audi A6" loading="lazy" width="640" height="337"></span>
-    <span class="lane-tail"><span class="lane-price mono">from 40 €/day</span><span class="x-arrow" aria-hidden="true">→</span></span></a>
-<a class="lane" href="fleet.html#suv" style="--i:2">
-    <span class="lane-head"><span class="lane-no mono">03</span><strong class="lane-label">Seven seats and high up</strong></span>
-    <span class="lane-cars"><img src="img/cars/hyundai-tucson-s.webp" alt="Hyundai Tucson" loading="lazy" width="640" height="337"><img src="img/cars/hyundai-santa-fe-s.webp" alt="Hyundai Santa Fe" loading="lazy" width="640" height="337"><img src="img/cars/hyundai-santa-fe-2016-s.webp" alt="Hyundai Santa Fe 2016" loading="lazy" width="640" height="337"></span>
-    <span class="lane-tail"><span class="lane-price mono">from 50 €/day</span><span class="x-arrow" aria-hidden="true">→</span></span></a>
-<a class="lane" href="fleet.html#coupe" style="--i:3">
-    <span class="lane-head"><span class="lane-no mono">04</span><strong class="lane-label">Coupé and cabrio</strong></span>
-    <span class="lane-cars"><img src="img/cars/audi-a5-2014-s.webp" alt="Audi A5 2014" loading="lazy" width="640" height="337"><img src="img/cars/volkswagen-passat-cc-s.webp" alt="Volkswagen Passat CC 2012" loading="lazy" width="640" height="337"><img src="img/cars/volkswagen-passat-cc-2014-s.webp" alt="Volkswagen Passat CC 2014" loading="lazy" width="640" height="337"></span>
-    <span class="lane-tail"><span class="lane-price mono">from 40 €/day</span><span class="x-arrow" aria-hidden="true">→</span></span></a>
-<a class="lane" href="fleet.html#premium" style="--i:4">
-    <span class="lane-head"><span class="lane-no mono">05</span><strong class="lane-label">The good one</strong></span>
-    <span class="lane-cars"><img src="img/cars/jaguar-xf-s.webp" alt="Jaguar XF" loading="lazy" width="640" height="337"></span>
-    <span class="lane-tail"><span class="lane-price mono">from 65 €/day</span><span class="x-arrow" aria-hidden="true">→</span></span></a>
-</section>
-
-<section class="desks" aria-label="Where to collect">
-  <div class="desk"><span class="openlight">Open now</span><strong>Tirana International Airport</strong><em>Nënë Tereza, arrivals hall</em></div><div class="desk"><span class="openlight">Open now</span><strong>Rruga Njazi Meka, Tiranë</strong><em>City office</em></div>
-</section>
-
-<section class="roadstease" aria-label="Roads">
-  <img src="img/road-riviera.webp" alt="The Albanian Riviera coast road" loading="lazy">
-  <div class="roadstease-copy">
-    <h2>Three drives worth the rental</h2>
-    <p>The Riviera over Llogara, the mountain road to Theth, and the Ottoman towns in the south. Timed, and matched to a car that can do it.</p>
-    <a class="btn-paper" href="roads.html">See the routes <span aria-hidden="true">→</span></a>
+  <div class="pgrid">
+    <a class="pcard" href="car-golf-5.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">City</span>
+    <img src="img/cars/golf-5-s.webp" alt="Golf 5" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">Golf 5</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Manual</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>4</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2005</span>
+  </span>
+  <span class="pcard-price"><strong>30 €</strong><em>/ day</em></span>
+</a>
+    <a class="pcard" href="car-hyundai-accent.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">City</span>
+    <img src="img/cars/hyundai-accent-s.webp" alt="Hyundai Accent" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">Hyundai Accent</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Automatic</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>4</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2012</span>
+  </span>
+  <span class="pcard-price"><strong>35 €</strong><em>/ day</em></span>
+</a>
+    <a class="pcard" href="car-audi-a3-2015.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">Compact</span>
+    <img src="img/cars/audi-a3-2015-s.webp" alt="Audi A3 2015" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">Audi A3 2015</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Automatic</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>5</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2015</span>
+  </span>
+  <span class="pcard-price"><strong>40 €</strong><em>/ day</em></span>
+</a>
+    <a class="pcard" href="car-volkswagen-passat.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">Sedan</span>
+    <img src="img/cars/volkswagen-passat-s.webp" alt="Volkswagen Passat" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">Volkswagen Passat</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Automatic</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>5</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2014</span>
+  </span>
+  <span class="pcard-price"><strong>40 €</strong><em>/ day</em></span>
+</a>
+    <a class="pcard" href="car-volkswagen-golf-7.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">Compact</span>
+    <img src="img/cars/volkswagen-golf-7-s.webp" alt="VW Golf VII" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">VW Golf VII</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Automatic</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>5</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2014</span>
+  </span>
+  <span class="pcard-price"><strong>45 €</strong><em>/ day</em></span>
+</a>
+    <a class="pcard" href="car-hyundai-tucson.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">SUV</span>
+    <img src="img/cars/hyundai-tucson-s.webp" alt="Hyundai Tucson" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">Hyundai Tucson</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Automatic</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>5</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2014</span>
+  </span>
+  <span class="pcard-price"><strong>50 €</strong><em>/ day</em></span>
+</a>
+    <a class="pcard" href="car-hyundai-santa-fe-2016.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">SUV · 7 seats</span>
+    <img src="img/cars/hyundai-santa-fe-2016-s.webp" alt="Hyundai Santa Fe 2016" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">Hyundai Santa Fe 2016</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Automatic</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>7</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2016</span>
+  </span>
+  <span class="pcard-price"><strong>60 €</strong><em>/ day</em></span>
+</a>
+    <a class="pcard" href="car-jaguar-xf.html">
+  <span class="pcard-bed">
+    <span class="pcard-tag">Premium</span>
+    <img src="img/cars/jaguar-xf-s.webp" alt="Jaguar XF" loading="lazy" width="640" height="337">
+  </span>
+  <span class="pcard-nm">Jaguar XF</span>
+  <span class="pcard-gear"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 5v14M12 5v14M18 5v9"/><path d="M6 5h12"/><circle cx="6" cy="19.5" r="1.6" fill="currentColor" stroke="none"/></svg>Automatic</span>
+  <span class="pcard-specs">
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 4h3.2a2 2 0 0 1 2 1.7l1 7.3H8.5A2.5 2.5 0 0 1 6 10.4V5a1 1 0 0 1 1-1Z"/><path d="M13.2 13h3.3a2.5 2.5 0 0 1 2.5 2.5V20H10"/></svg>5</span>
+    <span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 19V8.6a2 2 0 0 1 .9-1.7l6.4-4.2A2 2 0 0 1 14.4 4v15Z"/><path d="M14.4 19H20"/><path d="M8 12.5h2.2"/></svg>5</span>
+    <span class="pcard-yr">2015</span>
+  </span>
+  <span class="pcard-price"><strong>65 €</strong><em>/ day</em></span>
+</a>
   </div>
 </section>
+
+<section class="hz-tags" aria-label="Where to drive">
+  <div class="hz-head">
+    <h2>Where people drive to</h2>
+    <a class="hz-pill" href="roads.html">All routes and places <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="taglist">
+    <a class="tag tag-road" href="roads.html#riviera">The Albanian Riviera<em>120 km</em></a><a class="tag tag-road" href="roads.html#north">North to the Accursed Mountains<em>250 km</em></a><a class="tag tag-road" href="roads.html#berat">Berat and Gjirokastër<em>230 km</em></a>
+    <a class="tag" href="roads.html#ksamil">Ksamil<em>280 km</em></a><a class="tag" href="roads.html#blue-eye">The Blue Eye<em>18 km</em></a><a class="tag" href="roads.html#butrint">Butrint<em>18 km</em></a><a class="tag" href="roads.html#gjirokaster">Gjirokastër<em>230 km</em></a><a class="tag" href="roads.html#koman">Lake Koman ferry<em>150 km</em></a><a class="tag" href="roads.html#valbona">Valbona valley<em>250 km</em></a><a class="tag" href="roads.html#kruja">Krujë<em>35 km</em></a><a class="tag" href="roads.html#shkodra">Shkodër and Rozafa<em>95 km</em></a>
+  </div>
+</section>
+
+<section class="hz-range" aria-label="What it costs">
+  <div class="hz-head">
+    <h2>Thirty euro to sixty-five</h2>
+    <a class="hz-pill" href="fleet.html">Every car and its price <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="rangegrid">
+    <a class="rcard" href="car-golf-5.html">
+      <span class="rcard-body">
+        <span class="rcard-k">The floor</span>
+        <span class="rcard-nm">Golf 5</span>
+        <strong class="rcard-fig">30 €<em>a day</em></strong>
+        <span class="rcard-why">The cheapest key on the board, and the only manual left in the fleet.</span>
+        <span class="rcard-when">2005 &middot; manual &middot; 4 seats &middot; 1.4 L gasoline</span>
+      </span>
+      <span class="rcard-bed"><img src="img/cars/golf-5-s.webp" alt="Golf 5" loading="lazy" width="640" height="337"></span>
+    </a><a class="rcard" href="car-jaguar-xf.html">
+      <span class="rcard-body">
+        <span class="rcard-k">The ceiling</span>
+        <span class="rcard-nm">Jaguar XF</span>
+        <strong class="rcard-fig">65 €<em>a day</em></strong>
+        <span class="rcard-why">The whole fleet fits between these two, and nothing above it costs more.</span>
+        <span class="rcard-when">2015 &middot; automatic &middot; 5 seats &middot; 2.2 L diesel</span>
+      </span>
+      <span class="rcard-bed"><img src="img/cars/jaguar-xf-s.webp" alt="Jaguar XF" loading="lazy" width="640" height="337"></span>
+    </a>
+  </div>
+</section>
+
+<section class="hz-mosaic" aria-label="How it works">
+  <div class="mo-cta">
+    <span class="mo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="8.5" cy="12" r="4.5"/><path d="M13 12h8M18 12v3.5M15.5 12v2.5"/></svg></span>
+    <h2>Five steps, then you drive</h2>
+    <p>Send the dates and the car. You get the total, the meeting point and the name of the person who will be there, in writing the same day and usually inside the hour.</p>
+    <a class="mo-go" href="how.html">How it works <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+  </div>
+
+  <div class="mo-stat">
+    <img src="img/road-north.webp" alt="The valley road into Theth, northern Albania" loading="lazy" width="2400" height="1600">
+    <span class="mo-stat-body"><em>Both desks are staffed</em><strong>24 hours</strong></span>
+  </div>
+
+  <div class="mo-tall">
+    <img src="img/dest-ksamil.webp" alt="Ksamil, on the far south coast of Albania" loading="lazy" width="1600" height="1000">
+    <p>Albania is a country you drive, not one you are driven around.</p>
+  </div>
+</section>
+
 </main>
 
 <footer class="foot">
-  <div class="foot-top">
-    <div class="foot-act">
-      <p class="foot-h">Talk to a person, any hour</p>
-      <p class="foot-sub">Two offices in Tirana, both staffed around the clock. Send the dates and the car, get a written answer the same day.</p>
-      <div class="foot-btns">
-        <a class="btn-wa" href="https://wa.me/355685000700?text=Hello%2024%2F7%20Car%20Rental%2C%20I%20would%20like%20to%20ask%20about%20renting%20a%20car%20in%20Tirana." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>WhatsApp us</span></a>
+  <div class="foot-card">
+    <div class="foot-top">
+
+      <div class="foot-brand">
+        <img class="foot-logo" src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
+        <p class="foot-mission">Two offices in Tirana, ten minutes apart, both staffed at every hour of every day. 19 cars, each one photographed and priced on its own page.</p>
+        <div class="foot-desks">
+          <div class="foot-desk">
+            <span class="openlight">Open now</span>
+            <strong>Tirana International Airport</strong>
+            <em>Nënë Tereza, arrivals hall</em>
+          </div><div class="foot-desk">
+            <span class="openlight">Open now</span>
+            <strong>Rruga Njazi Meka, Tiranë</strong>
+            <em>City office</em>
+          </div>
+        </div>
+      </div>
+
+      <nav class="foot-col" aria-label="Cars">
+        <h2>Cars</h2>
+        <ul>
+          <li><a href="car-golf-5.html">Golf 5<span class="foot-fig">30 €</span></a></li><li><a href="car-hyundai-accent.html">Hyundai Accent<span class="foot-fig">35 €</span></a></li><li><a href="car-audi-a3-2014.html">Audi A3 2014<span class="foot-fig">40 €</span></a></li><li><a href="car-volkswagen-passat-sel-2014.html">Volkswagen Passat Sel 2014<span class="foot-fig">40 €</span></a></li><li><a href="car-audi-a3-2015.html">Audi A3 2015<span class="foot-fig">40 €</span></a></li>
+          <li><a href="fleet.html" class="foot-more">All 19 cars <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+      </nav>
+
+      <nav class="foot-col" aria-label="Albania">
+        <h2>Albania</h2>
+        <ul>
+          <li><a href="roads.html#ksamil">Ksamil<span class="foot-fig">280 km</span></a></li><li><a href="roads.html#blue-eye">The Blue Eye<span class="foot-fig">18 km</span></a></li><li><a href="roads.html#butrint">Butrint<span class="foot-fig">18 km</span></a></li><li><a href="roads.html#gjirokaster">Gjirokastër<span class="foot-fig">230 km</span></a></li><li><a href="roads.html#koman">Lake Koman ferry<span class="foot-fig">150 km</span></a></li>
+          <li><a href="roads.html" class="foot-more">All routes and places <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+      </nav>
+
+      <nav class="foot-col" aria-label="Good to know">
+        <h2>Good to know</h2>
+        <ul>
+          <li><a href="how.html">How renting works</a></li>
+          <li><a href="faq.html#booking-3">What the daily price includes</a></li>
+          <li><a href="faq.html#driving-1">Licence and driver rules</a></li>
+          <li><a href="faq.html#driving-3">Taking the car across a border</a></li>
+          <li><a href="company.html">About the company</a></li>
+          <li><a href="faq.html" class="foot-more">All 20 answers <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="foot-col foot-contact">
+        <h2>Talk to a person</h2>
         <a class="foot-call" href="tel:+355685000700">+355 68 500 0700</a>
+        <p class="foot-claim">No online payment. No card charged in advance. You pay at pickup.</p>
+        <a class="btn-wa foot-wa" href="https://wa.me/355685000700?text=Hello%2024%2F7%20Car%20Rental%2C%20I%20would%20like%20to%20ask%20about%20renting%20a%20car%20in%20Tirana." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>Ask on WhatsApp</span></a>
+        <a class="foot-mail" href="mailto:info@24-7rentalcar.com">info@24-7rentalcar.com</a>
+        <div class="foot-social">
+          <a href="https://instagram.com/24_7carrental" rel="noopener" target="_blank" aria-label="Instagram, 24_7carrental" title="@24_7carrental"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.42.7.83.92 1.4.17.44.37 1.1.42 2.3.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.3-.22.6-.5 1-.92 1.4-.42.43-.83.7-1.4.92-.44.17-1.1.37-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.3-.42-.6-.22-1-.5-1.4-.92-.42-.42-.7-.83-.9-1.4-.18-.44-.38-1.1-.43-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.3.22-.6.5-1 .91-1.4.42-.42.83-.7 1.4-.9.44-.18 1.1-.38 2.3-.43C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.83-.4.4-.63.78-.83 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.83 1.3.4.4.78.63 1.3.83.4.16 1 .35 2.1.4 1.2.06 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.83.4-.4.63-.78.83-1.3.16-.4.35-1 .4-2.1.06-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.83-1.3-.4-.4-.78-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm6.3-8.3a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg></a><a href="https://instagram.com/247.car.rental" rel="noopener" target="_blank" aria-label="Instagram, 247.car.rental" title="@247.car.rental"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.42.7.83.92 1.4.17.44.37 1.1.42 2.3.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.3-.22.6-.5 1-.92 1.4-.42.43-.83.7-1.4.92-.44.17-1.1.37-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.3-.42-.6-.22-1-.5-1.4-.92-.42-.42-.7-.83-.9-1.4-.18-.44-.38-1.1-.43-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.3.22-.6.5-1 .91-1.4.42-.42.83-.7 1.4-.9.44-.18 1.1-.38 2.3-.43C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.83-.4.4-.63.78-.83 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.83 1.3.4.4.78.63 1.3.83.4.16 1 .35 2.1.4 1.2.06 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.83.4-.4.63-.78.83-1.3.16-.4.35-1 .4-2.1.06-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.83-1.3-.4-.4-.78-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm6.3-8.3a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg></a>
+          <a href="https://24-7rentalcar.com/" rel="noopener" target="_blank" aria-label="24-7rentalcar.com" title="24-7rentalcar.com"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.6 5.6 3.6 9s-1.2 6.4-3.6 9c-2.4-2.6-3.6-5.6-3.6-9S9.6 5.6 12 3Z"/></svg></a>
+        </div>
       </div>
-      <a class="foot-mail" href="mailto:info@24-7rentalcar.com">info@24-7rentalcar.com</a>
+
     </div>
 
-    <div class="foot-desks">
-      <div class="foot-desk">
-        <span class="openlight">Open now</span>
-        <strong>Tirana International Airport</strong>
-        <em>Nënë Tereza, arrivals hall</em>
-        <span class="mono">24 hours, Monday to Sunday</span>
-      </div><div class="foot-desk">
-        <span class="openlight">Open now</span>
-        <strong>Rruga Njazi Meka, Tiranë</strong>
-        <em>City office</em>
-        <span class="mono">24 hours, Monday to Sunday</span>
-      </div>
+    <div class="foot-legal">
+      <p>24/7 Car Rental, Rruga Njazi Meka, Tiran&euml; and Tirana International Airport. Rates in euro, per day, as published.</p>
+      <p><a href="company.html#colophon">Redesign proposal by Off-Plate</a>. Cars, prices and contact details are the real ones from 24-7rentalcar.com.</p>
     </div>
-  </div>
-
-  <div class="foot-cols">
-    <nav class="foot-col" aria-label="Cars by price">
-      <h2>Cars by price</h2>
-      <ul>
-        <li><a href="car-golf-5.html">Golf 5<span class="mono">30 €</span></a></li><li><a href="car-hyundai-accent.html">Hyundai Accent<span class="mono">35 €</span></a></li><li><a href="car-audi-a3-2014.html">Audi A3 2014<span class="mono">40 €</span></a></li><li><a href="car-volkswagen-passat-sel-2014.html">Volkswagen Passat Sel 2014<span class="mono">40 €</span></a></li><li><a href="car-audi-a3-2015.html">Audi A3 2015<span class="mono">40 €</span></a></li><li><a href="car-audi-a4-2014.html">Audi A4 2014<span class="mono">40 €</span></a></li>
-        <li><a href="fleet.html" class="foot-more">All 19 cars <span aria-hidden="true">→</span></a></li>
-      </ul>
-    </nav>
-
-    <nav class="foot-col" aria-label="Where to go">
-      <h2>Where to go</h2>
-      <ul>
-        <li><a href="roads.html#ksamil">Ksamil<span class="mono">280 km</span></a></li><li><a href="roads.html#blue-eye">The Blue Eye<span class="mono">18 km</span></a></li><li><a href="roads.html#butrint">Butrint<span class="mono">18 km</span></a></li><li><a href="roads.html#gjirokaster">Gjirokastër<span class="mono">230 km</span></a></li><li><a href="roads.html#koman">Lake Koman ferry<span class="mono">150 km</span></a></li><li><a href="roads.html#valbona">Valbona valley<span class="mono">250 km</span></a></li>
-        <li><a href="roads.html" class="foot-more">All routes and places <span aria-hidden="true">→</span></a></li>
-      </ul>
-    </nav>
-
-    <nav class="foot-col" aria-label="Good to know">
-      <h2>Good to know</h2>
-      <ul>
-        <li><a href="faq.html">How do I actually book a car?</a></li><li><a href="faq.html">Do I pay online?</a></li><li><a href="faq.html">Is the price per day the final price?</a></li><li><a href="faq.html">Is it cheaper for a longer rental?</a></li><li><a href="faq.html">Can I change or cancel?</a></li>
-        <li><a href="faq.html" class="foot-more">All 20 answers <span aria-hidden="true">→</span></a></li>
-      </ul>
-    </nav>
-
-    <nav class="foot-col" aria-label="Before you book">
-      <h2>Before you book</h2>
-      <p class="foot-claim">No online payment. No card charged in advance. You pay at pickup.</p>
-      <ul>
-        <li><a href="how.html">How renting works, step by step</a></li>
-        <li><a href="faq.html#booking-3">What the daily price includes</a></li>
-        <li><a href="faq.html#driving-1">Licence and driver rules</a></li>
-        <li><a href="faq.html#driving-3">Taking the car across a border</a></li>
-        <li><a href="faq.html#pickup-5">How fuel works</a></li>
-        <li><a href="faq.html#pickup-4">Delivery to your hotel</a></li>
-      </ul>
-    </nav>
-
-    <div class="foot-col">
-      <h2>Follow</h2>
-      <ul>
-        <li><a href="https://instagram.com/24_7carrental" rel="noopener" target="_blank">Instagram @24_7carrental</a></li><li><a href="https://instagram.com/247.car.rental" rel="noopener" target="_blank">Instagram @247.car.rental</a></li>
-        <li><a href="https://24-7rentalcar.com/" rel="noopener" target="_blank">24-7rentalcar.com</a></li>
-      </ul>
-      <img class="foot-logo" src="img/logo.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
-    </div>
-  </div>
-
-  <div class="foot-legal">
-    <p>24/7 Car Rental, Rruga Njazi Meka, Tiranë and Tirana International Airport. Rates in euro, per day, as published.</p>
-    <p><a href="company.html#colophon">Redesign proposal by Off-Plate</a>. Cars, prices and contact details are the real ones from 24-7rentalcar.com.</p>
   </div>
 </footer>
 <script src="js/fleet-data.js" defer></script>
-<script src="js/app.js" defer></script>
+<script src="js/app.js?v=970b364c" defer></script>
 </body></html>
