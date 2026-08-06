@@ -140,7 +140,7 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 .deck { padding: calc(88px + 3vh) 0 clamp(30px, 4vw, 56px); }
 .deck-grid {
   max-width: var(--shell); margin: 0 auto; padding: 0 var(--pad);
-  display: grid; grid-template-columns: minmax(0, 1.72fr) minmax(280px, 1fr);
+  display: grid; grid-template-columns: minmax(0, 3.1fr) minmax(300px, 1fr);
   gap: clamp(14px, 1.4vw, 22px); align-items: stretch;
 }
 .deck-panel { grid-column: 1; background: var(--card-2); border-radius: var(--r); padding: clamp(26px, 2.4vw, 38px); }
@@ -171,8 +171,8 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
   font-weight: 800; font-size: clamp(15px, 1.25vw, 18px); color: var(--verde-t);
   font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.01em; white-space: nowrap;
 }
-.fact h2 { font-weight: 750; font-size: clamp(16px, 1.25vw, 18.5px); padding-right: 4.5em; }
-.fact p { color: var(--dim); font-size: 14.5px; max-width: 30ch; }
+.fact h2 { font-weight: 750; font-size: clamp(16px, 1.15vw, 17.5px); padding-right: 3.6em; }
+.fact p { color: var(--dim); font-size: 14px; }
 .deckbar {
   grid-column: 1 / -1; margin-top: clamp(6px, .8vw, 12px);
   background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
