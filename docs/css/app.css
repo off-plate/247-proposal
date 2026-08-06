@@ -14,7 +14,6 @@
   --ink: #141212;   --dim: #605A57;
   --verde: #A3141B; --verde-t: #AE131B; --verde-2: #861016; --sole: #E8A33A;
   --open: #1B7443;
-  --panel: #E9E5E2;        /* second light surface: ink 14.91, dim 5.41, verde-t 5.77 */
   --wa: #1D7D4A;      /* white on it 4.86 */
   --wa-2: #14603A;    /* white on it 7.03 */
   --open-board: #12673A;   /* the open green on a light panel, 5.66 */
@@ -140,47 +139,26 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 
 /* ---------- deck: the hour board ---------- */
 .deck {
-  background: var(--panel); color: var(--ink);
-  min-height: 100svh; display: grid; grid-template-rows: 1fr auto auto; grid-template-columns: minmax(0, 1fr);
-  padding-top: clamp(92px, 10vh, 132px); overflow: clip; position: relative;
+  background: var(--paper); color: var(--ink);
+  min-height: 92svh; display: grid; grid-template-rows: 1fr auto; grid-template-columns: minmax(0, 1fr);
+  padding-top: clamp(88px, 9vh, 120px); overflow: clip; position: relative;
 }
 .deck-in {
   max-width: var(--shell); width: 100%; margin: 0 auto; padding: 0 var(--pad);
-  display: grid; align-content: center; gap: clamp(22px, 2.8vw, 40px); position: relative;
+  display: grid; align-content: center; gap: clamp(16px, 1.8vw, 26px); position: relative;
 }
 .deck-copy { position: relative; z-index: 3; max-width: 62%; }
 .deck-h1 {
   font-stretch: 125%; font-weight: 850; text-transform: uppercase;
-  font-size: clamp(38px, 6.6vw, 122px); line-height: .92; letter-spacing: -.014em;
+  font-size: clamp(40px, 7.4vw, 148px); line-height: .9; letter-spacing: -.016em;
 }
 .deck-h1 span { display: block; }
 .deck-h1 span:nth-child(2) { margin-left: .42em; }
-.deck-sub { color: var(--dim); margin-top: 20px; max-width: 46ch; font-size: clamp(15.5px, 1.25vw, 18px); }
+.deck-sub { color: var(--dim); max-width: 44ch; font-size: clamp(16px, 1.3vw, 19px); }
 
 /* 24 ticks, all lit, because they are open at all of them */
-.hours-label {
-  max-width: var(--shell); width: 100%; margin: 0 auto; padding: 0 var(--pad) 12px;
-  display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  position: relative; z-index: 5;
-}
-.hours-label .openlight { color: var(--open-board); }
-.hours-label .openlight::before { background: var(--open-board); }
-.hours-note { color: var(--dim); font-size: 12.5px; }
-.hours {
-  display: flex; align-items: flex-end; gap: clamp(3px, .5vw, 9px); min-width: 0;
-  position: relative; z-index: 5; max-width: var(--shell); width: 100%;
-  margin: 0 auto; padding: 0 var(--pad) clamp(14px, 1.6vw, 22px);
-}
-.hr { display: grid; justify-items: center; gap: 7px; flex: 1 1 0; min-width: 0; position: relative; }
-.hr i { display: block; width: 100%; height: clamp(16px, 2.2vw, 34px); background: var(--open-board); border-radius: 1px; opacity: .42; }
-.hr em {
-  font-style: normal; font-family: 'MartianMono', monospace; font-size: clamp(9px, .72vw, 12px);
-  color: var(--dim); letter-spacing: -.02em;
-}
-.hr.is-now i { opacity: 1; height: clamp(30px, 3.6vw, 56px); }
-.hr.is-now em { color: var(--ink); font-weight: 700; }
 
-.deck-car { position: absolute; right: calc(-1 * var(--pad)); bottom: 0; width: min(50%, 820px); z-index: 1; pointer-events: none; }
+.deck-car { position: absolute; right: calc(-1 * var(--pad)); bottom: -8%; width: min(58%, 1000px); z-index: 1; pointer-events: none; }
 .deck-car img { width: 100%; filter: drop-shadow(0 38px 40px rgb(20 18 18/.28)); }
 
 /* booking sits on the bottom edge, columns rhyming with the board above */
@@ -211,16 +189,7 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
   .db-go .btn-verde, .db-go .btn-wa { flex: 1; justify-content: center; }
 }
 @media (max-width: 560px) {
-  .hours-label { flex-direction: column; align-items: flex-start; gap: 4px; }
-  .hours-note { font-size: 13px; }
-  .hours { padding-bottom: 30px; }
-  .hr em {
-    visibility: hidden; font-size: 13px;
-    position: absolute; top: calc(100% + 6px); left: 50%; translate: -50% 0;
-  }
-  .hr:nth-child(6n + 1) em { visibility: visible; }
-  .hours { gap: 3px; }
-  .deckbar { grid-template-columns: 1fr; }
+    .deckbar { grid-template-columns: 1fr; }
   .db-field { border-right: 0; border-bottom: 1px solid var(--line); padding-inline: var(--pad); }
 }
 
@@ -246,7 +215,7 @@ a:hover .x-arrow, button:hover .x-arrow { translate: 6px 0; }
 
 /* flagship strip: one car, one band, ink */
 .flagstrip {
-  background: var(--card); color: var(--ink); display: grid; overflow: clip;
+  background: var(--paper); color: var(--ink); display: grid; overflow: clip;
   grid-template-columns: minmax(320px, 1fr) 1.4fr; align-items: center;
   gap: clamp(20px, 3vw, 60px); padding: clamp(48px, 7vw, 120px) var(--pad); overflow: clip;
 }
@@ -614,7 +583,8 @@ body[data-page^="car-"] main { padding-bottom: 96px; }
 .e404 { font-stretch: 110%; font-weight: 850; text-transform: uppercase; font-size: clamp(40px, 5vw, 76px); line-height: .92; margin: 8px 0 22px; overflow-wrap: anywhere; }
 
 /* ---------- footer ---------- */
-.foot { background: var(--panel); color: var(--ink); margin-top: clamp(50px, 7vw, 110px); border-top: 1px solid var(--line-2); }
+.foot { background: var(--paper); color: var(--ink); margin-top: clamp(50px, 7vw, 110px); border-top: 1px solid var(--line-2); }
+.flagstrip { border-block: 1px solid var(--line); }
 body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
 .foot-top {
   max-width: var(--shell); margin: 0 auto; padding: clamp(44px, 6vw, 88px) var(--pad) clamp(30px, 4vw, 52px);

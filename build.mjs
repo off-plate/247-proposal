@@ -165,15 +165,10 @@ ${nav()}
   <div class="deck-in">
     <div class="deck-copy">
       <h1 class="deck-h1"><span>Albania,</span> <span>at any</span> <span>hour</span></h1>
-      <p class="deck-sub">Two desks in Tirana, staffed at every hour on this board. ${fleet.length} cars you can see before you book, from ${eur(CHEAP.price)} a day.</p>
+      <p class="deck-sub">Open 24 hours at Tirana airport and in the city. ${fleet.length} cars you can see before you book, from ${eur(CHEAP.price)} a day.</p>
     </div>
 
     <div class="deck-car"><img src="img/cars/${FLAG.slug}.webp" alt="${FLAG.name}, the top of the fleet" width="1400" height="700" fetchpriority="high"></div>
-  </div>
-
-  <p class="hours-label"><span class="openlight">Open right now in Tirana</span><span class="hours-note mono">every hour, both desks</span></p>
-  <div class="hours" id="hours" role="img" aria-label="Open every hour of the day, all 24 of them">
-    ${Array.from({ length: 24 }, (_, h) => `<span class="hr" data-h="${h}"><i></i><em>${String(h).padStart(2, '0')}</em></span>`).join('')}
   </div>
 
   <form action="book.html" method="get" class="deckbar">
