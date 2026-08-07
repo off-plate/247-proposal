@@ -10,6 +10,7 @@ const fleet = JSON.parse(readFileSync(join(ROOT, 'data/fleet.json'), 'utf8'));
 const site  = JSON.parse(readFileSync(join(ROOT, 'data/site.json'), 'utf8'));
 const gallery = JSON.parse(readFileSync(join(ROOT, 'data/gallery.json'), 'utf8'));
 const avail = JSON.parse(readFileSync(join(ROOT, 'data/availability.json'), 'utf8'));
+const reviews = JSON.parse(readFileSync(join(ROOT, 'data/reviews.json'), 'utf8'));
 const D = join(ROOT, 'docs');
 mkdirSync(join(D, 'fonts'), { recursive: true });
 cpSync(join(ROOT, 'assets/fonts/switzer-var.woff2'), join(D, 'fonts/switzer-var.woff2'));
@@ -264,6 +265,20 @@ ${nav()}
   <div class="pgrid">
     ${PICKS.map(s => carCard(fleet.find(c => c.slug === s))).join('\n    ')}
   </div>
+</section>
+
+<section class="hz-revs" aria-label="What renters say">
+  <div class="hz-head">
+    <h2>Five stars from ${reviews.count} renters</h2>
+    <a class="hz-pill" href="${reviews.url}" target="_blank" rel="noopener">Read them on Google <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="revrail">
+    ${reviews.quotes.map(q => `<figure class="rev">
+      <span class="rev-stars" aria-label="Five out of five">${'<svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.5 5.1 5.6.8-4 4 .9 5.6L10 14.4 5 16.9l1-5.6-4.1-4 5.6-.8z"/></svg>'.repeat(5)}</span>
+      <blockquote>${q}</blockquote>
+    </figure>`).join('')}
+  </div>
+  <p class="rev-src">Quoted from their Google profile, rated ${reviews.rating} across ${reviews.count} reviews on ${new Date(reviews.verified).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}. Google does not publish the reviewer names in the listing these came from, so the quotes carry no name.</p>
 </section>
 
 <section class="hz-tags" aria-label="Where to drive">

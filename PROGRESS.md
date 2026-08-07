@@ -177,5 +177,8 @@ look the research flagged.
 13. Is +355 68 500 0700 actually reachable on WhatsApp? Every WhatsApp link on the demo
     assumes it is. If it is a different number, it is a one-line change in data/site.json.
 14. Which Instagram handle is canonical? Two are published and both are linked.
-15. Is there a Google Business Profile with reviews? The site shows no rating because
-    none could be verified, and a linked profile would be worth more than a number.
+15. ~~Is there a Google Business Profile with reviews?~~ ANSWERED 7 Aug 2026. It is
+    24/7 Car Rental, Rruga Njazi Meka, Tirane: **5.0 across 109 reviews**, phone and
+    website both matching. Ten quotes now run on the homepage with a link to it.
+    Reviewer names are not shown because Google does not publish them in the listing
+    the snippets come from; a Places API key would get them.

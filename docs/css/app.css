@@ -3136,3 +3136,25 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
   text-decoration: underline; text-underline-offset: 3px; min-height: 40px;
 }
 #cal-book[aria-disabled="true"] { background: var(--card-2); color: var(--dim); pointer-events: none; }
+
+/* ==========================================================================
+   REVIEWS. Their own, quoted from their Google profile, with the rating and
+   the count and a link so anyone can check both.
+   ========================================================================== */
+.hz-revs { padding-block: clamp(46px, 5vw, 86px) 0; }
+.revrail {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 1fr);
+  gap: clamp(14px, 1.3vw, 22px); overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 6px; overscroll-behavior-x: contain;
+}
+.rev {
+  scroll-snap-align: start; margin: 0; background: var(--card);
+  border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(20px, 2vw, 30px); display: grid; align-content: start; gap: 12px;
+}
+.rev-stars { display: inline-flex; gap: 2px; color: #E8A33A; }
+.rev blockquote { margin: 0; font-size: clamp(15.5px, 1.15vw, 17.5px); line-height: 1.5; }
+.rev blockquote::before { content: '\201C'; }
+.rev blockquote::after { content: '\201D'; }
+.rev-src { color: var(--dim); font-size: 13.5px; margin-top: clamp(14px, 1.4vw, 20px); max-width: 92ch; }
+@media (max-width: 900px) { .revrail { grid-auto-columns: minmax(268px, 84%); } }
