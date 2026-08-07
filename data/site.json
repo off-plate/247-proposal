@@ -74,7 +74,7 @@
   },
   {
    "q": "Is the car in the photo the car I get?",
-   "a": "You book a named car, not a category with 'or similar' beside it. The photographs on this demo are stand-ins of the same model, so ask for a picture of the actual car when you book and it comes back with the confirmation."
+   "a": "Yes. You book a named car, not a category with 'or similar' beside it. Every photograph on this site is the car itself, taken by the office. If you want a fresh one, ask and it comes back with the confirmation."
   },
   {
    "q": "Are the cars automatic?",
@@ -295,7 +295,7 @@
    "q": [
     {
      "q": "Is the car in the photo the car I get?",
-     "a": "You book a named car, not a category with 'or similar' beside it. The photographs on this demo are stand-ins of the same model, so ask for a picture of the actual car when you book and it comes back with the confirmation."
+     "a": "Yes. You book a named car, not a category with 'or similar' beside it. Every photograph on this site is the car itself, taken by the office. If you want a fresh one, ask and it comes back with the confirmation."
     },
     {
      "q": "Are the cars automatic?",

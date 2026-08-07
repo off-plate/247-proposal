@@ -307,6 +307,7 @@ ${nav('fleet')}
         <label class="tog"><input type="checkbox" id="f-5seats"> 5+ seats</label>
       </div>
     </div>
+    <p class="rows-empty" id="rows-empty" hidden>No car matches those filters. <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
     <ol class="rows" id="rows">
       ${fleet.map(c => `<li class="row${c.flagship ? ' is-flag' : ''}" data-slug="${c.slug}" data-cls="${c.cls}" data-price="${c.price}" data-year="${c.year}" data-trans="${c.gear}" data-seats="${c.seats}" data-name="${c.name}" data-meta="${c.year} · ${c.gear} · ${c.engine.toFixed(1)}&nbsp;L ${c.fuel} · ${c.seats}&nbsp;seats">
         <a class="row-link" href="car-${c.slug}.html" aria-label="Open ${c.name}">
@@ -347,22 +348,22 @@ ${nav('fleet')}
 <section class="hero-car">
   <h1 class="hero-nm">${c.name}</h1>
   <img class="hero-img" src="img/cars/${c.slug}.webp" alt="${c.name}" width="1600" height="800" fetchpriority="high">
-  <p class="hero-tag">${c.note} Availability is confirmed in writing when you send your dates.</p>
+  <p class="hero-tag">${c.note}</p>
 </section>
 
 <section class="specsheet" aria-label="Specification">
   <table class="spec-t mono">
-    <tr><td>Class</td><td>${c.clsLabel}</td><td>Year</td><td>${c.year}</td></tr>
+    <tr><td>Year</td><td>${c.year}</td><td>Fuel</td><td>${c.fuel}</td></tr>
     <tr><td>Engine</td><td>${c.engine.toFixed(1)} L ${c.fuel}</td><td>Gearbox</td><td>${c.gear}</td></tr>
-    <tr><td>Seats</td><td>${c.seats}</td><td>Doors</td><td>${c.doors}</td></tr>
-    <tr><td>Rate</td><td>${eur(c.price)} per day</td><td>Luggage</td><td>${c.seats >= 7 ? 'Ask us, it depends on the row you fold' : 'Ask us before you book'}</td></tr>
+    <tr><td>Seats</td><td>${c.seats}</td><td>Class</td><td>${c.clsLabel}</td></tr>
+    <tr><td>Rate</td><td>${eur(c.price)} per day</td><td>Seats</td><td>${c.seats}</td></tr>
   </table>
 </section>
 
 <div class="incwrap"><section class="gantry included" aria-label="Included">
   <p class="gantry-top">${gantryChip('24/7')}<span class="sign">Every rental includes</span></p>
   <ul class="inc-list">
-    <li>One named car with its own year and rate, not a category</li>
+    <li>This car, photographed above, not a category with 'or similar' beside it</li>
     <li>Basic insurance and unlimited kilometres inside Albania</li>
     <li>Collection at Tirana airport or the city office, at any hour</li>
     <li>Delivery inside Tirana on request, cost confirmed before you book</li>
@@ -440,7 +441,7 @@ ${nav()}
           <a class="gantry-go" id="send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp <span aria-hidden="true">→</span></a>
           <a class="btn-paper" id="send-call" href="tel:${TEL}">Or call now</a>
         </div>
-        <p class="done-note">This demo opens WhatsApp with the details filled in. Nothing is charged and no card is taken. On the live site this would also drop an email into the office inbox.</p>
+        
       </div>
     </section>
 
@@ -570,10 +571,8 @@ ${nav('faq')}
 <main class="faqwrap">
   <section class="faq-hero">
     <h1 class="faq-h1">Questions,<br>answered straight</h1>
-    <p class="faq-lede">Everything renters ask us before they land, and the things they wish they had asked. If your question is not here, send it and a person in Tirana will answer it today.</p>
-    <div class="faq-jump">
-      ${site.faqGroups.map(g => `<a href="#${g.id}">${g.g}</a>`).join('')}
-    </div>
+    
+
   </section>
 
   ${site.faqGroups.map((g, gi) => `
@@ -610,8 +609,8 @@ const howPage = () => `${head('How renting from us works', 'No online checkout. 
 ${nav('how')}
 <main class="howwrap">
   <section class="how-hero">
-    <h1 class="how-h1">No checkout.<br>A person instead.</h1>
-    <p class="how-lede">There is no payment form on this website and that is deliberate. You send two lines, the office answers with the real total, and the car is waiting when you land.</p>
+    <h1 class="how-h1">Book it in two lines on WhatsApp</h1>
+    <p class="how-lede">You send two lines, the office answers with the real total, and the car is waiting when you land.</p>
     <div class="how-cta">
       ${waLink(WA_GENERIC, 'btn-wa', 'Start on WhatsApp')}
       <a class="btn-paper" href="tel:${TEL}">Call ${site.phone}</a>

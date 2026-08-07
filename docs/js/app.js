@@ -98,14 +98,18 @@
         if (ok) shown++;
         rows.appendChild(el);
       });
-      const cnt = $('#rowcount');
-      if (cnt) cnt.textContent = shown === items.length ? `${items.length} cars` : `${shown} of ${items.length} cars`;
+      const empty = $('#rows-empty');
+      if (empty) empty.hidden = shown > 0;
     };
     $('#chips').addEventListener('click', e => {
       const c = e.target.closest('.chip'); if (!c) return;
       laneSet = null; cls = c.dataset.cls; apply();
     });
     ['#sort', '#f-auto', '#f-5seats'].forEach(s => $(s).addEventListener('change', apply));
+    const clear = $('#rows-clear');
+    if (clear) clear.addEventListener('click', () => {
+      laneSet = null; cls = 'all'; $('#f-auto').checked = false; $('#f-5seats').checked = false; apply();
+    });
 
     apply();
   }
@@ -254,8 +258,10 @@
         const el = $('.pick-total', p);
         if (n > 0) {
           const perDay = +p.dataset.price;
-          const total = n >= 7 ? perDay * SITE.week * Math.floor(n / 7) + perDay * (n % 7) : perDay * n;
-          el.textContent = `${eur(total)} for ${n} day${n > 1 ? 's' : ''}${n >= 7 ? ', 7th day free' : ''}`;
+          // days x the published daily rate. There is no weekly formula and no free day:
+          // they publish neither, and SITE.week was undefined, which printed NaN.
+          const total = perDay * n;
+          el.textContent = `${eur(total)} for ${n} day${n > 1 ? 's' : ''}`;
         } else el.textContent = `${eur(+p.dataset.price)}/day`;
       });
     };
@@ -271,8 +277,12 @@
 
     /* step 3: extras */
     /* nav */
-    $('#back').addEventListener('click', () => { step = Math.max(0, step - 1); paint(); });
-    $('#next').addEventListener('click', () => {
+    $('#back').addEventListener('click', () => { toStepTop(); step = Math.max(0, step - 1); paint(); });
+    const toStepTop = () => {
+      const el = $('.step.is-now') || $('.bookgrid');
+      if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    $('#next').addEventListener('click', () => { toStepTop();
       if (!valid()) return;
       if (step === 3) return confirmBooking();
       step += 1; paint();

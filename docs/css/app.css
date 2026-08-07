@@ -2267,3 +2267,85 @@ body[data-page^="car-"] main { padding-bottom: clamp(96px, 10vw, 130px); }
 .sum-total td:last-child { font-size: 15px; }
 /* the logo was riding the hero's rounded corner */
 body[data-page="index"] .pillnav:not(.is-pinned) { padding-block: 18px; }
+
+/* ==========================================================================
+   FINAL GATE. Every blocker the panel named, in the order it named them.
+   ========================================================================== */
+
+/* 1 + 11: the photographs letterboxed inside grey boxes, so no two tiles matched.
+   One footprint, 3:2, the frame holds the car and no grey rails anywhere. */
+.row-link img, .pcard-bed img, .rcard-bed img, .sim-card img, .pick img {
+  object-fit: cover; padding: 0; background: var(--card-2);
+}
+.row-link img, .pcard-bed { aspect-ratio: 3/2; }
+.sim-card img, .pick img { aspect-ratio: 3/2; }
+.hero-car .hero-img { object-fit: cover; aspect-ratio: 16/8.5; padding: 0; box-shadow: none; }
+.stage-img { object-fit: cover; }
+
+/* 2: green belongs to WhatsApp and to nothing else. */
+.openlight, .foot-desk .openlight, .foot-place .openlight, .aboutcta-desks .foot-desk .openlight,
+.hz-open .openlight, .loc .openlight, .gantry .openlight, .board .openlight { color: var(--dim); }
+.road-cta .btn-wa, .rd .btn-wa {
+  background: transparent; color: var(--ink); border: 1px solid var(--line-2);
+}
+.road-cta .btn-wa:hover, .rd .btn-wa:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.road-cta .btn-wa svg, .rd .btn-wa svg { display: none; }
+
+/* 7: the red rule under the footer phone number read as a rendering bug */
+.foot-call { border: 0; padding: 0; }
+.foot-top { grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 2.2vw, 40px); }
+.foot-card { padding-block: clamp(30px, 3.4vw, 62px); }
+.foot-legal { margin-top: clamp(26px, 2.8vw, 46px); }
+
+/* 8: eleven identical modules with twelve red dashes. One dash per page, and the
+   three routes alternate so the eye has something to hold. */
+.rd-h::after { display: none; }
+.rd:nth-child(even) .rd-img { order: -1; }
+.rd:nth-child(even) { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+.rd:nth-child(-n+3) .rd-img { min-height: clamp(320px, 32vw, 560px); }
+.rd:nth-child(n+4) { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
+.rd:nth-child(n+4) .rd-img { min-height: clamp(200px, 20vw, 300px); }
+.rd:nth-child(n+4) .rd-h { font-size: clamp(20px, 1.6vw, 27px); }
+.rd:nth-child(n+4) .rd-body { padding-block: clamp(20px, 2vw, 32px); }
+
+/* 6 + 25 + 26: raw browser controls on the page that takes the booking */
+.loc { padding-left: 56px; }
+.loc-tick { width: 22px; height: 22px; border-width: 1.5px; }
+.tog, .oneway { display: inline-flex; align-items: center; gap: 11px; cursor: pointer; font-size: 15px; }
+.tog input, .oneway input { accent-color: var(--verde); width: 18px; height: 18px; flex: none; }
+.stepnav .btn-verde { background: var(--ink); color: #fff; }
+.stepnav .btn-verde:hover { background: var(--verde); }
+.stepnav .btn-verde:disabled {
+  background: transparent; color: var(--dim); border: 1px solid var(--line-2); cursor: not-allowed;
+}
+/* 5: the summary is the reason the panel exists. It keeps every row on a phone. */
+@media (max-width: 1100px) { .sumboard .sum-t tr { display: table-row !important; } }
+
+/* 10 + 27: an oversized shadow was painting a grey slab behind the car caption */
+.hero-car .hero-img { filter: none; }
+.hero-tag { background: none; padding: 0; }
+
+/* 22 + 30: the logo sat half on the hero photo and half off it */
+body[data-page="index"] .pillnav:not(.is-pinned) { padding-inline: calc(var(--gut) + clamp(14px, 1.6vw, 34px)); }
+.pillnav { padding-inline: var(--gut); }
+
+/* 28 + 29: the car page on a phone */
+@media (max-width: 780px) {
+  body[data-page^="car-"] main { padding-bottom: 130px; }
+  .spec-t td { border-right: 0; }
+  .spec-t tr { border-bottom: 1px solid var(--line); }
+}
+
+/* 31: a centred pull quote breaking into three ragged lines */
+.mo-tall p { text-align: left; max-width: 17ch; justify-self: start; }
+.mo-tall { place-content: end start; padding: clamp(24px, 3vw, 52px); }
+
+/* 32: two different WhatsApp buttons on one page */
+.faq-ask .btn-wa, .how-ask .btn-wa { background: var(--wa); color: #fff; border: 0; }
+.faq-ask .btn-wa:hover, .how-ask .btn-wa:hover { background: var(--wa-2); }
+/* the open light is neutral now, so it takes the neutral of the surface it sits on */
+.foot-place .openlight, .foot-desk .openlight, .gantry .openlight, .board .openlight,
+.sumboard .openlight, .aboutcta-card .openlight { color: var(--night-dim); }
+.aboutcta-desks .foot-desk .openlight, .loc .openlight, .hz-open .openlight { color: var(--dim); }
+.rows-empty { padding: clamp(30px, 4vw, 60px) clamp(20px, 2.2vw, 34px); color: var(--dim); font-size: 16px; }
+.rows-clear { background: none; border: 0; padding: 0; color: var(--verde-t); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
