@@ -185,7 +185,20 @@
       set('days', nd > 0 ? `${nd} day${nd > 1 ? 's' : ''}` : 'not set');
       const p = price();
       // a zero total on a rental page reads as free or broken. Say what is missing instead.
+      const tot = $$('#sum-t tr').find(r => r.dataset.k === 'total');
+      if (tot) tot.classList.toggle('is-pending', !p.total);
       set('total', p.total ? eur(p.total) : 'after dates and car');
+      // the panel shows the car, not just its name in a table row
+      const c2 = carOf(), fig = $('#sum-car');
+      if (fig) {
+        fig.hidden = !c2;
+        if (c2) {
+          $('#sum-car-img').src = `img/cars/${c2.slug}-s.webp`;
+          $('#sum-car-img').alt = c2.name;
+          $('#sum-car-nm').textContent = c2.name;
+          $('#sum-car-spec').textContent = `${c2.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${c2.seats} seats, ${eur(c2.price)} a day`;
+        }
+      }
     };
     const fmt = d => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase();
 

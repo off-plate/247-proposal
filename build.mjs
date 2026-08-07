@@ -174,7 +174,7 @@ const deck = () => `${head('24/7 Car Rental Tirana. Open at every hour, includin
 ${nav()}
 <main class="home">
 
-<section class="hz-top" aria-label="Car rental in Tirana">
+<section class="hz-top" data-bleed aria-label="Car rental in Tirana">
   <div class="hz-hero">
     <img class="hz-hero-img" src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albanian Riviera" width="2400" height="1051" fetchpriority="high">
     <div class="hz-hero-copy">
@@ -350,7 +350,7 @@ ${nav('fleet')}
 <main>
 <section class="hero-car">
   <h1 class="hero-nm">${c.name}</h1>
-  <div class="cargal" id="cargal">
+  <div class="cargal${(gallery[c.slug] || []).length > 1 ? ' has-strip' : ''}" id="cargal">
     <img class="hero-img" id="cargal-main" src="img/cars/${c.slug}.webp" alt="${c.name}" width="1400" height="800" fetchpriority="high">
     ${(gallery[c.slug] || []).length > 1 ? `<div class="cargal-strip" role="group" aria-label="More photographs of this car">
       ${(gallery[c.slug] || []).map((g, i) => `<button class="cargal-t${i === 0 ? ' is-on' : ''}" type="button" data-img="img/cars/${g}.webp" aria-label="Photo ${i + 1}"><img src="img/cars/${g}.webp" alt="" loading="lazy"></button>`).join('')}
@@ -361,10 +361,9 @@ ${nav('fleet')}
 
 <section class="specsheet" aria-label="Specification">
   <table class="spec-t mono">
-    <tr><td>Year</td><td>${c.year}</td><td>Fuel</td><td>${c.fuel}</td></tr>
+    <tr><td>Year</td><td>${c.year}</td><td>Class</td><td>${c.clsLabel}</td></tr>
     <tr><td>Engine</td><td>${c.engine.toFixed(1)} L ${c.fuel}</td><td>Gearbox</td><td>${c.gear}</td></tr>
-    <tr><td>Seats</td><td>${c.seats}</td><td>Class</td><td>${c.clsLabel}</td></tr>
-    <tr><td>Rate</td><td>${eur(c.price)} per day</td><td>Seats</td><td>${c.seats}</td></tr>
+    <tr><td>Seats</td><td>${c.seats}</td><td>Rate</td><td>${eur(c.price)} per day</td></tr>
   </table>
 </section>
 
@@ -453,7 +452,11 @@ ${nav()}
     </section>
 
     <aside class="gantry sumboard" aria-label="Your reservation so far">
-      <p class="gantry-top">${gantryChip('Σ')}<span class="sign">Your request</span></p>
+      <p class="sum-head">Your request</p>
+      <figure class="sum-car" id="sum-car" hidden>
+        <img id="sum-car-img" src="" alt="">
+        <figcaption><strong id="sum-car-nm"></strong><span id="sum-car-spec"></span></figcaption>
+      </figure>
       <table class="sum-t mono" id="sum-t">
         <tr data-k="loc"><td>Route</td><td>choose</td></tr>
         <tr data-k="dates"><td>Dates</td><td>not set</td></tr>
@@ -538,7 +541,7 @@ ${nav('company')}
   </article>
 </section>
 
-<section class="promises" aria-label="Why choose us">
+<section class="promises" data-bleed aria-label="Why choose us">
   <h2 class="sec-h">Why choose us?</h2>
   <ol class="prom-list">
     <!-- slop-lint-ignore 24/7 Car Rental's own About Us wording, verbatim on request -->${[

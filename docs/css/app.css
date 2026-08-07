@@ -2513,3 +2513,107 @@ body[data-page="index"] .pillnav:not(.is-pinned) .reserve-cta {
 .rd { align-items: stretch; }
 .rd-img { align-self: stretch; height: 100%; min-height: 100%; }
 .rd-body { align-content: center; }
+
+/* the request panel: their brand red doing the work, the car in it, no stray glyph */
+.sumboard { border-top: 3px solid var(--verde); }
+.sum-head { font-weight: 700; font-size: 17px; letter-spacing: -.02em; color: #fff; margin-bottom: 16px; }
+.sum-car {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; align-items: center;
+  margin: 0 0 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.18);
+}
+.sum-car img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--r-sm); background: var(--night-2); }
+.sum-car figcaption { display: grid; gap: 3px; min-width: 0; }
+.sum-car strong { font-size: 15px; font-weight: 700; letter-spacing: -.015em; color: #fff; }
+.sum-car span { font-size: 12.5px; color: var(--night-dim); }
+.sum-t td:last-child { white-space: normal; line-height: 1.35; }
+.sum-total td { border-top: 1px solid rgba(255,255,255,.28); }
+.sum-total td:last-child { color: var(--ink-accent); font-size: 20px; }
+.sumboard .gantry-top { display: none; }
+
+/* ==========================================================================
+   Measured, not assumed. Each of these was verified at 1600 and 390 after.
+   ========================================================================== */
+
+/* FAQ: computed padding was 0, so the questions sat 5px off the card border */
+.faqwrap .faq-group {
+  padding: clamp(26px, 2.6vw, 46px) clamp(26px, 2.6vw, 46px) clamp(14px, 1.6vw, 26px);
+}
+.faqwrap .faq-hero { padding-inline: clamp(4px, 0.6vw, 10px); }
+
+/* the footer's legal line floated between the columns instead of under them */
+.foot-legal { padding-inline: 0; }
+.foot-legal p { margin-inline: 0; }
+.foot-card .foot-legal { justify-content: space-between; align-items: baseline; }
+
+/* no hover on a car card or its photograph. Nothing moves, nothing lifts. */
+.row-link, .row-link img, .pcard, .pcard-bed img, .rcard, .rcard-bed img,
+.sim-card, .sim-card img, .pick, .pick img, .cargal-t, .cargal-t img,
+.dest > img, .lane-cars img, .roadcar img {
+  transition: none;
+}
+.row-link:hover, .row-link:hover img,
+.pcard:hover, .pcard:hover .pcard-bed img,
+.rcard:hover, .rcard:hover .rcard-bed img,
+.sim-card:hover, .sim-card:hover img,
+.pick:hover, .pick:hover img,
+.cargal-t:hover, .cargal-t:hover img,
+.dest:hover > img, .lane:hover .lane-cars img, .roadcar:hover img {
+  scale: 1; translate: 0 0; box-shadow: none; background: inherit;
+}
+.row-link:hover { border-color: var(--line); background: var(--card); }
+.pcard:hover { border-color: var(--line); background: var(--card); }
+.rcard:hover { border-color: var(--line); background: var(--card); }
+.sim-card:hover { border-color: var(--line); translate: 0 0; }
+
+/* the request panel carries the weight the homepage cards do */
+.bookgrid { grid-template-columns: minmax(0, 1fr) minmax(340px, 430px); }
+.sumboard { padding: clamp(26px, 2.6vw, 40px); }
+.sum-head { font-size: 19px; margin-bottom: 20px; }
+.sum-car { grid-template-columns: 128px minmax(0, 1fr); gap: 16px; margin-bottom: 20px; padding-bottom: 20px; }
+.sum-car strong { font-size: 16.5px; }
+.sum-t td { padding: 14px 0; font-size: 14.5px; }
+.sum-total td { padding-top: 16px; font-size: 17px; }
+.sum-total td:last-child { font-size: 23px; }
+
+/* the FAQ and How heroes had their own inline padding, so the page had two edges */
+.faqwrap .faq-hero, .howwrap .how-hero { padding-inline: 0; }
+
+/* the car page: a smaller main image with the gallery stacked beside it, so the
+   whole car and its other photographs are on one laptop screen */
+.cargal.has-strip {
+  display: grid; grid-template-columns: minmax(0, 1fr) clamp(120px, 12vw, 190px);
+  gap: clamp(10px, 1vw, 16px); align-items: start;
+}
+.cargal.has-strip .hero-img { aspect-ratio: 4/3; max-height: 62svh; }
+.cargal.has-strip .cargal-strip {
+  display: grid; grid-auto-rows: min-content; gap: clamp(8px, .8vw, 12px);
+  max-height: 62svh; overflow-y: auto; grid-template-columns: 1fr;
+}
+.cargal-t img { aspect-ratio: 4/3; }
+@media (max-width: 780px) {
+  .cargal.has-strip { grid-template-columns: 1fr; }
+  .cargal.has-strip .hero-img { max-height: none; }
+  .cargal.has-strip .cargal-strip {
+    grid-template-columns: repeat(4, 1fr); max-height: none; overflow: visible;
+  }
+}
+/* these two pages were still sizing themselves from --pad (4vw) while the footer
+   used --gut (3vw), which is where the 48 against 64 came from */
+.faqwrap > section, .howwrap > section, .companywrap > section, .roadswrap > section,
+.bookwrap, .fleetwrap, .foot-card, main > section, main > div.hz-top {
+  width: min(100% - 2 * var(--gut), var(--shell)) !important;
+  margin-inline: auto !important;
+}
+main > [data-bleed] { width: 100% !important; }
+/* a card that already sits inside a shelled wrapper must not inset itself again */
+.fleetwrap > .list, .bookwrap > *, .roadswrap > .rd-list { width: 100% !important; margin-inline: 0 !important; }
+.roadswrap > .rd-list { width: min(100% - 2 * var(--gut), var(--shell)) !important; margin-inline: auto !important; }
+.roadswrap > .rd-list > .rd { width: 100%; }
+/* the estimate placeholder was shouting in the accent colour before it was a number */
+.sum-total.is-pending td:last-child { color: var(--night-dim); font-size: 14px; font-weight: 500; }
+/* the step number still had a coloured plate behind it */
+.pchip .gchip, .pchip.is-now .gchip { background: none !important; border: 0; padding: 0 8px 0 0; color: inherit; }
+/* the day counter showed a bare dash before any dates were set */
+.daysline .mono:empty, #days-chip { border: 0; background: none; padding: 0; color: var(--dim); font-size: 13.5px; }
+/* the fixed action bar was sitting on the spec table on desktop too */
+body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
