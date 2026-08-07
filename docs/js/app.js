@@ -70,7 +70,6 @@
       const note = $('#list-note');
       if (note) note.innerHTML = `Totals are the published daily rate multiplied by your ${nDays} days, starting ${new Date(bk.from).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}. Longer rentals are usually cheaper per day, so the office may quote you less. <a href="book.html">Change dates</a>.`;
     }
-    const stageImg = $('#stage-img'), stageName = $('#stage-name'), stageMeta = $('#stage-meta'), stageView = $('#stage-view');
     const LANES = {
       city: ['golf-5', 'hyundai-accent', 'audi-a4'],
       sedan: ['volkswagen-passat', 'mercedes-benz-c220', 'audi-a6'],
@@ -90,51 +89,43 @@
       const [key, dir] = $('#sort').value.split('-');
       const items = $$('.row', rows);
       items.sort((a, z) => (dir === 'asc' ? 1 : -1) * (+a.dataset[key] - +z.dataset[key]));
+      let shown = 0;
       items.forEach(el => {
         const ok = (laneSet ? laneSet.includes(el.dataset.slug) : (cls === 'all' || el.dataset.cls === cls)) &&
           (!wantAuto || el.dataset.trans === 'automatic') &&
           (!want5 || +el.dataset.seats >= 5);
         el.hidden = !ok;
+        if (ok) shown++;
         rows.appendChild(el);
       });
-      const sel = $('.row.is-sel', rows);
-      if (!sel || sel.hidden) {
-        const flag = items.find(el => !el.hidden && el.dataset.slug === 'jaguar-xf');
-        const first = flag || items.find(el => !el.hidden);
-        if (first) select(first, false);
-      }
+      const cnt = $('#rowcount');
+      if (cnt) cnt.textContent = shown === items.length ? `${items.length} cars` : `${shown} of ${items.length} cars`;
     };
-    const select = (row, scroll = true) => {
-      $$('.row', rows).forEach(r => r.classList.remove('is-sel'));
-      row.classList.add('is-sel');
-      const slug = row.dataset.slug;
-      stageImg.src = `img/cars/${slug}.webp`;
-      stageImg.alt = row.dataset.name;
-      stageName.textContent = row.dataset.name;
-      const bk2 = readBook(), n2 = days(bk2);
-      stageMeta.innerHTML = n2 > 0
-        ? `<span class="mono">${eur(tripTotal(+row.dataset.price, n2))} / ${n2} day${n2 > 1 ? 's' : ''}</span> · ${row.dataset.meta}`
-        : `<span class="mono">${eur(+row.dataset.price)}/day</span> · ${row.dataset.meta}`;
-      stageView.href = `car-${slug}.html`;
-      if (scroll && matchMedia('(max-width:1100px)').matches) window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-    rows.addEventListener('click', e => {
-      if (e.target.closest('.row-go')) return;
-      const row = e.target.closest('.row');
-      if (row) select(row);
-    });
-    rows.addEventListener('keydown', e => {
-      if (e.key === 'Enter') { const row = e.target.closest('.row'); if (row) select(row); }
-    });
     $('#chips').addEventListener('click', e => {
       const c = e.target.closest('.chip'); if (!c) return;
       laneSet = null; cls = c.dataset.cls; apply();
     });
     ['#sort', '#f-auto', '#f-5seats'].forEach(s => $(s).addEventListener('change', apply));
-    // preload full-size images once idle so stage swaps are instant
-    (window.requestIdleCallback || setTimeout)(() => {
-      $$('.row', rows).forEach(r => { const i = new Image(); i.src = `img/cars/${r.dataset.slug}.webp`; });
-    });
+
+    /* list or grid. The choice is the visitor's and it survives the next page. */
+    const sw = $('#viewswitch');
+    if (sw) {
+      const setView = v => {
+        rows.classList.toggle('is-grid', v === 'grid');
+        $$('.vbtn', sw).forEach(b => {
+          const on = b.dataset.view === v;
+          b.classList.toggle('is-on', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        try { localStorage.setItem('fleet-view', v); } catch (e) {}
+      };
+      let saved = 'list';
+      try { saved = localStorage.getItem('fleet-view') || 'list'; } catch (e) {}
+      setView(saved);
+      sw.addEventListener('click', e => {
+        const b = e.target.closest('.vbtn'); if (b) setView(b.dataset.view);
+      });
+    }
     apply();
   }
 

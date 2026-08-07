@@ -300,28 +300,13 @@ ${footer()}`;
 // ---------- fleet ----------
 const fleetPage = () => `${head('The fleet. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' a day', 'Every car we own, photographed and priced. ' + fleet.filter(c => c.gear === 'automatic').length + ' of ' + fleet.length + ' are automatic. Book the exact car, not a category.', 'fleet.html')}
 ${nav('fleet')}
-<main class="split">
-  <section class="stage" aria-live="polite">
-    <div class="stage-floor"></div>
-    <img class="stage-img" id="stage-img" src="img/cars/${FLAG.slug}.webp" alt="${FLAG.name}" width="1600" height="752">
-    <div class="stage-info">
-      <h1 class="stage-name" id="stage-name">${FLAG.name}</h1>
-      <p class="stage-meta" id="stage-meta"><span class="mono">${eur(FLAG.price)}/day</span> · ${FLAG.year} · ${FLAG.gear} · ${FLAG.engine.toFixed(1)}&nbsp;L ${FLAG.fuel} · ${FLAG.seats}&nbsp;seats</p>
-      <div class="stage-ctas">
-        <a class="btn-verde" id="stage-view" href="car-${FLAG.slug}.html">This car <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
+<main class="fleetwrap">
   <section class="list">
     <div class="list-head">
-      <h2 class="list-title">Every car</h2>
+      <h1 class="list-title">Every car</h1>
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All ${fleet.length}</button>
         ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]}</button>`).join('')}
-      </div>
-      <div class="list-ask">
-        <span>Cannot decide?</span>
-        ${waLink('Hello 24/7 Car Rental, I am not sure which car suits my trip. Can you help me choose?', 'btn-wa sm', 'Ask us on WhatsApp')}
       </div>
       <div class="list-tools">
         <label class="sort">Sort <select id="sort">
@@ -331,17 +316,32 @@ ${nav('fleet')}
         </select></label>
         <label class="tog"><input type="checkbox" id="f-auto"> automatic</label>
         <label class="tog"><input type="checkbox" id="f-5seats"> 5+ seats</label>
+        <div class="viewswitch" id="viewswitch" role="group" aria-label="Layout">
+          <button class="vbtn is-on" data-view="list" aria-pressed="true">
+            <svg viewBox="0 0 18 18" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg>List
+          </button>
+          <button class="vbtn" data-view="grid" aria-pressed="false">
+            <svg viewBox="0 0 18 18" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="5.6" height="5.6" rx="1"/><rect x="10.4" y="2" width="5.6" height="5.6" rx="1"/><rect x="2" y="10.4" width="5.6" height="5.6" rx="1"/><rect x="10.4" y="10.4" width="5.6" height="5.6" rx="1"/></svg>Grid
+          </button>
+        </div>
+      </div>
+      <div class="list-ask">
+        <span>Cannot decide?</span>
+        ${waLink('Hello 24/7 Car Rental, I am not sure which car suits my trip. Can you help me choose?', 'btn-wa sm', 'Ask us on WhatsApp')}
       </div>
     </div>
     <ol class="rows" id="rows">
       ${fleet.map(c => `<li class="row${c.flagship ? ' is-flag' : ''}" data-slug="${c.slug}" data-cls="${c.cls}" data-price="${c.price}" data-year="${c.year}" data-trans="${c.gear}" data-seats="${c.seats}" data-name="${c.name}" data-meta="${c.year} · ${c.gear} · ${c.engine.toFixed(1)}&nbsp;L ${c.fuel} · ${c.seats}&nbsp;seats">
-        <img src="img/cars/${c.slug}-s.webp" alt="" loading="lazy" width="640" height="337">
-        <span class="row-nm">${c.name}<em>${c.year} · ${c.gear} · ${c.engine.toFixed(1)}&nbsp;L ${c.fuel} · ${c.seats}&nbsp;seats</em></span>
-        <span class="row-price mono">${eur(c.price)}<em>/day</em></span>
-        <a class="row-go" href="car-${c.slug}.html" aria-label="Open ${c.name}"><span class="x-arrow" aria-hidden="true">→</span></a>
+        <a class="row-link" href="car-${c.slug}.html" aria-label="Open ${c.name}">
+          <img src="img/cars/${c.slug}-s.webp" alt="${c.name}" loading="lazy" width="900" height="506">
+          <span class="row-nm">${c.name}<em>${c.year} · ${c.gear} · ${c.engine.toFixed(1)}&nbsp;L ${c.fuel} · ${c.seats}&nbsp;seats</em></span>
+          <span class="row-tag">${c.clsLabel}</span>
+          <span class="row-price mono">${eur(c.price)}<em>/day</em></span>
+          <span class="x-arrow" aria-hidden="true">→</span>
+        </a>
       </li>`).join('\n')}
     </ol>
-    <p class="list-note" id="list-note">Daily rates as published by 24/7 Car Rental, covering the car, basic insurance and unlimited kilometres inside Albania. Longer rentals cost less per day, so ask for the total. Every car here is a specific car with its own photo, not a category. Set dates in <a href="book.html">Book</a> to see the total for your stay.</p>
+    <p class="list-note" id="list-note">Daily rates as published by 24/7 Car Rental, covering the car, basic insurance and unlimited kilometres inside Albania. Longer rentals cost less per day, so ask for the total. Set dates in <a href="book.html">Book</a> to see the total for your stay.</p>
   </section>
 </main>
 ${footer()}`;
@@ -537,30 +537,51 @@ ${footer()}`;
 };
 
 // ---------- company ----------
-const companyPage = () => `${head('About 24/7 Car Rental Tirana', 'Two locations in Tirana, open every hour of every day, ' + fleet.length + ' cars that are photographed and priced individually. The straight answers to the questions renters actually ask.', 'company.html')}
+const companyPage = () => `${head('About 24/7 Car Rental Tirana', 'Car rental in Tirana, Albania. Two locations, the city office on Rruga Njazi Meka and Tirana International Airport. A fleet of ' + fleet.length + ' maintained cars for city driving, family trips and business.', 'company.html')}
 ${nav('company')}
 <main class="companywrap">
+
 <section class="manifesto">
-  <h1 class="man-h">Open when you land</h1>
+  <h1 class="man-h">We make finding the right car simple</h1>
   <div class="man-body">
-    <p>Most flights into Tirana arrive at hours no rental desk wants to work. Ours does. That is the whole reason the company is called what it is, and it is the one promise everything else here is built around.</p>
-    <p>We are a Tirana company with two offices ten minutes apart: one at the airport, one on Rruga Njazi Meka in the city. ${fleet.length} cars, ${fleet.filter(c => c.gear === 'automatic').length} of them automatic, each photographed and priced on its own page so you know which car you are getting before you arrive.</p>
-    <p>Albania rewards a car more than almost anywhere in Europe. The Riviera, the mountains in the north, the Ottoman towns in the south: none of them are a bus ride. That is what we are actually renting.</p>
+    <p>Welcome to 24/7 Car Rental, a car rental company in Tirana, Albania. Whether you are exploring the streets of Tirana or setting off across the country, we are here so you have the right vehicle for the journey.</p>
+    <p>Our mission is straightforward: good service, quality vehicles, and rental that fits around you. Travel plans are not the same for everyone, which is why the fleet covers a range of well maintained cars for different occasions and budgets.</p>
+    <p>Albania is a country of rich history, striking landscapes and warm hospitality. With a car you are free to find it at your own pace, from Tirana city out to the beaches of the Albanian Riviera.</p>
   </div>
 </section>
 
-<section class="promises" aria-label="The five promises">
-  <h2 class="sec-h">What you get</h2>
+<section class="promises" aria-label="Why choose us">
+  <h2 class="sec-h">Why choose us</h2>
   <ol class="prom-list">
-    ${site.promises.map((p, i) => `<li class="prom"><span class="gchip">${String(i + 1).padStart(2, '0')}</span><div><strong>${p.t}</strong><p>${p.d}</p></div></li>`).join('')}
+    ${[
+      { t: 'Convenience', d: 'Two locations, the city office in Tirana and Tirana International Airport at Rinas, so collecting and returning the car fits your arrival rather than the other way round.' },
+      { t: 'Variety', d: 'A compact car for the city, a roomier one for a family trip, a sedan for business. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' to ' + eur(FLAG.price) + ' a day, each with its own page.' },
+      { t: 'Quality', d: 'Your safety and comfort come first. The fleet is modern and maintained, from brands you already know, so the car behaves the way you expect it to.' },
+      { t: 'Service', d: 'The people who answer the phone are the people who hand you the key. From the first message to the return, someone in Tirana is dealing with it.' },
+    ].map((p, i) => `<li class="prom"><span class="gchip">${String(i + 1).padStart(2, '0')}</span><div><strong>${p.t}</strong><p>${p.d}</p></div></li>`).join('')}
   </ol>
+</section>
+
+<section class="aboutcta">
+  <div class="aboutcta-card">
+    <h2>Ready when you are</h2>
+    <p>Get in touch to book a car or to ask about anything that is not answered here. Visitor or local, in Tirana for a week or for an afternoon, the number is answered at every hour.</p>
+    <div class="aboutcta-btns">
+      ${waLink('Hello 24/7 Car Rental, I would like to ask about renting a car in Tirana.', 'btn-wa', 'Message us on WhatsApp')}
+      <a class="foot-call" href="tel:${TEL}">${site.phone}</a>
+    </div>
+    <a class="aboutcta-mail" href="mailto:${site.email}">${site.email}</a>
+  </div>
+  <div class="aboutcta-desks">
+    ${site.locations.map(l => `<div class="foot-desk"><span class="openlight">Open now</span><strong>${l.label}</strong><em>${l.sub}</em></div>`).join('')}
+  </div>
 </section>
 
 <section class="faq-teaser">
   <div>
     <h2 class="sec-h">Questions get straight answers</h2>
     <p>Licences, borders, night pickups, which car survives the road to Theth, and what the daily price actually covers. ${site.faq.length} of them, grouped and written plainly.</p>
-    <a class="btn-verde" href="faq.html">Read the answers <span aria-hidden="true">→</span></a>
+    <a class="btn-verde" href="faq.html">Read the answers <span aria-hidden="true">&rarr;</span></a>
   </div>
   <ul class="faq-teaser-list">
     ${site.faq.slice(0, 4).map(f => `<li><a href="faq.html">${f.q}</a></li>`).join('')}
@@ -569,7 +590,7 @@ ${nav('company')}
 
 <section class="colophon" id="colophon">
   <h2 class="sec-h">Colophon</h2>
-  <p>This is an unsolicited redesign proposal for <a href="https://24-7rentalcar.com/">24-7rentalcar.com</a>, built by <a href="https://off-plate.com">Off-Plate</a>. Every car, price, specification, phone number and location on this site was taken from their live website on 5 August 2026. Nothing here is invented: where a fact was missing, the question is listed rather than answered. The car photographs are the exception and are labelled as such: they are stand-in shots of the same models, not their cars, because their own photography is between 446 and 735 pixels wide.</p>
+  <p>This is an unsolicited redesign proposal for <a href="https://24-7rentalcar.com/">24-7rentalcar.com</a>, built by <a href="https://off-plate.com">Off-Plate</a>. Every car, price, specification, phone number and location on this site was taken from their live website on 5 August 2026, and the wording on this page follows their own About Us. Nothing here is invented: where a fact was missing, the question is listed rather than answered. The car photographs are the exception and are labelled as such: they are stand-in shots of the same models, not their cars, because their own photography is between 446 and 735 pixels wide.</p>
   <p>Type is Switzer, one variable file under the Fontshare licence, used at two weights. No framework, no tracker, no analytics, no cookie banner because there are no cookies to consent to. The whole site is hand-built static HTML, CSS and one file of JavaScript.</p>
   <details class="credits"><summary>Photography credits</summary><ul id="credit-list">
     <li>The car photographs in this demo are stand-ins: one photograph of the same model, sourced from Wikimedia Commons and Wikipedia, for each of the ${fleet.length} cars. They are <strong>not</strong> the actual cars 24/7 Car Rental rents. On a live site every car would carry its own photograph, which is the whole point of listing cars individually rather than by category.</li>

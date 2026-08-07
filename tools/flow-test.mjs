@@ -28,8 +28,8 @@ const reset = async u => { await page.goto(u, { waitUntil: 'networkidle' }); awa
 
 /* ---- fleet ---- */
 await reset(`${BASE}/fleet.html`);
-const stage0 = await page.textContent('#stage-name');
-stage0.includes('Jaguar') ? ok('stage defaults to the flagship Jaguar') : fail(`stage default: ${stage0}`);
+// the sticky preview panel is gone; the list is the page. tools/fleet-test.mjs covers
+// the list and grid views, so what belongs here is sorting, filtering and pricing.
 await page.selectOption('#sort', 'price-asc');
 let first = await page.$eval('.row:not([hidden])', e => e.dataset.slug);
 first === 'golf-5' ? ok('cheapest first is Golf 5 at 30 €') : fail(`asc first: ${first}`);

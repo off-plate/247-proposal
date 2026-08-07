@@ -1473,8 +1473,10 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
 .brand-logo { height: 54px; }
 
 /* the pill hugs its content instead of holding an 880px box with a hole in the middle */
+/* width: max-content cannot be interpolated, so the bar jumped between states
+   instead of morphing. A resolvable length brings the transition back. */
 .pillnav.is-pinned {
-  width: max-content; max-width: calc(100% - 2 * var(--pad));
+  width: min(calc(100% - 2 * var(--pad)), 1020px);
   padding: 6px 6px 6px 20px; gap: clamp(12px, 1.6vw, 26px);
 }
 .is-pinned .brand-logo { height: 32px; }
@@ -1727,3 +1729,111 @@ body[data-page="index"] .pillnav:not(.is-pinned) .nav-call:hover { color: #fff; 
 .roadcar img { object-fit: cover; aspect-ratio: 16/10; width: clamp(72px, 7vw, 110px); border-radius: 6px; }
 .pick img { object-fit: cover; aspect-ratio: 16/10; border-radius: var(--r-sm); background: var(--card-2); }
 .lane-cars img { object-fit: cover; aspect-ratio: 16/9; border-radius: var(--r-sm); }
+
+/* --- fleet, full width. The sticky preview panel is gone: it held 40 percent of the
+   canvas to show one car you could already see in the row you were hovering. --- */
+.fleetwrap {
+  width: min(100% - 2 * var(--pad), var(--shell));
+  margin: calc(84px + 2vh) auto 0;
+}
+.list { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: visible; }
+.list-head {
+  position: static; padding: clamp(24px, 2.6vw, 40px) clamp(20px, 2.2vw, 34px) 20px;
+  display: grid; gap: 16px; border-bottom: 1px solid var(--line);
+  border-radius: var(--r-lg) var(--r-lg) 0 0; background: var(--card);
+}
+.list-title { font-size: clamp(28px, 2.6vw, 44px); }
+.list-tools { display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; }
+.viewswitch { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: var(--r-pill); margin-left: auto; }
+.vbtn {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; background: none;
+  border-radius: var(--r-pill); padding: 8px 16px; font-size: 14px; font-weight: 500;
+  color: var(--dim); transition: background var(--t1) var(--out), color var(--t1) var(--out);
+}
+.vbtn.is-on { background: var(--ink); color: #fff; }
+.list-ask { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14.5px; color: var(--dim); }
+
+/* list view */
+.rows { display: block; }
+.row { border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row-link {
+  display: grid; grid-template-columns: clamp(96px, 9vw, 150px) minmax(0, 1fr) auto auto auto;
+  align-items: center; gap: clamp(14px, 1.8vw, 30px);
+  padding: clamp(12px, 1.2vw, 18px) clamp(20px, 2.2vw, 34px);
+  text-decoration: none; transition: background var(--t1) var(--out);
+}
+.row-link:hover { background: #FAF9F8; }
+.row-link img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: var(--r-sm); background: var(--card-2); }
+.row-nm { font-weight: 700; font-size: clamp(16px, 1.3vw, 19px); display: grid; gap: 3px; letter-spacing: -.018em; }
+.row-nm em { font-style: normal; font-weight: 500; font-size: 13.5px; color: var(--dim); letter-spacing: 0; }
+.row-tag { font-size: 13px; color: var(--dim); white-space: nowrap; }
+.row-price { font-weight: 700; font-size: clamp(17px, 1.4vw, 21px); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.row-price em { font-style: normal; font-weight: 500; font-size: 13px; color: var(--dim); }
+.row-link .x-arrow { color: var(--dim); }
+.is-flag .row-link { box-shadow: inset 3px 0 0 var(--verde); }
+
+/* grid view, three across */
+.rows.is-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.3vw, 22px); padding: clamp(18px, 1.8vw, 28px);
+}
+.rows.is-grid .row { border: 0; }
+.rows.is-grid .row-link {
+  grid-template-columns: 1fr; align-items: start; gap: 7px; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(12px, 1vw, 16px) clamp(14px, 1.1vw, 18px) clamp(16px, 1.2vw, 20px);
+}
+.rows.is-grid .row-link img { aspect-ratio: 16/9; margin-bottom: 8px; }
+.rows.is-grid .row-link { position: relative; }
+.rows.is-grid .row-tag {
+  position: absolute; top: clamp(20px, 1.8vw, 26px); left: clamp(22px, 1.9vw, 28px); z-index: 2;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-pill);
+  padding: 4px 12px; font-size: 12.5px;
+}
+.rows.is-grid .row-price { margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.rows.is-grid .x-arrow { display: none; }
+.rows.is-grid .is-flag .row-link, .rows.is-grid .row.is-flag .row-link { box-shadow: none; border-color: var(--verde); }
+.list-note { padding: clamp(18px, 2vw, 28px) clamp(20px, 2.2vw, 34px); border-top: 1px solid var(--line); color: var(--dim); font-size: 14.5px; }
+
+@media (max-width: 1250px) { .rows.is-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+  .row-link { grid-template-columns: clamp(84px, 22vw, 120px) minmax(0, 1fr) auto; row-gap: 4px; }
+  .row-tag { display: none; }
+  .row-link .x-arrow { display: none; }
+}
+@media (max-width: 620px) { .rows.is-grid { grid-template-columns: 1fr; } }
+
+/* the morph animates every property that changes between the two states, so the
+   inline padding on the homepage no longer snaps when the bar leaves the photo */
+.pillnav { transition-property: width, padding, top, border-radius, background, box-shadow, border-color, gap; }
+
+/* about page: their own About Us content, in this site's language */
+.companywrap { padding-top: calc(84px + 2vh); }
+.manifesto { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 80px); align-items: start; padding-block: clamp(24px, 3vw, 48px); }
+.man-h { font-size: clamp(32px, 3.6vw, 64px); }
+.man-body { display: grid; gap: 16px; }
+.man-body p { color: var(--dim); max-width: 64ch; }
+.man-body p:last-child { color: var(--ink); font-weight: 500; }
+.promises { padding-block: clamp(30px, 4vw, 64px); }
+.aboutcta {
+  width: min(100% - 2 * var(--pad), var(--shell)); margin: clamp(20px, 3vw, 44px) auto 0;
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(14px, 1.4vw, 24px);
+}
+.aboutcta-card {
+  background: var(--night); color: #fff; border-radius: var(--r-lg);
+  padding: clamp(26px, 3vw, 52px); display: grid; align-content: center; gap: 14px;
+}
+.aboutcta-card h2 { font-weight: 700; font-size: clamp(26px, 2.6vw, 44px); letter-spacing: -.028em; }
+.aboutcta-card p { color: var(--night-dim); max-width: 52ch; }
+.aboutcta-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 6px; }
+.aboutcta-btns .foot-call { color: #fff; }
+.aboutcta-mail { color: var(--night-dim); font-size: 14.5px; }
+.aboutcta-desks { display: grid; gap: clamp(12px, 1.2vw, 20px); align-content: stretch; }
+.aboutcta-desks .foot-desk {
+  background: var(--card-2); border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(20px, 2vw, 30px); display: grid; align-content: center; gap: 5px; color: var(--ink);
+}
+.aboutcta-desks .foot-desk .openlight { color: var(--open); }
+.aboutcta-desks .foot-desk em { color: var(--dim); }
+@media (max-width: 900px) { .aboutcta, .manifesto { grid-template-columns: 1fr; } }
