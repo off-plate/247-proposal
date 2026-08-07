@@ -1,10 +1,10 @@
 {
  "source": "Google Maps business profile for 24/7 Car Rental, Rruga Njazi Meka, Tirane",
- "url": "https://www.google.com/maps/place/24%2F7+Car+Rental/@41.3477283,19.8333309,17z",
+ "url": "https://maps.app.goo.gl/xW1PiKuqa2fNsWrQA",
  "rating": "5.0",
  "count": 109,
  "verified": "2026-08-07",
- "note": "Quotes are copied verbatim from review snippets Google surfaces on the profile listing. Google does not expose the reviewer names in that listing and the Maps review pane could not be read without an API key, so the quotes carry no attribution beyond the profile itself, which is linked.",
+ "note": "Quotes copied verbatim from the review snippets Google surfaces on the profile listing. Reviewer names are not obtainable without a Places API key: six scraping routes were tried and Google renders nothing readable. Link goes to the profile itself so anyone can read them with names there.",
  "quotes": [
   "Smooth pick-up, easy return, and the car was flawless.",
   "The car was in perfect condition and we had a comfortable trip.",
@@ -16,5 +16,6 @@
   "The car was clean, well-maintained, and exactly as described.",
   "We rent a car for 15 days and short long story: was amazing experience.",
   "Smooth experiance, good car and a professional customer service."
- ]
+ ],
+ "place": "0x1350311dd032336b:0xacf125d019f20e7b"
 }

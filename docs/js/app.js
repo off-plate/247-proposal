@@ -221,6 +221,24 @@
     render();
   }
 
+  /* ---------- reviews rail ---------- */
+  const rail = $('#revrail');
+  if (rail) {
+    const step = () => rail.querySelector('.rev')?.getBoundingClientRect().width + 20 || 320;
+    const prev = $('#rev-prev'), next = $('#rev-next');
+    const sync = () => {
+      const max = rail.scrollWidth - rail.clientWidth - 2;
+      prev.disabled = rail.scrollLeft <= 2;
+      next.disabled = rail.scrollLeft >= max;
+    };
+    prev.addEventListener('click', () => rail.scrollBy({ left: -step() * 2, behavior: 'smooth' }));
+    next.addEventListener('click', () => rail.scrollBy({ left: step() * 2, behavior: 'smooth' }));
+    rail.addEventListener('scroll', sync, { passive: true });
+    addEventListener('resize', sync);
+    // after layout, or the widths are still zero and both arrows read as enabled
+    requestAnimationFrame(sync);
+  }
+
   /* ---------- language switcher ---------- */
   const langBtn = $('#lang-btn'), langMenu = $('#lang-menu');
   if (langBtn && langMenu) {

@@ -3158,3 +3158,19 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
 .rev blockquote::after { content: '\201D'; }
 .rev-src { color: var(--dim); font-size: 13.5px; margin-top: clamp(14px, 1.4vw, 20px); max-width: 92ch; }
 @media (max-width: 900px) { .revrail { grid-auto-columns: minmax(268px, 84%); } }
+
+/* the reviews rail says it scrolls, and can be scrolled */
+.rev-tools { display: flex; align-items: center; gap: 8px; }
+.revnav {
+  width: 40px; height: 40px; display: grid; place-content: center;
+  background: none; border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--ink);
+  transition: background 160ms var(--out), border-color 160ms var(--out);
+}
+.revnav:hover:not(:disabled) { background: var(--ink); color: #fff; border-color: var(--ink); }
+.revnav:disabled { color: var(--line-2); cursor: not-allowed; }
+.revrail { scroll-behavior: smooth; scrollbar-width: none; }
+.revrail::-webkit-scrollbar { display: none; }
+
+/* the fleet header: one row for the title and the ask, one for the filters */
+.list-topline { align-items: center; }
+.list-ask { gap: 10px; }

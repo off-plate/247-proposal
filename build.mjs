@@ -270,15 +270,18 @@ ${nav()}
 <section class="hz-revs" aria-label="What renters say">
   <div class="hz-head">
     <h2>Five stars from ${reviews.count} renters</h2>
-    <a class="hz-pill" href="${reviews.url}" target="_blank" rel="noopener">Read them on Google <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+    <div class="rev-tools">
+      <button class="revnav" type="button" id="rev-prev" aria-label="Previous reviews"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></button>
+      <button class="revnav" type="button" id="rev-next" aria-label="More reviews"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></button>
+      <a class="hz-pill" href="${reviews.url}" target="_blank" rel="noopener">Read them on Google <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
   </div>
-  <div class="revrail">
+  <div class="revrail" id="revrail">
     ${reviews.quotes.map(q => `<figure class="rev">
       <span class="rev-stars" aria-label="Five out of five">${'<svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.5 5.1 5.6.8-4 4 .9 5.6L10 14.4 5 16.9l1-5.6-4.1-4 5.6-.8z"/></svg>'.repeat(5)}</span>
       <blockquote>${q}</blockquote>
     </figure>`).join('')}
   </div>
-  <p class="rev-src">Quoted from their Google profile, rated ${reviews.rating} across ${reviews.count} reviews on ${new Date(reviews.verified).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}. Google does not publish the reviewer names in the listing these came from, so the quotes carry no name.</p>
 </section>
 
 <section class="hz-tags" aria-label="Where to drive">
@@ -337,13 +340,13 @@ ${nav()}
 ${footer()}`;
 
 // ---------- fleet ----------
-const fleetPage = () => `${head('The fleet. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' a day', 'Every car we own, photographed and priced. ' + fleet.filter(c => c.gear === 'automatic').length + ' of ' + fleet.length + ' are automatic. Book the exact car, not a category.', 'fleet.html')}
+const fleetPage = () => `${head('Our fleet. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' a day', 'Every car we own, photographed and priced. ' + fleet.filter(c => c.gear === 'automatic').length + ' of ' + fleet.length + ' are automatic. Book the exact car, not a category.', 'fleet.html')}
 ${nav('fleet')}
 <main class="fleetwrap">
   <section class="list">
     <div class="list-head">
       <div class="list-topline">
-        <h1 class="list-title">Every car</h1>
+        <h1 class="list-title">Our fleet</h1>
         <div class="list-ask">
           <span>Not sure which car to take?</span>
           ${waLink('Hello 24/7 Car Rental, I am not sure which car suits my trip. Can you help me choose?', 'btn-wa sm', 'Ask us on WhatsApp')}
