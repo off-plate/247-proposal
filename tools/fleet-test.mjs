@@ -61,6 +61,37 @@ for (const [w, want] of [[2560, 4], [1600, 4], [1300, 3], [1000, 2], [390, 1]]) 
     ? ok(`calendar: 3 months, ${cal.free} free and ${cal.busy} booked days, labelled as demo data`)
     : fail(`calendar: ${JSON.stringify(cal)}`);
 
+  // the calendar is the booking control, so picking a range has to produce the same
+  // number of days and the same total the booking page then shows
+  const free = await p.$$eval('button.cal-d.is-free', e => e.slice(0, 6).map(x => x.dataset.d));
+  await p.click(`button.cal-d[data-d="${free[0]}"]`);
+  await p.click(`button.cal-d[data-d="${free[3]}"]`);
+  await p.waitForTimeout(150);
+  const picked = await p.evaluate(() => ({
+    line: document.querySelector('#cal-pick').textContent,
+    href: document.querySelector('#cal-book').getAttribute('href'),
+    range: document.querySelectorAll('.cal-d.is-in').length,
+    enabled: !document.querySelector('#cal-book').hasAttribute('aria-disabled'),
+  }));
+  picked.enabled && /\d+ days?/.test(picked.line) && picked.href.includes('book/?car=jaguar-xf&from=')
+    ? ok(`calendar picks a range: "${picked.line}"`)
+    : fail(`calendar pick: ${JSON.stringify(picked)}`);
+  // booked days are not selectable at all
+  const busyClickable = await p.$$eval('.cal-d.is-busy', e => e.filter(x => x.tagName === 'BUTTON').length);
+  busyClickable === 0 ? ok('booked days cannot be selected') : fail(`${busyClickable} booked days are clickable`);
+  // and the two pages agree on the number
+  const calDays = picked.line.match(/(\d+) days?/)[1];
+  await p.goto(picked.href.startsWith('http') ? picked.href : `${B}/${picked.href.replace(/^(\.\.\/)+/, '')}`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(300);
+  const bookDays = await p.evaluate(() => {
+    const r = [...document.querySelectorAll('#sum-t tr')].find(x => x.dataset.k === 'days');
+    return (r?.textContent || '').match(/(\d+)/)?.[1];
+  });
+  bookDays === calDays
+    ? ok(`the calendar and the booking agree: ${calDays} days`)
+    : fail(`calendar says ${calDays} days, booking says ${bookDays}`);
+  await p.goto(`${B}/cars/jaguar-xf/`, { waitUntil: 'networkidle' });
+
   // a car booked across a range must disappear from the fleet for that range
   const [bFrom, bTo] = AV['golf-5'][0];
   await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });

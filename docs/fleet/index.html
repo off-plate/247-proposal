@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" href="../img/icon.png">
 <link rel="preload" href="../fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>window.BASE="../"</script>
-<link rel="stylesheet" href="../css/app.css?v=b09e01a8">
+<link rel="stylesheet" href="../css/app.css?v=ffff8c82">
 
 </head>
 <body data-page="fleet">
@@ -73,20 +73,22 @@
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All <b>20</b></button>
         <button class="chip" data-cls="city">City <b>3</b></button><button class="chip" data-cls="compact">Compact <b>3</b></button><button class="chip" data-cls="sedan">Sedan <b>6</b></button><button class="chip" data-cls="coupe">Coupé <b>4</b></button><button class="chip" data-cls="suv">SUV <b>3</b></button><button class="chip" data-cls="premium">Premium <b>1</b></button>
-        <span class="list-dates">
-          <label class="datefilter"><span>From</span><input type="date" id="f-from"></label>
-          <label class="datefilter"><span>To</span><input type="date" id="f-to"></label>
-          <button class="datefilter-clear" type="button" id="f-dates-clear" hidden>Clear dates</button>
-        </span>
-        <span class="list-filters">
-          <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
-          <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
-          <label class="sort">Sort <select id="sort">
+      </div>
+      <div class="listbar">
+        <label class="hz-f"><span class="hz-f-k">From</span><input type="date" id="f-from"></label>
+        <label class="hz-f"><span class="hz-f-k">To</span><input type="date" id="f-to"></label>
+        <label class="hz-f hz-sel"><span class="hz-f-k">Sort by</span>
+          <select id="sort">
             <option value="price-desc">price, high to low</option>
             <option value="price-asc">price, low to high</option>
             <option value="year-desc">newest first</option>
-          </select></label>
-        </span>
+          </select>
+        </label>
+        <div class="listbar-tog">
+          <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
+          <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
+          <button class="datefilter-clear" type="button" id="f-dates-clear" hidden>Clear dates</button>
+        </div>
       </div>
 
     </div>
@@ -405,5 +407,5 @@
   </div>
 </footer>
 <script src="../js/fleet-data.js" defer></script>
-<script src="../js/app.js?v=ad080ab2" defer></script>
+<script src="../js/app.js?v=85ac6918" defer></script>
 </body></html>

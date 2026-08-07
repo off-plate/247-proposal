@@ -143,32 +143,82 @@
     apply();
   }
 
-  /* ---------- car page calendar ---------- */
+  /* ---------- car page calendar: the booking control, not a picture of one ---------- */
   const calEl = $('#cal');
   if (calEl) {
-    const slug = calEl.dataset.slug;
+    const slug = calEl.dataset.slug, rate = +calEl.dataset.price;
     const MONTHS = 3;
     const today = new Date(); today.setHours(0, 0, 0, 0);
-    let html = '';
-    for (let m = 0; m < MONTHS; m++) {
-      const first = new Date(today.getFullYear(), today.getMonth() + m, 1);
-      const last = new Date(today.getFullYear(), today.getMonth() + m + 1, 0);
-      const lead = (first.getDay() + 6) % 7; // weeks start on Monday
-      html += `<div class="cal-month"><p class="cal-m">${first.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</p>`
-        + `<div class="cal-dow">${['M','T','W','T','F','S','S'].map(d => `<span>${d}</span>`).join('')}</div><div class="cal-grid">`
-        + '<span class="cal-pad"></span>'.repeat(lead);
-      for (let day = 1; day <= last.getDate(); day++) {
-        const d = new Date(first.getFullYear(), first.getMonth(), day);
-        const k = iso(d);
-        const past = d < today;
-        const busy = busyOn(slug, k);
-        const cls = past ? 'is-past' : busy ? 'is-busy' : 'is-free';
-        const label = past ? 'past' : busy ? 'booked' : 'available';
-        html += `<span class="cal-d ${cls}" title="${d.toLocaleDateString('en-GB')}: ${label}"><b>${day}</b></span>`;
+    let from = null, to = null;
+    const pickEl = $('#cal-pick'), bookEl = $('#cal-book'), resetEl = $('#cal-reset');
+
+    // the same arithmetic the booking uses, so the calendar and the request never
+    // disagree about how many days a stay is
+    const rentalDays = (a, z) => Math.max(Math.round((new Date(z) - new Date(a)) / 864e5), 0);
+    // a range is only offerable if every night in it is free
+    const clearBetween = (a, z) => {
+      const d = new Date(a + 'T00:00:00'), end = new Date(z + 'T00:00:00');
+      while (d <= end) { if (busyOn(slug, iso(d))) return false; d.setDate(d.getDate() + 1); }
+      return true;
+    };
+
+    const render = () => {
+      let html = '';
+      for (let m = 0; m < MONTHS; m++) {
+        const first = new Date(today.getFullYear(), today.getMonth() + m, 1);
+        const last = new Date(today.getFullYear(), today.getMonth() + m + 1, 0);
+        const lead = (first.getDay() + 6) % 7;
+        html += `<div class="cal-month"><p class="cal-m">${first.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</p>`
+          + `<div class="cal-dow">${['Mo','Tu','We','Th','Fr','Sa','Su'].map(d => `<span>${d}</span>`).join('')}</div><div class="cal-grid">`
+          + '<span class="cal-pad"></span>'.repeat(lead);
+        for (let day = 1; day <= last.getDate(); day++) {
+          const d = new Date(first.getFullYear(), first.getMonth(), day);
+          const k = iso(d);
+          const past = d < today, busy = busyOn(slug, k);
+          const isFrom = from === k, isTo = to === k;
+          const inRange = from && to && k > from && k < to;
+          const cls = ['cal-d',
+            past ? 'is-past' : busy ? 'is-busy' : 'is-free',
+            isFrom ? 'is-from' : '', isTo ? 'is-to' : '', inRange ? 'is-in' : ''].filter(Boolean).join(' ');
+          const label = `${d.toLocaleDateString('en-GB')}: ${past ? 'in the past' : busy ? 'booked' : 'available'}`;
+          html += past || busy
+            ? `<span class="${cls}" title="${label}"><b>${day}</b></span>`
+            : `<button type="button" class="${cls}" data-d="${k}" title="${label}"><b>${day}</b></button>`;
+        }
+        html += '</div></div>';
       }
-      html += '</div></div>';
-    }
-    calEl.innerHTML = html;
+      calEl.innerHTML = html;
+
+      if (from && to) {
+        const n = rentalDays(from, to);
+        const fmt = x => new Date(x + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        pickEl.textContent = n > 0
+          ? `${fmt(from)} to ${fmt(to)}, ${n} day${n > 1 ? 's' : ''}, ${eur(rate * n)}`
+          : 'Pick a last day after the first.';
+        bookEl.href = `${window.BASE || ''}book/?car=${slug}&from=${from}&to=${to}`;
+        bookEl.removeAttribute('aria-disabled');
+      } else if (from) {
+        pickEl.textContent = 'Now pick your last day.';
+        bookEl.setAttribute('aria-disabled', 'true');
+      } else {
+        pickEl.textContent = 'Pick your first day, then your last.';
+        bookEl.setAttribute('aria-disabled', 'true');
+      }
+      resetEl.hidden = !from;
+    };
+
+    calEl.addEventListener('click', e => {
+      const btn = e.target.closest('.cal-d[data-d]'); if (!btn) return;
+      const k = btn.dataset.d;
+      if (!from || (from && to)) { from = k; to = null; }
+      else if (k === from) { from = null; to = null; }
+      else if (k < from) { from = k; to = null; }
+      else if (!clearBetween(from, k)) { from = k; to = null; }   // a booked night sits in between
+      else { to = k; }
+      render();
+    });
+    resetEl.addEventListener('click', () => { from = null; to = null; render(); });
+    render();
   }
 
   /* ---------- language switcher ---------- */

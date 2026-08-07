@@ -337,20 +337,22 @@ ${nav('fleet')}
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All <b>${fleet.length}</b></button>
         ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]} <b>${fleet.filter(x => x.cls === c).length}</b></button>`).join('')}
-        <span class="list-dates">
-          <label class="datefilter"><span>From</span><input type="date" id="f-from"></label>
-          <label class="datefilter"><span>To</span><input type="date" id="f-to"></label>
-          <button class="datefilter-clear" type="button" id="f-dates-clear" hidden>Clear dates</button>
-        </span>
-        <span class="list-filters">
-          <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
-          <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
-          <label class="sort">Sort <select id="sort">
+      </div>
+      <div class="listbar">
+        <label class="hz-f"><span class="hz-f-k">From</span><input type="date" id="f-from"></label>
+        <label class="hz-f"><span class="hz-f-k">To</span><input type="date" id="f-to"></label>
+        <label class="hz-f hz-sel"><span class="hz-f-k">Sort by</span>
+          <select id="sort">
             <option value="price-desc">price, high to low</option>
             <option value="price-asc">price, low to high</option>
             <option value="year-desc">newest first</option>
-          </select></label>
-        </span>
+          </select>
+        </label>
+        <div class="listbar-tog">
+          <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
+          <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
+          <button class="datefilter-clear" type="button" id="f-dates-clear" hidden>Clear dates</button>
+        </div>
       </div>
 
     </div>
@@ -416,8 +418,15 @@ ${nav('fleet')}
     <h2>When this car is free</h2>
     <p class="cal-legend"><span class="cal-key cal-key-free"></span>Available<span class="cal-key cal-key-busy"></span>Booked</p>
   </div>
-  <div class="cal" id="cal" data-slug="${c.slug}"></div>
-  <p class="cal-note">Demo availability. 24/7 Car Rental publish no booking calendar, so these dates are generated to show the feature working. Send your dates and the office confirms what is actually free.</p>
+  <div class="cal" id="cal" data-slug="${c.slug}" data-price="${c.price}"></div>
+  <div class="cal-bar" id="cal-bar">
+    <p class="cal-pick" id="cal-pick">Pick your first day, then your last.</p>
+    <div class="cal-go">
+      <button class="cal-reset" type="button" id="cal-reset" hidden>Clear</button>
+      <a class="btn-verde" id="cal-book" href="book.html?car=${c.slug}" aria-disabled="true">Book these dates <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+  <p class="cal-note">Demo availability. 24/7 Car Rental publish no booking calendar, so these dates are generated to show the feature working. The office confirms what is actually free when you send your request.</p>
 </section>
 
 <div class="incwrap"><section class="gantry included" aria-label="Included">

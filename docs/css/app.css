@@ -3080,18 +3080,59 @@ body[data-page="index"] .pillnav:not(.is-pinned) .lang-btn { color: #fff; border
 .cal-d.is-past { color: #767471; }   /* passes AA on white; --line-2 was 1.89 */
 .cal-note { color: var(--dim); font-size: 14px; margin-top: clamp(14px, 1.4vw, 20px); max-width: 78ch; }
 
-.list-dates { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.datefilter {
-  display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--dim);
-  border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 7px 14px; min-height: 38px;
-}
-.datefilter input {
-  border: 0; background: none; font: inherit; color: var(--ink); font-weight: 500;
-  padding: 0; min-width: 116px; color-scheme: light;
-}
+
+
+
 .datefilter-clear {
   background: none; border: 0; padding: 8px 6px; font-size: 14px; font-weight: 600;
   color: var(--verde-t); text-decoration: underline; text-underline-offset: 3px; min-height: 38px;
 }
 @media (max-width: 1000px) { .cal { grid-template-columns: 1fr; } }
 @media (max-width: 900px) { .datefilter input { min-width: 104px; } }
+
+/* ==========================================================================
+   THE FLEET TOOLBAR IS THE HOMEPAGE SEARCH BAR. One field component on both,
+   because a date field on the fleet had been styled as a filter chip and the
+   sort control carried a border inside its own border.
+   ========================================================================== */
+.listbar {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: var(--r); overflow: clip; align-items: stretch;
+}
+.listbar .hz-f { background: var(--card); padding: clamp(11px, 1.1vw, 15px) clamp(13px, 1.2vw, 18px); }
+.listbar .hz-f input, .listbar .hz-f select { color-scheme: light; width: 100%; }
+.listbar-tog {
+  background: var(--card); display: flex; align-items: center; gap: 10px;
+  padding: clamp(10px, 1vw, 14px) clamp(13px, 1.2vw, 18px); flex-wrap: wrap;
+}
+.sort { all: unset; }
+.listbar .hz-sel::after { bottom: auto; top: 50%; translate: 0 -50%; right: clamp(13px, 1.2vw, 18px); }
+.datefilter-clear {
+  background: none; border: 0; padding: 8px 4px; font-size: 14px; font-weight: 600;
+  color: var(--verde-t); text-decoration: underline; text-underline-offset: 3px; min-height: 38px;
+}
+@media (max-width: 1100px) { .listbar { grid-template-columns: 1fr 1fr; } .listbar-tog { grid-column: 1 / -1; } }
+@media (max-width: 620px)  { .listbar { grid-template-columns: 1fr; } }
+
+/* the calendar is the booking control: pick a first day, pick a last */
+.cal-d { border: 0; background: none; padding: 0; font: inherit; }
+button.cal-d { cursor: pointer; }
+button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
+.cal-d.is-in { background: #EDE6E6; color: var(--ink); border-radius: 0; }
+.cal-d.is-from, .cal-d.is-to { background: var(--ink); color: #fff; }
+.cal-d.is-from { border-radius: var(--r-sm) 0 0 var(--r-sm); }
+.cal-d.is-to { border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+.cal-d.is-from.is-to { border-radius: var(--r-sm); }
+.cal-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  margin-top: clamp(16px, 1.6vw, 24px); padding-top: clamp(14px, 1.4vw, 20px);
+  border-top: 1px solid var(--line);
+}
+.cal-pick { font-weight: 600; font-size: clamp(15px, 1.2vw, 18px); }
+.cal-go { display: flex; align-items: center; gap: 14px; }
+.cal-reset {
+  background: none; border: 0; color: var(--dim); font-size: 14.5px;
+  text-decoration: underline; text-underline-offset: 3px; min-height: 40px;
+}
+#cal-book[aria-disabled="true"] { background: var(--card-2); color: var(--dim); pointer-events: none; }

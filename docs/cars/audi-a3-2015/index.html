@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" href="../../img/icon.png">
 <link rel="preload" href="../../fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>window.BASE="../../"</script>
-<link rel="stylesheet" href="../../css/app.css?v=b09e01a8">
+<link rel="stylesheet" href="../../css/app.css?v=ffff8c82">
 
 </head>
 <body data-page="car-audi-a3-2015">
@@ -85,8 +85,15 @@
     <h2>When this car is free</h2>
     <p class="cal-legend"><span class="cal-key cal-key-free"></span>Available<span class="cal-key cal-key-busy"></span>Booked</p>
   </div>
-  <div class="cal" id="cal" data-slug="audi-a3-2015"></div>
-  <p class="cal-note">Demo availability. 24/7 Car Rental publish no booking calendar, so these dates are generated to show the feature working. Send your dates and the office confirms what is actually free.</p>
+  <div class="cal" id="cal" data-slug="audi-a3-2015" data-price="40"></div>
+  <div class="cal-bar" id="cal-bar">
+    <p class="cal-pick" id="cal-pick">Pick your first day, then your last.</p>
+    <div class="cal-go">
+      <button class="cal-reset" type="button" id="cal-reset" hidden>Clear</button>
+      <a class="btn-verde" id="cal-book" href="../../book/?car=audi-a3-2015" aria-disabled="true">Book these dates <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+  <p class="cal-note">Demo availability. 24/7 Car Rental publish no booking calendar, so these dates are generated to show the feature working. The office confirms what is actually free when you send your request.</p>
 </section>
 
 <div class="incwrap"><section class="gantry included" aria-label="Included">
@@ -158,5 +165,5 @@
   </div>
 </footer>
 <script src="../../js/fleet-data.js" defer></script>
-<script src="../../js/app.js?v=ad080ab2" defer></script>
+<script src="../../js/app.js?v=85ac6918" defer></script>
 </body></html>
