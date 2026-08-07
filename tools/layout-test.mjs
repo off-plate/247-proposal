@@ -75,6 +75,12 @@ for (const w of [2560, 1600, 390]) {
                  : fail(`${w}: fleet card ${flt}px against homepage ${home}px`);
   }
 
+  // the homepage hero starts at the very top: any gap shows through the clear header
+  await p.goto(`${B}/`, { waitUntil: 'networkidle' });
+  const heroTop = await p.$eval('.hz-hero', e => Math.round(e.getBoundingClientRect().top));
+  heroTop === 0 ? ok(`${w}: the hero photograph starts at the top of the page`)
+                : fail(`${w}: ${heroTop}px of page background above the hero`);
+
   // every select is drawn by us, never by the OS on top of our own chevron
   await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
   const native = await p.$$eval('select', els => els.filter(e => getComputedStyle(e).appearance !== 'none').length);

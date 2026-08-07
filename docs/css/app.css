@@ -2883,3 +2883,6 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 }
 .up-keep-btn:hover { border-color: var(--ink); }
 @media (max-width: 760px) { .upgrade { grid-template-columns: 1fr; } }
+/* the hero carried an 8px top margin, so a strip of page background sat above the
+   photograph and read as a white line through the transparent header */
+.hz-top { margin-top: 0; }
