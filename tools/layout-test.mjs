@@ -14,8 +14,8 @@ for (const w of [2560, 1600, 390]) {
   const p = await (await b.newContext({ viewport: { width: w, height: 1000 } })).newPage();
 
   // one left edge per page, every top-level band
-  for (const page of ['index', 'fleet', 'roads', 'faq', 'how', 'company', 'book', 'car-jaguar-xf']) {
-    await p.goto(`${B}/${page}.html`, { waitUntil: 'networkidle' });
+  for (const page of ['', 'fleet/', 'roads/', 'faq/', 'how-it-works/', 'about/', 'book/', 'cars/jaguar-xf/']) {
+    await p.goto(`${B}/${page}`, { waitUntil: 'networkidle' });
     const edges = await p.evaluate(() => {
       const s = new Set();
       document.querySelectorAll('main > section, main > div, footer .foot-card').forEach(el => {
@@ -27,12 +27,12 @@ for (const w of [2560, 1600, 390]) {
       return [...s];
     });
     edges.length === 1
-      ? ok(`${w} ${page}: one left edge (${edges[0]})`)
-      : fail(`${w} ${page}: ${edges.length} left edges: ${edges.sort((a, z) => a - z).join(', ')}`);
+      ? ok(`${w} ${page || 'index'}: one left edge (${edges[0]})`)
+      : fail(`${w} ${page || 'index'}: ${edges.length} left edges: ${edges.sort((a, z) => a - z).join(', ')}`);
   }
 
   // FAQ questions must sit inside their card, not on its border
-  await p.goto(`${B}/faq.html`, { waitUntil: 'networkidle' });
+  await p.goto(`${B}/faq/`, { waitUntil: 'networkidle' });
   const inset = await p.evaluate(() => {
     const g = document.querySelector('.faq-group'), q = document.querySelector('.qa-q');
     return Math.round(q.getBoundingClientRect().left - g.getBoundingClientRect().left);
@@ -48,16 +48,16 @@ for (const w of [2560, 1600, 390]) {
 
   // the fleet card must be the homepage card, to the pixel, at desktop widths
   if (w >= 1600) {
-    await p.goto(`${B}/index.html`, { waitUntil: 'networkidle' });
+    await p.goto(`${B}/`, { waitUntil: 'networkidle' });
     const home = await p.$eval('.pcard', e => Math.round(e.getBoundingClientRect().width));
-    await p.goto(`${B}/fleet.html`, { waitUntil: 'networkidle' });
+    await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
     const flt = await p.$eval('.row-link', e => Math.round(e.getBoundingClientRect().width));
     home === flt ? ok(`${w}: fleet card matches the homepage card (${home}px)`)
                  : fail(`${w}: fleet card ${flt}px against homepage ${home}px`);
   }
 
   // no hover moves a car card or its photograph
-  await p.goto(`${B}/fleet.html`, { waitUntil: 'networkidle' });
+  await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
   const before = await p.$eval('.row:not([hidden]) img', e => JSON.stringify(e.getBoundingClientRect()));
   await p.hover('.row:not([hidden]) .row-link');
   await p.waitForTimeout(350);

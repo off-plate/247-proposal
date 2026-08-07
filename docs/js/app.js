@@ -68,7 +68,7 @@
         el.innerHTML = `${eur(total)}<em> / ${nDays} day${nDays > 1 ? 's' : ''}</em>`;
       });
       const note = $('#list-note');
-      if (note) note.innerHTML = `Totals are the published daily rate multiplied by your ${nDays} days, starting ${new Date(bk.from).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}. Longer rentals are usually cheaper per day, so the office may quote you less. <a href="book.html">Change dates</a>.`;
+      if (note) note.innerHTML = `Totals are the published daily rate multiplied by your ${nDays} days, starting ${new Date(bk.from).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}. Rates are per day, as published. <a href="${window.BASE || ''}book/">Change dates</a>.`;
     }
     const LANES = {
       city: ['golf-5', 'hyundai-accent', 'audi-a4'],
@@ -193,7 +193,7 @@
       if (fig) {
         fig.hidden = !c2;
         if (c2) {
-          $('#sum-car-img').src = `img/cars/${c2.slug}-s.webp`;
+          $('#sum-car-img').src = `${window.BASE || ''}img/cars/${c2.slug}-s.webp`;
           $('#sum-car-img').alt = c2.name;
           $('#sum-car-nm').textContent = c2.name;
           $('#sum-car-spec').textContent = `${c2.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${c2.seats} seats, ${eur(c2.price)} a day`;

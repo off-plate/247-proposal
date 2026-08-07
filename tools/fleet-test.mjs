@@ -15,7 +15,7 @@ const b = await chromium.launch();
 
 for (const [w, want] of [[2560, 4], [1600, 4], [1300, 3], [1000, 2], [390, 1]]) {
   const p = await (await b.newContext({ viewport: { width: w, height: 1000 } })).newPage();
-  await p.goto(`${B}/fleet.html`, { waitUntil: 'networkidle' });
+  await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
   const cols = await p.$eval('#rows', e => getComputedStyle(e).gridTemplateColumns.split(' ').length);
   cols === want ? ok(`${w}px: ${cols} columns`) : fail(`${w}px: ${cols} columns, expected ${want}`);
   if (w === 1600) {
@@ -31,7 +31,7 @@ for (const [w, want] of [[2560, 4], [1600, 4], [1300, 3], [1000, 2], [390, 1]]) 
       !el.querySelector('.row-tag') || !/\d/.test(el.querySelector('.row-price')?.textContent || '')).length);
     bad === 0 ? ok('every card has a photo, a name, a class and a price') : fail(`${bad} incomplete cards`);
     // the whole card is the link, not just an arrow
-    const links = await p.$$eval('.row:not([hidden]) > a.row-link[href^="car-"]', e => e.length);
+    const links = await p.$$eval('.row:not([hidden]) > a.row-link[href*="cars/"]', e => e.length);
     links === FLEET.length ? ok('the whole card is the link') : fail(`${links} card links, expected ${FLEET.length}`);
     await p.selectOption('#sort', 'price-desc');
     const first = await p.$eval('.row:not([hidden])', e => e.dataset.slug);

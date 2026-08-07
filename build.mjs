@@ -33,7 +33,7 @@ const head = (title, desc, path, ogImg = 'img/cars/jaguar-xf.webp', schema = '')
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${desc}">
-<link rel="canonical" href="${site.base}/${path}">
+<link rel="canonical" href="${site.base}/${(path === '' || path === 'index.html') ? '' : path.replace(/^car-(.+)\.html$/, 'cars/$1/').replace(/^company\.html$/, 'about/').replace(/^how\.html$/, 'how-it-works/').replace(/^(fleet|book|roads|faq)\.html$/, '$1/')}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
 <meta property="og:image" content="${site.base}/img/og.png">
@@ -134,6 +134,15 @@ const footer = () => `
 <script src="js/fleet-data.js" defer></script>
 <script src="js/app.js?v=${V_JS}" defer></script>
 </body></html>`;
+
+// One hero for every sub page. Type first, one column, one primary action.
+// No rule under the title, no two-column split, no eyebrow.
+const pageHero = (h1, lede, actions = '') => `
+<section class="phero">
+  <h1>${h1}</h1>
+  <p class="phero-lede">${lede}</p>
+  ${actions ? `<div class="phero-act">${actions}</div>` : ''}
+</section>`;
 
 const gantryChip = t => `<span class="gchip">${t}</span>`;
 const WA_ICON = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>`;
@@ -494,10 +503,7 @@ const roadsPage = () => {
   return `${head('Where to drive in Albania', 'Three routes worth the rental and eight places people go, each with the road time from Tirana and a car that can do it.', 'roads.html')}
 ${nav('roads')}
 <main class="roadswrap">
-<section class="roads-head">
-  <h1>Where to drive</h1>
-  <p>Three routes worth the rental, then eight places people go. Road times are from Tirana one way unless the card says otherwise.</p>
-</section>
+${pageHero('Where to drive', 'Three routes worth the rental, then eight places people go. Road times are from Tirana one way unless the card says otherwise.', `<a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>`)}
 
 <section class="rd-list" aria-label="Routes and places">
   ${site.roads.map((r, i) => place(r, i, 'road-' + r.id,
@@ -516,12 +522,7 @@ const companyPage = () => `${head('About us. 24/7 Car Rental, Tirana', 'Welcome 
 ${nav('company')}
 <main class="companywrap">
 
-<section class="manifesto">
-  <h1 class="man-h">We make finding the right car simple</h1>
-  <div class="man-body">
-    <p>Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania. Whether you are exploring the vibrant streets of Tirana city or embarking on an Albanian adventure, we are here to ensure you have the perfect vehicle for your journey.</p>
-  </div>
-</section>
+${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania. Whether you are exploring the vibrant streets of Tirana city or embarking on an Albanian adventure, we are here to ensure you have the perfect vehicle for your journey.', `<a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>`)}
 
 <figure class="about-shot">
   <img src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albania" width="2400" height="1051" loading="lazy">
@@ -585,11 +586,7 @@ const faqSchema = () => JSON.stringify({
 const faqPage = () => `${head('Questions about renting a car in Tirana', 'Licences, borders, deposits, night pickups, mountain roads and what the daily price covers. ' + site.faq.length + ' straight answers from a rental company in Tirana that is open at every hour.', 'faq.html', 'img/cars/jaguar-xf.webp', faqSchema())}
 ${nav('faq')}
 <main class="faqwrap">
-  <section class="faq-hero">
-    <h1 class="faq-h1">Questions,<br>answered straight</h1>
-    
-
-  </section>
+  ${pageHero('Questions, answered straight', 'Everything renters ask before they land, and the things they wish they had asked. If yours is not here, send it and someone in Tirana answers it.', waLink('Hello 24/7 Car Rental, I have a question before I book.', 'btn-wa', 'Ask on WhatsApp'))}
 
   ${site.faqGroups.map((g, gi) => `
   <section class="faq-group" id="${g.id}">
@@ -624,14 +621,7 @@ ${footer()}`;
 const howPage = () => `${head('How renting from us works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing, collect at Tirana airport or the city office at any hour.', 'how.html')}
 ${nav('how')}
 <main class="howwrap">
-  <section class="how-hero">
-    <h1 class="how-h1">Book it in two lines on WhatsApp</h1>
-    <p class="how-lede">You send two lines, the office answers with the real total, and the car is waiting when you land.</p>
-    <div class="how-cta">
-      ${waLink(WA_GENERIC, 'btn-wa', 'Start on WhatsApp')}
-      <a class="btn-paper" href="tel:${TEL}">Call ${site.phone}</a>
-    </div>
-  </section>
+  ${pageHero('Book it in two lines on WhatsApp', 'You send two lines, the office answers with the real total, and the car is waiting when you land.', waLink(WA_GENERIC, 'btn-wa', 'Start on WhatsApp') + `<a class="phero-alt" href="tel:${TEL}">or call ${site.phone}</a>`)}
 
   <ol class="steps">
     ${site.steps.map(s => `<li class="step-row">
@@ -671,18 +661,69 @@ ${nav('how')}
 ${footer()}`;
 
 // ---------- 404 ----------
-const notFound = () => `${head('Wrong turn', 'This page is not here. The desk is still open though.', '404.html')}
+const notFound = () => `${head('Wrong turn', 'This page is not here. Both desks are, at any hour.', '404.html')}
 ${nav()}
 <main class="wrap404">
-  <div class="gantry g404">
-    <p class="gantry-top">${gantryChip('404')}<span class="openlight">Still open</span></p>
-    <p class="e404">Wrong turn</p>
-    <a class="gantry-go" href="index.html">Back to the cars <span aria-hidden="true">→</span></a>
+  <div class="sign404" role="img" aria-label="A road sign listing where this page is not">
+    <div class="sign404-plate">
+      <span class="sign404-code">404</span>
+      <ul class="sign404-list">
+        <li><span>Every car</span><em>fleet</em></li>
+        <li><span>Where to drive</span><em>roads</em></li>
+        <li><span>How it works</span><em>how it works</em></li>
+        <li><span>Straight answers</span><em>faq</em></li>
+      </ul>
+    </div>
+    <span class="sign404-post" aria-hidden="true"></span>
+  </div>
+  <div class="wrap404-copy">
+    <h1>You have taken a wrong turn</h1>
+    <p>The page you asked for is not at this address. Everything worth stopping for is signposted above, and both desks are open whatever hour it is where you are.</p>
+    <div class="phero-act">
+      <a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+      ${waLink(WA_GENERIC, 'btn-wa', 'Ask on WhatsApp')}
+    </div>
   </div>
 </main>
 ${footer()}`;
 
 // ---------- emit ----------
+// Clean URLs. Pages are written as directories so nothing a visitor sees ends in
+// .html, and every internal link is rewritten to match, relative to its own depth.
+const ROUTES = {
+  'index.html':   { out: 'index.html',              url: '' },
+  'fleet.html':   { out: 'fleet/index.html',        url: 'fleet/' },
+  'book.html':    { out: 'book/index.html',         url: 'book/' },
+  'roads.html':   { out: 'roads/index.html',        url: 'roads/' },
+  'company.html': { out: 'about/index.html',        url: 'about/' },
+  'faq.html':     { out: 'faq/index.html',          url: 'faq/' },
+  'how.html':     { out: 'how-it-works/index.html', url: 'how-it-works/' },
+  '404.html':     { out: '404.html',                url: '404.html' },
+};
+for (const c of fleet) ROUTES[`car-${c.slug}.html`] = { out: `cars/${c.slug}/index.html`, url: `cars/${c.slug}/` };
+
+const ASSET_DIRS = ['css', 'js', 'img', 'fonts'];
+const rewrite = (html, out) => {
+  const depth = out.split('/').length - 1;
+  const up = '../'.repeat(depth);
+  // internal page links, including any query string or fragment
+  html = html.replace(/(href|action)="([a-z0-9-]+\.html)((?:[?#][^"]*)?)"/gi, (m, attr, file, tail) => {
+    const r = ROUTES[file];
+    if (!r) return m;
+    const href = `${up}${r.url}${tail}` || './';
+    return `${attr}="${href}"`;
+  });
+  // assets sit at the site root, so they need the same climb
+  if (depth) {
+    for (const d of ASSET_DIRS) {
+      html = html.replace(new RegExp(`(href|src)="${d}/`, 'g'), `$1="${up}${d}/`);
+    }
+  }
+  // one base for anything JavaScript builds at runtime
+  html = html.replace('<link rel="stylesheet"', `<script>window.BASE=${JSON.stringify(up)}</script>\n<link rel="stylesheet"`);
+  return html;
+};
+
 const pages = {
   'index.html': deck(),
   'fleet.html': fleetPage(),
@@ -694,6 +735,12 @@ const pages = {
   '404.html': notFound(),
 };
 for (const c of fleet) pages[`car-${c.slug}.html`] = carPage(c);
-for (const [name, html] of Object.entries(pages)) writeFileSync(join(D, name), html);
+
+for (const [name, html] of Object.entries(pages)) {
+  const { out } = ROUTES[name];
+  const full = join(D, out);
+  mkdirSync(dirname(full), { recursive: true });
+  writeFileSync(full, rewrite(html, out));
+}
 writeFileSync(join(D, 'js/fleet-data.js'), 'window.FLEET=' + JSON.stringify(fleet.map(({ slug, name, price, cls }) => ({ slug, name, price, cls }))) + ';window.SITE=' + JSON.stringify({ locations: site.locations, wa: site.wa, tel: site.tel, phone: site.phone }) + ';');
-console.log(`built ${Object.keys(pages).length} pages`);
+console.log(`built ${Object.keys(pages).length} pages at clean URLs`);

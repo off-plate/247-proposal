@@ -12,7 +12,7 @@ const ok = m => console.log('ok: ' + m);
 
 for (const w of [1440, 390]) {
   const p = await (await b.newContext({ viewport: { width: w, height: 900 } })).newPage();
-  await p.goto(`${BASE}/index.html`, { waitUntil: 'networkidle' });
+  await p.goto(`${BASE}/`, { waitUntil: 'networkidle' });
   await p.evaluate(() => document.fonts.ready);
 
   const rest = await p.$eval('#pillnav', e => ({ w: e.getBoundingClientRect().width, pinned: e.classList.contains('is-pinned') }));

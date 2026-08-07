@@ -11,7 +11,7 @@ for (const page of PAGES) {
   for (const [tag, w] of [['desktop', 2560], ['mobile', 390]]) {
     const ctx = await b.newContext({ viewport: { width: w, height: tag === 'mobile' ? 844 : 1440 }, deviceScaleFactor: 1 });
     const p = await ctx.newPage();
-    await p.goto(`http://localhost:8472/docs/${page}.html`, { waitUntil: 'networkidle' });
+    await p.goto(`http://localhost:8472/docs/${page}`, { waitUntil: 'networkidle' });
     await p.evaluate(() => document.fonts.ready);
     // lazy images load on scroll but a fullPage capture resizes the viewport and can
     // leave them undrawn, so a review panel ends up judging blank rectangles that a

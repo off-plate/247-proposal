@@ -27,7 +27,7 @@ const snap = async n => { if (!SHOTDIR) return; const { mkdirSync } = await impo
 const reset = async u => { await page.goto(u, { waitUntil: 'networkidle' }); await page.evaluate(() => localStorage.clear()); await page.goto(u, { waitUntil: 'networkidle' }); };
 
 /* ---- fleet ---- */
-await reset(`${BASE}/fleet.html`);
+await reset(`${BASE}/fleet/`);
 // the sticky preview panel is gone; the list is the page. tools/fleet-test.mjs covers
 // the list and grid views, so what belongs here is sorting, filtering and pricing.
 await page.selectOption('#sort', 'price-asc');
@@ -46,7 +46,7 @@ const autos = await page.$$eval('.row:not([hidden])', e => e.length);
 autos === FLEET_AUTO ? ok(`automatic filter shows ${FLEET_AUTO} of ${FLEET_N}`) : fail(`automatic ${autos}, expected ${FLEET_AUTO}`);
 
 /* ---- enquiry flow ---- */
-await reset(`${BASE}/book.html?car=hyundai-santa-fe-2016`);
+await reset(`${BASE}/book/?car=hyundai-santa-fe-2016`);
 const next = () => page.click('#next');
 const disabled = () => page.$eval('#next', b => b.disabled);
 (await disabled()) ? ok('step 1 gated until a location is chosen') : fail('continue enabled with no location');
@@ -93,7 +93,7 @@ await snap('5-send');
 
 errors.length ? fail('JS errors: ' + errors.join(' | ')) : ok('zero console/page errors across the walk');
 /* the hero search collects four values; the booking page must not ask for them again */
-await page.goto(`${BASE}/book.html?loc=cty&ret=tia&from=2026-09-10&to=2026-09-15&tfrom=23:30&tto=10:00`, { waitUntil: 'networkidle' });
+await page.goto(`${BASE}/book/?loc=cty&ret=tia&from=2026-09-10&to=2026-09-15&tfrom=23:30&tto=10:00`, { waitUntil: 'networkidle' });
 const carried = await page.evaluate(() => ({
   loc: document.querySelector('.loc.is-on')?.dataset.loc,
   oneway: document.getElementById('oneway')?.checked,

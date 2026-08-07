@@ -5,7 +5,7 @@
    Contrast: computed text color composited over effective background, WCAG 2.1.
    Overflow: document.scrollWidth vs viewport. Exit 1 on any failure. */
 import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
+import { resolve, join } from 'node:path';
 import { homedir } from 'node:os';
 
 const HELPERS = resolve(homedir(), 'Claude Helpers');
@@ -22,9 +22,11 @@ const BASE = process.argv[2] || 'http://localhost:8471/docs';
 import { readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 const DOCS = resolve(fileURLToPath(import.meta.url), '../../docs');
-const ALL = readdirSync(DOCS).filter(f => f.endsWith('.html'));
-const CARS = ALL.filter(f => f.startsWith('car-'));
-const PAGES = [...ALL.filter(f => !f.startsWith('car-')), CARS[0], CARS[CARS.length - 1]].filter(Boolean);
+const walk = d => readdirSync(d, { withFileTypes: true }).flatMap(e =>
+  e.isDirectory() ? walk(join(d, e.name)) : (e.name.endsWith('.html') ? [join(d, e.name)] : []));
+const REL = walk(DOCS).map(f => f.slice(DOCS.length + 1).replace(/index\.html$/, '').replace(/^$/, ''));
+const CARS = REL.filter(f => f.startsWith('cars/'));
+const PAGES = [...REL.filter(f => !f.startsWith('cars/')), CARS[0], CARS[CARS.length - 1]].filter(Boolean);
 const WIDTHS = [390, 834, 1440, 2560];
 
 const AUDIT_JS = () => {

@@ -11,7 +11,7 @@ const p = await (await b.newContext({ viewport: { width: 1440, height: 900 } }))
 const fail = m => { console.log('FAIL: ' + m); process.exitCode = 1; };
 const ok = m => console.log('ok: ' + m);
 
-await p.goto('http://localhost:8472/docs/faq.html', { waitUntil: 'networkidle' });
+await p.goto('http://localhost:8472/docs/faq/', { waitUntil: 'networkidle' });
 const total = await p.$$eval('.qa-item', e => e.length);
 total === FAQ_N ? ok(`${FAQ_N} questions render`) : fail(`${total} questions, expected ${FAQ_N}`);
 const openCount = await p.$$eval('.qa-item[open]', e => e.length);
@@ -40,7 +40,7 @@ await p.keyboard.press('Enter');
 ok('summary is keyboard operable (native details)');
 
 // deep link from the footer must reveal the answer
-await p.goto('http://localhost:8472/docs/faq.html#driving-3', { waitUntil: 'networkidle' });
+await p.goto('http://localhost:8472/docs/faq/#driving-3', { waitUntil: 'networkidle' });
 await p.waitForTimeout(400);
 const deep = await p.$eval('#driving-3', e => e.open);
 deep ? ok('footer deep link opens its answer') : fail('deep link left the answer closed');
