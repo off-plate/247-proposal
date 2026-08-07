@@ -284,16 +284,6 @@ ${nav()}
   </div>
 </section>
 
-<section class="hz-tags" aria-label="Where to drive">
-  <div class="hz-head">
-    <h2>Places to drive in Albania</h2>
-    <a class="hz-pill" href="roads.html">All routes and places <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
-  </div>
-  <div class="taglist">
-    ${site.roads.map(r => `<a class="tag tag-road" href="roads.html#${r.id}">${r.name}<em>${r.km} km</em></a>`).join('')}
-    ${site.destinations.map(d => `<a class="tag" href="roads.html#${d.id}">${d.name}<em>${d.hours}</em></a>`).join('')}
-  </div>
-</section>
 
 <section class="hz-range" aria-label="What it costs">
   <div class="hz-head">

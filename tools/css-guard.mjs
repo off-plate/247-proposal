@@ -13,7 +13,7 @@ const REQUIRED = [
   // the reference rebuild, 2026-08-07. Homepage layout lives entirely in these.
   '.hz-hero {', '.hz-hero-img {', '.hz-bar {', '.hz-bar-fields {', '.hz-bar-foot {',
   '.hz-head {', '.pgrid {', '.pcard {', '.pcard-bed {', '.pcard-price {',
-  '.taglist {', '.tag {', '.rangegrid {', '.rcard {', '.rcard-fig {',
+  '.rangegrid {', '.rcard {', '.rcard-fig {',
   '.hz-mosaic {', '.mo-cta {', '.mo-stat {', '.mo-tall {', '.foot-card {',
   '.pillnav {', '.brand {', '.burger {', '.sheet {',
   '.gantry {', '.gantry-go {',
