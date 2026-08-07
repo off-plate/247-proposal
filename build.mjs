@@ -90,7 +90,7 @@ const footer = () => `
 
       <div class="foot-brand">
         <img class="foot-logo" src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
-        <p class="foot-mission">Car rental in Tirana, open at every hour. Two offices, ${fleet.length} cars.</p>
+        <p class="foot-mission">Car rental in Tirana, open 24 hours a day. Two offices, ${fleet.length} cars.</p>
         <div class="foot-social">
           <a href="https://instagram.com/${site.instagram[0]}" rel="noopener" target="_blank" aria-label="Instagram" title="@${site.instagram[0]}">${IG_ICON}</a>
           <a href="https://24-7rentalcar.com/" rel="noopener" target="_blank" aria-label="24-7rentalcar.com" title="24-7rentalcar.com">${GLOBE_ICON}</a>
@@ -117,7 +117,7 @@ const footer = () => `
       </nav>
 
       <div class="foot-col foot-contact">
-        <h2>Talk to a person</h2>
+        <h2>Contact details</h2>
         <a class="foot-call" href="tel:${TEL}">${site.phone}</a>
         <a class="foot-mail" href="mailto:${site.email}">${site.email}</a>
         ${waLink(WA_GENERIC, 'btn-wa foot-wa', 'Ask on WhatsApp')}
@@ -202,7 +202,7 @@ ${nav()}
   <div class="hz-hero">
     <img class="hz-hero-img" src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albanian Riviera" width="2400" height="1051" fetchpriority="high">
     <div class="hz-hero-copy">
-      <h1>A car at the hour you land</h1>
+      <h1>Rent a car in Tirana, at any hour</h1>
     </div>
   </div>
 
@@ -226,7 +226,7 @@ ${nav()}
       </label>
     </div>
     <div class="hz-bar-foot">
-      <span class="hz-open"><span class="openlight">Open now</span> Both desks, every hour of every day</span>
+      <span class="hz-open"><span class="openlight">Open now</span> Both offices are open 24 hours, every day</span>
       <span class="hz-chips">
         <span class="hz-chips-k">Gearbox</span>
         <label class="hz-chip"><input type="radio" name="gear" value="any" checked><span>Any</span></label>
@@ -235,7 +235,7 @@ ${nav()}
       </span>
       <span class="hz-bar-go">
         ${waLink(WA_GENERIC, 'btn-wa hz-bar-wa', 'WhatsApp')}
-        <button class="hz-search" type="submit">See cars <span class="x-arrow" aria-hidden="true">&rarr;</span></button>
+        <button class="hz-search" type="submit">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></button>
       </span>
     </div>
   </form>
@@ -243,7 +243,7 @@ ${nav()}
 
 <section class="hz-picks" aria-label="Cars">
   <div class="hz-head">
-    <h2>A car from every corner of the fleet</h2>
+    <h2>A few of the cars in our fleet</h2>
     <a class="hz-pill" href="fleet.html">All ${fleet.length} cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
   <div class="pgrid">
@@ -253,7 +253,7 @@ ${nav()}
 
 <section class="hz-tags" aria-label="Where to drive">
   <div class="hz-head">
-    <h2>Where people drive to</h2>
+    <h2>Places to drive in Albania</h2>
     <a class="hz-pill" href="roads.html">All routes and places <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
   <div class="taglist">
@@ -264,13 +264,13 @@ ${nav()}
 
 <section class="hz-range" aria-label="What it costs">
   <div class="hz-head">
-    <h2>Thirty euro to sixty-five</h2>
-    <a class="hz-pill" href="fleet.html">Every car and its price <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+    <h2>Daily rates from 30 to 65 euro</h2>
+    <a class="hz-pill" href="fleet.html">See all the prices <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
   <div class="rangegrid">
     ${[
-      { c: CHEAP, k: 'The floor', why: 'The cheapest key on the board, and the only manual left in the fleet.' },
-      { c: FLAG, k: 'The ceiling', why: 'The whole fleet fits between these two, and nothing above it costs more.' },
+      { c: CHEAP, k: 'The floor', why: 'Our lowest daily rate, and the one manual car we have.' },
+      { c: FLAG, k: 'The ceiling', why: 'Our highest daily rate. Every other car in the fleet sits below it.' },
     ].map(x => `<a class="rcard" href="car-${x.c.slug}.html">
       <span class="rcard-body">
         
@@ -287,19 +287,19 @@ ${nav()}
 <section class="hz-mosaic" aria-label="How it works">
   <div class="mo-cta">
     <span class="mo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="8.5" cy="12" r="4.5"/><path d="M13 12h8M18 12v3.5M15.5 12v2.5"/></svg></span>
-    <h2>Five steps, then you drive</h2>
-    <p>Send the dates and the car. You get the total, the meeting point and the name of the person who will be there, in writing on WhatsApp.</p>
+    <h2>How booking works</h2>
+    <p>Send us your dates and the car you want. We reply on WhatsApp with the total, where to meet us, and the name of the person who will be there.</p>
     <a class="mo-go" href="how.html">How it works <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
 
   <div class="mo-stat">
     <img src="img/road-north.webp" alt="The valley road into Theth, northern Albania" loading="lazy" width="2400" height="1600">
-    <span class="mo-stat-body"><strong>Both desks, 24 hours</strong></span>
+    <span class="mo-stat-body"><strong>Both offices, open 24 hours</strong></span>
   </div>
 
   <div class="mo-tall">
     <img src="img/dest-ksamil.webp" alt="Ksamil, on the far south coast of Albania" loading="lazy" width="1600" height="1000">
-    <p>The good parts of Albania are down roads no bus takes.</p>
+    <p>The best parts of Albania are easiest to reach by car.</p>
   </div>
 </section>
 
@@ -315,7 +315,7 @@ ${nav('fleet')}
       <div class="list-topline">
         <h1 class="list-title">Every car</h1>
         <div class="list-ask">
-          <span>Cannot decide?</span>
+          <span>Not sure which car to take?</span>
           ${waLink('Hello 24/7 Car Rental, I am not sure which car suits my trip. Can you help me choose?', 'btn-wa sm', 'Ask us on WhatsApp')}
         </div>
       </div>
@@ -350,7 +350,7 @@ ${nav('fleet')}
         </a>
       </li>`).join('\n')}
     </ol>
-    <p class="list-note" id="list-note">Rates are per day, as published by 24/7 Car Rental. Set dates in <a href="book.html">Book</a> to see the total for your stay.</p>
+    <p class="list-note" id="list-note">All rates are per day, in euro. Send us your dates and we will come back with the total for your stay. <a href="book.html">Start here</a>.</p>
   </section>
 </main>
 ${footer()}`;
@@ -394,15 +394,15 @@ ${nav('fleet')}
 <div class="incwrap"><section class="gantry included" aria-label="Included">
   <p class="gantry-top">${gantryChip('24/7')}<span class="sign">Every rental includes</span></p>
   <ul class="inc-list">
-    <li>This car, photographed above, not a category with 'or similar' beside it</li>
+    <li>The exact car photographed above, booked by name</li>
     
     <li>Collection at Tirana airport or the city office, at any hour</li>
     <li>Delivery inside Tirana on request, cost confirmed before you book</li>
-    <li>${c.gear === 'automatic' ? 'Automatic gearbox, which the mountain roads reward' : 'Manual gearbox, the only one in the fleet'}</li>
+    <li>${c.gear === 'automatic' ? 'An automatic gearbox, which helps on the mountain roads' : 'Manual gearbox, the only one in the fleet'}</li>
   </ul>
 </section></div>
 
-${similar.length ? `<section class="similar"><h2 class="sec-h">Nearby in the fleet</h2><div class="sim-rail">${similar.map(s => `<a class="sim-card" href="car-${s.slug}.html"><img src="img/cars/${s.slug}-s.webp" alt="" loading="lazy"><strong>${s.name}</strong><span class="mono">${eur(s.price)}/day</span></a>`).join('')}</div></section>` : ''}
+${similar.length ? `<section class="similar"><h2 class="sec-h">Other cars at a similar price</h2><div class="sim-rail">${similar.map(s => `<a class="sim-card" href="car-${s.slug}.html"><img src="img/cars/${s.slug}-s.webp" alt="" loading="lazy"><strong>${s.name}</strong><span class="mono">${eur(s.price)}/day</span></a>`).join('')}</div></section>` : ''}
 </main>
 
 <div class="reservebar" data-slug="${c.slug}" data-price="${c.price}" data-prestige="0">
@@ -424,7 +424,7 @@ ${nav()}
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
       <h1 class="step-h">Where and when?</h1>
-      <p class="step-hint" id="loc-hint">Pick one to continue.</p>
+      <p class="step-hint" id="loc-hint">Choose where you would like to collect the car.</p>
       <div class="locgrid" id="locgrid">
         ${site.locations.map((l, i) => `<button class="loc" data-loc="${l.id}" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>${l.label}</strong><span class="sign">${l.sub}</span><span class="openlight">Open now</span></button>`).join('')}
       </div>
@@ -500,7 +500,7 @@ ${nav()}
         <tr data-k="dates"><td>Dates</td><td>not set</td></tr>
         <tr data-k="car"><td>Car</td><td>not set</td></tr>
         <tr data-k="days"><td>Days</td><td>not set</td></tr>
-        <tr data-k="total" class="sum-total"><td>Estimate</td><td>after dates and car</td></tr>
+        <tr data-k="total" class="sum-total"><td>Estimate</td><td>shown once you pick dates and a car</td></tr>
       </table>
     </aside>
   </div>
@@ -532,7 +532,7 @@ const roadsPage = () => {
   return `${head('Where to drive in Albania', 'Three routes worth the rental and eight places people go, each with the road time from Tirana and a car that can do it.', 'roads.html')}
 ${nav('roads')}
 <main class="roadswrap">
-${pageHero('Where to drive', 'Three routes worth the rental, then eight places people go. Road times are from Tirana one way unless the card says otherwise.', 'Roads')}
+${pageHero('Where to drive', 'Three longer routes and eight places worth the drive. Road times are from Tirana, one way, unless the card says otherwise.', 'Roads')}
 
 <section class="rd-list" aria-label="Routes and places">
   ${site.roads.map((r, i) => place(r, i, 'road-' + r.id,
@@ -616,7 +616,7 @@ const faqSchema = () => JSON.stringify({
 const faqPage = () => `${head('Questions about renting a car in Tirana', 'Licences, borders, deposits, night pickups, mountain roads and what the daily price covers. ' + site.faq.length + ' straight answers from a rental company in Tirana that is open at every hour.', 'faq.html', 'img/cars/jaguar-xf.webp', faqSchema())}
 ${nav('faq')}
 <main class="faqwrap">
-  ${pageHero('Questions, answered straight', 'Everything renters ask before they land, and the things they wish they had asked. If yours is not here, send it and someone in Tirana answers it.', 'FAQ')}
+  ${pageHero('Your questions, answered', 'If your question is not here, send it to us and we will answer it.', 'FAQ')}
 
   ${site.faqGroups.map((g, gi) => `
   <section class="faq-group" id="${g.id}">
@@ -635,8 +635,8 @@ ${nav('faq')}
     <div class="gantry">
       
       <div>
-        <p class="faq-ask-h">Not answered here?</p>
-        <p class="faq-ask-p">Ask it directly. Both offices are staffed around the clock, and questions about dates, borders or which car suits a route get answered by a person.</p>
+        <p class="faq-ask-h">Still have a question?</p>
+        <p class="faq-ask-p">Send it to us. Both offices are staffed around the clock, and we are glad to help with dates, borders, or choosing the right car for your route.</p>
       </div>
       <div class="faq-ask-btns">
         ${waLink('Hello 24/7 Car Rental, I have a question about renting a car in Albania:', 'gantry-wa', 'Ask on WhatsApp')}
@@ -651,7 +651,7 @@ ${footer()}`;
 const howPage = () => `${head('How renting from us works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing, collect at Tirana airport or the city office at any hour.', 'how.html')}
 ${nav('how')}
 <main class="howwrap">
-  ${pageHero('Book it in two lines on WhatsApp', 'You send two lines, the office answers with the real total, and the car is waiting when you land.', 'How it works')}
+  ${pageHero('How to book with us', 'You send us your dates, we reply with the total in writing, and the car is ready when you land.', 'How it works')}
 
   <ol class="steps">
     ${site.steps.map(s => `<li class="step-row">
@@ -679,7 +679,7 @@ ${nav('how')}
       
       <div>
         <p class="faq-ask-h">Ready when you are</p>
-        <p class="faq-ask-p">Send the dates and the car and you will have the total back. If you would rather ask a question first, that is what the number is for.</p>
+        <p class="faq-ask-p">Send us your dates and the car you want and we will come back with the total. If you would rather ask a question first, give us a call.</p>
       </div>
       <div class="faq-ask-btns">
         ${waLink('Hello 24/7 Car Rental, I would like to book a car. My dates are:', 'gantry-wa', 'Send my dates')}
@@ -701,14 +701,14 @@ ${nav()}
         <li><span>Every car</span><em>fleet</em></li>
         <li><span>Where to drive</span><em>roads</em></li>
         <li><span>How it works</span><em>how it works</em></li>
-        <li><span>Straight answers</span><em>faq</em></li>
+        <li><span>Questions and answers</span><em>faq</em></li>
       </ul>
     </div>
     <span class="sign404-post" aria-hidden="true"></span>
   </div>
   <div class="wrap404-copy">
-    <h1>You have taken a wrong turn</h1>
-    <p>The page you asked for is not at this address. Everything worth stopping for is signposted above, and both desks are open whatever hour it is where you are.</p>
+    <h1>We cannot find that page</h1>
+    <p>The page you asked for is not at this address. The links above will take you to the cars, the routes and the answers. Both our offices are open, whatever the hour.</p>
     <div class="phero-act">
       <a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
       ${waLink(WA_GENERIC, 'btn-wa', 'Ask on WhatsApp')}

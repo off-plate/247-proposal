@@ -44,12 +44,40 @@ nine page types; and the pinned header still a real pill.
 
 ---
 
+## Copy
+
+**The "X, not Y" contrast is banned outright.** Every form of it: "not a category",
+"not the errand", "A person instead", "It is not X, it is Y", "not just X but Y".
+It reads as trying to be clever and it was a tic across this whole site.
+
+Also banned: em dashes, eyebrows above a heading, subtitles that restate the heading,
+sentences that announce what is coming instead of saying it, and the marketing
+formula words (seamless, cutting-edge, world-class, best-in-class, streamline,
+supercharge, empower).
+
+**Voice.** 24/7 Car Rental's own, from their live site: warm, plain, welcoming,
+first person plural, speaking to "you", functional and unpretentious. Not clipped,
+not literary, not aphoristic. Their headings are the reference: "We make finding the
+right car simple", "Find a car", "Discover the fleet", "Let's get in touch",
+"Contact details", "Our hours".
+
+**Nothing may claim what they do not publish:** no rating, no discount, no deposit
+amount, no cancellation policy, no insurance or mileage terms, and no response time.
+
+**Gate:** `node tools/copy-test.mjs`. It reads the built pages, strips the markup and
+fails on any banned construction. `about/index.html` is exempt by name because it
+reproduces the client's own wording verbatim, including "premier" and "top-notch",
+which are theirs and not ours.
+
+---
+
 ## The other gates
 
 Run all of them before anything is called done. None is optional.
 
 ```bash
 node tools/radius-test.mjs http://localhost:8472/docs   # the radius rule above
+node tools/copy-test.mjs                                # the copy rules above
 node tools/layout-test.mjs http://localhost:8472/docs   # one left edge, hero parity, card parity, no OS selects, no hover drift
 node tools/links-test.mjs                               # no visitor-facing .html, every internal link resolves
 node tools/audit.mjs      http://localhost:8472/docs    # contrast and overflow, every width
