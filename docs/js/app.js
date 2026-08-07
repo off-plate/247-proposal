@@ -114,6 +114,17 @@
     apply();
   }
 
+  /* ---------- car page gallery ---------- */
+  const gal = $('#cargal');
+  if (gal) {
+    const main = $('#cargal-main');
+    gal.addEventListener('click', e => {
+      const t = e.target.closest('.cargal-t'); if (!t) return;
+      main.src = t.dataset.img;
+      $$('.cargal-t', gal).forEach(x => x.classList.toggle('is-on', x === t));
+    });
+  }
+
   /* ---------- car page reserve bar: total for stored dates ---------- */
   const rb = $('.reservebar');
   if (rb) {

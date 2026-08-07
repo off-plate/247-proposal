@@ -1,7 +1,7 @@
 [
  {
   "slug": "golf-5",
-  "name": "Golf 5",
+  "name": "Golf 5 2005",
   "fullOption": false,
   "cls": "city",
   "clsLabel": "City",
@@ -17,7 +17,7 @@
  },
  {
   "slug": "hyundai-accent",
-  "name": "Hyundai Accent",
+  "name": "Hyundai Accent 2012 (first car)",
   "fullOption": false,
   "cls": "city",
   "clsLabel": "City",
@@ -33,7 +33,7 @@
  },
  {
   "slug": "hyundai-accent-2",
-  "name": "Hyundai Accent",
+  "name": "Hyundai Accent 2012 (second car)",
   "fullOption": false,
   "cls": "city",
   "clsLabel": "City",
@@ -129,7 +129,7 @@
  },
  {
   "slug": "audi-a4",
-  "name": "Audi A4",
+  "name": "Audi A4 2012",
   "fullOption": false,
   "cls": "sedan",
   "clsLabel": "Sedan",
@@ -145,7 +145,7 @@
  },
  {
   "slug": "volkswagen-passat",
-  "name": "Volkswagen Passat",
+  "name": "Volkswagen Passat 2014",
   "fullOption": false,
   "cls": "sedan",
   "clsLabel": "Sedan",
@@ -177,7 +177,7 @@
  },
  {
   "slug": "audi-a6",
-  "name": "Audi A6",
+  "name": "Audi A6 2007",
   "fullOption": false,
   "cls": "sedan",
   "clsLabel": "Sedan",
@@ -193,7 +193,7 @@
  },
  {
   "slug": "volkswagen-golf-7",
-  "name": "VW Golf VII",
+  "name": "VW Golf VII 2014",
   "fullOption": true,
   "cls": "compact",
   "clsLabel": "Compact",
@@ -209,7 +209,7 @@
  },
  {
   "slug": "mercedes-benz-c220",
-  "name": "Mercedes Benz c220",
+  "name": "Mercedes Benz c220 2013",
   "fullOption": false,
   "cls": "sedan",
   "clsLabel": "Sedan",
@@ -225,7 +225,7 @@
  },
  {
   "slug": "golf-6-cabrio",
-  "name": "Golf 6 Cabrio",
+  "name": "Golf 6 Cabrio 2012",
   "fullOption": false,
   "cls": "coupe",
   "clsLabel": "Cabrio",
@@ -257,7 +257,7 @@
  },
  {
   "slug": "hyundai-tucson",
-  "name": "Hyundai Tucson",
+  "name": "Hyundai Tucson 2014",
   "fullOption": false,
   "cls": "suv",
   "clsLabel": "SUV",
@@ -289,7 +289,7 @@
  },
  {
   "slug": "hyundai-santa-fe",
-  "name": "Hyundai Santa Fe",
+  "name": "Hyundai Santa Fe 2013",
   "fullOption": false,
   "cls": "suv",
   "clsLabel": "SUV · 7 seats",
@@ -305,7 +305,7 @@
  },
  {
   "slug": "jaguar-xf",
-  "name": "Jaguar XF",
+  "name": "Jaguar XF 2015",
   "fullOption": false,
   "cls": "premium",
   "clsLabel": "Premium",

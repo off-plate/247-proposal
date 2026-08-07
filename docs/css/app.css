@@ -2418,3 +2418,98 @@ body[data-page="index"] .pillnav:not(.is-pinned) { padding-inline: calc(var(--gu
   .pickrail { grid-template-columns: repeat(2, 1fr); }
   .pick img { aspect-ratio: 4/3; }
 }
+
+/* ==========================================================================
+   ROUND THREE. Named problems, in the order they were named.
+   ========================================================================== */
+
+/* the fleet card is the homepage card. Same frame, same fit, the whole car in it. */
+.rows { padding: clamp(18px, 1.8vw, 28px); gap: clamp(16px, 1.5vw, 26px); }
+.row-link { padding: clamp(12px, 1vw, 16px) clamp(14px, 1.1vw, 18px) clamp(16px, 1.2vw, 20px); overflow: visible; }
+.row-link img {
+  aspect-ratio: 3/2; object-fit: contain; padding: 0;
+  background: var(--card-2); border-radius: var(--r-sm); margin-bottom: 10px;
+}
+.row-tag { top: 22px; left: 24px; }
+.row-nm { padding: 0; font-size: clamp(16px, 1.25vw, 19px); display: block; }
+.row-spec { padding: 8px 0 0; }
+.row-price { padding: 12px 0 0; margin-top: 10px; background: none; border-top: 1px solid var(--line); }
+
+/* the filters belong on the chip row, right-aligned against it */
+.list-head { gap: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.list-filters { display: flex; align-items: center; gap: 10px; margin-left: auto; flex-wrap: wrap; }
+.list-tools { display: contents; }
+
+/* roads: content left, photograph right. Every card, no exceptions. */
+.rd, .rd:nth-child(even), .rd:nth-child(n+4) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+.rd:nth-child(even) .rd-img { order: 0; }
+.rd .rd-img { order: 0; min-height: clamp(300px, 28vw, 480px); }
+.rd:nth-child(n+4) .rd-img { min-height: clamp(300px, 28vw, 480px); }
+.rd:nth-child(n+4) .rd-h { font-size: clamp(24px, 2.2vw, 38px); }
+.rd:nth-child(n+4) .rd-body { padding-block: clamp(24px, 2.6vw, 46px); }
+
+/* FAQ: the questions were flush against the card's own border on both sides */
+.faq-group { padding: clamp(26px, 2.6vw, 44px); }
+.qa-item summary { padding: clamp(15px, 1.3vw, 19px) 4px; }
+.qa-a p { padding: 0 4px clamp(14px, 1.2vw, 20px); max-width: 62ch; }
+.faq-cols { gap: 0 clamp(40px, 4vw, 90px); }
+
+/* footer: the brand column was squashed left and the removed credits left a hole */
+.foot-card { padding: clamp(34px, 3.4vw, 60px); }
+.foot-legal { margin-top: clamp(26px, 2.8vw, 44px); padding-top: clamp(20px, 2vw, 30px); padding-bottom: 0; }
+.foot-brand { gap: 16px; align-content: start; }
+.foot-logo { width: 150px; }
+.foot-social { margin-top: 4px; }
+
+/* the car page shows every photograph the office took of that car */
+.cargal { display: grid; gap: clamp(10px, 1vw, 16px); }
+.cargal .hero-img { width: 100%; aspect-ratio: 16/9; object-fit: contain; background: var(--card-2); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 0; }
+.cargal-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: clamp(10px, 1vw, 16px); }
+.cargal-t { padding: 0; border: 1px solid var(--line); border-radius: var(--r); overflow: clip; background: var(--card-2); cursor: pointer; transition: border-color 160ms var(--out); }
+.cargal-t img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+.cargal-t:hover { border-color: var(--line-2); }
+.cargal-t.is-on { border-color: var(--ink); }
+
+/* booking summary: it was mid-grey text on near-black with the rows cut off */
+.sumboard { padding: clamp(22px, 2.2vw, 32px); }
+.sumboard .gantry-top { margin-bottom: 14px; gap: 10px; }
+.sumboard .gchip { background: rgba(255,255,255,.14); color: #fff; }
+.sumboard .sign { color: var(--night-dim); font-size: 13px; }
+.sum-t { table-layout: fixed; }
+.sum-t td { padding: 12px 0; font-size: 14px; word-break: break-word; }
+.sum-t td:first-child { color: var(--night-dim); width: 38%; }
+.sum-t td:last-child { text-align: right; color: #fff; }
+.sum-total td { border-top: 1px solid rgba(255,255,255,.28); font-weight: 700; font-size: 16px; padding-top: 14px; }
+
+/* the step number chip had a red plate that did not line up with its label */
+.pchip .gchip { background: none; color: inherit; padding: 0 7px 0 0; font-weight: 700; }
+.pchip { display: inline-flex; align-items: center; }
+
+/* the header sat half on the hero panel and half off it, cutting the logo in two */
+body[data-page="index"] .hz-top { width: 100%; margin-inline: 0; }
+body[data-page="index"] .hz-hero { border-radius: 0; }
+body[data-page="index"] .hz-hero-img, body[data-page="index"] .hz-hero::before { border-radius: 0; }
+body[data-page="index"] .hz-hero-copy { padding-inline: calc((100vw - min(100vw - 2 * var(--gut), var(--shell))) / 2); }
+body[data-page="index"] .hz-bar {
+  width: min(100% - 2 * var(--gut), var(--shell)); margin-inline: auto;
+}
+body[data-page="index"] .pillnav:not(.is-pinned) {
+  padding-inline: calc((100vw - min(100vw - 2 * var(--gut), var(--shell))) / 2);
+}
+body[data-page="index"] .pillnav:not(.is-pinned) .reserve-cta {
+  background: #fff; color: var(--ink); padding: 11px 22px;
+}
+
+/* mobile: the footer touched its own border and interleaved into two ragged columns */
+@media (max-width: 780px) {
+  .foot-card { padding: 26px 20px; }
+  .foot-top { grid-template-columns: 1fr !important; gap: 28px; }
+  .nav-wa { display: none; }
+  .pillnav-tools { gap: 8px; }
+}
+
+/* roads: the photograph fills its half instead of leaving a dead zone */
+.rd { align-items: stretch; }
+.rd-img { align-self: stretch; height: 100%; min-height: 100%; }
+.rd-body { align-content: center; }

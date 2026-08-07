@@ -50,7 +50,7 @@
  "faq": [
   {
    "q": "How do I actually book a car?",
-   "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour. There is no checkout to fight with and no account to create."
+   "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation on WhatsApp. There is no checkout to fight with and no account to create."
   },
   {
    "q": "Is there a deposit?",
@@ -139,7 +139,7 @@
    "name": "The Albanian Riviera",
    "route": "Vlorë to Sarandë over Llogara",
    "km": 120,
-   "hours": "3 h without stops, 6 h with",
+   "hours": "3 h driving, 6 h with stops",
    "best": "May, June, September",
    "car": "golf-6-cabrio",
    "carWhy": "The one drive that earns a roof you can drop.",
@@ -206,7 +206,7 @@
    "id": "gjirokaster",
    "name": "Gjirokastër",
    "region": "South, inland",
-   "hours": "3 h 30 from Tirana",
+   "hours": "3 h 30 from Tirana, direct",
    "km": 230,
    "img": "dest-gjirokaster",
    "car": "mercedes-benz-c220",
@@ -265,7 +265,7 @@
    "q": [
     {
      "q": "How do I actually book a car?",
-     "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour. There is no checkout to fight with and no account to create."
+     "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation on WhatsApp. There is no checkout to fight with and no account to create."
     },
     {
      "q": "Is there a deposit?",
@@ -378,8 +378,8 @@
   {
    "n": "02",
    "t": "We answer in writing",
-   "d": "You get the total for your exact dates, where to meet us, and the name of the person who will be there. In writing, the same day and usually within the hour, so nothing is left to discover at the desk.",
-   "aside": "Same day, usually under an hour"
+   "d": "You get the total for your exact dates, where to meet us, and the name of the person who will be there. In writing, so nothing is left to discover at the desk.",
+   "aside": "Answered on WhatsApp"
   },
   {
    "n": "03",

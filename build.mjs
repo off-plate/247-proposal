@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const fleet = JSON.parse(readFileSync(join(ROOT, 'data/fleet.json'), 'utf8'));
 const site  = JSON.parse(readFileSync(join(ROOT, 'data/site.json'), 'utf8'));
+const gallery = JSON.parse(readFileSync(join(ROOT, 'data/gallery.json'), 'utf8'));
 const D = join(ROOT, 'docs');
 mkdirSync(join(D, 'fonts'), { recursive: true });
 cpSync(join(ROOT, 'assets/fonts/switzer-var.woff2'), join(D, 'fonts/switzer-var.woff2'));
@@ -91,7 +92,7 @@ const footer = () => `
         <img class="foot-logo" src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
         <p class="foot-mission">Car rental in Tirana, open at every hour. Two offices, ${fleet.length} cars.</p>
         <div class="foot-social">
-          ${site.instagram.map(i => `<a href="https://instagram.com/${i}" rel="noopener" target="_blank" aria-label="Instagram, ${i}" title="@${i}">${IG_ICON}</a>`).join('')}
+          <a href="https://instagram.com/${site.instagram[0]}" rel="noopener" target="_blank" aria-label="Instagram" title="@${site.instagram[0]}">${IG_ICON}</a>
           <a href="https://24-7rentalcar.com/" rel="noopener" target="_blank" aria-label="24-7rentalcar.com" title="24-7rentalcar.com">${GLOBE_ICON}</a>
         </div>
       </div>
@@ -150,8 +151,9 @@ const G_DOOR = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="tru
 
 // One car from every corner of the fleet: both city cars, both ends of the price range,
 // each class represented once. Not "top picks" — they publish no booking figures.
-const PICKS = ['golf-5', 'hyundai-accent', 'audi-a3-2015', 'volkswagen-passat',
-               'volkswagen-golf-7', 'hyundai-tucson', 'hyundai-santa-fe-2016', 'jaguar-xf'];
+// the flagship leads. A 2005 hatchback is not the first thing the fleet should show.
+const PICKS = ['jaguar-xf', 'hyundai-santa-fe-2016', 'mercedes-benz-c220', 'audi-a5-2014',
+               'hyundai-tucson', 'volkswagen-passat', 'audi-a3-2015', 'golf-5'];
 
 const carCard = c => `<a class="pcard" href="car-${c.slug}.html">
   <span class="pcard-bed">
@@ -247,7 +249,7 @@ ${nav()}
       { c: FLAG, k: 'The ceiling', why: 'The whole fleet fits between these two, and nothing above it costs more.' },
     ].map(x => `<a class="rcard" href="car-${x.c.slug}.html">
       <span class="rcard-body">
-        <span class="rcard-k">${x.k}</span>
+        
         <span class="rcard-nm">${x.c.name}</span>
         <strong class="rcard-fig">${eur(x.c.price)}<em>a day</em></strong>
         <span class="rcard-why">${x.why}</span>
@@ -262,7 +264,7 @@ ${nav()}
   <div class="mo-cta">
     <span class="mo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="8.5" cy="12" r="4.5"/><path d="M13 12h8M18 12v3.5M15.5 12v2.5"/></svg></span>
     <h2>Five steps, then you drive</h2>
-    <p>Send the dates and the car. You get the total, the meeting point and the name of the person who will be there, in writing the same day and usually inside the hour.</p>
+    <p>Send the dates and the car. You get the total, the meeting point and the name of the person who will be there, in writing on WhatsApp.</p>
     <a class="mo-go" href="how.html">How it works <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
 
@@ -296,16 +298,17 @@ ${nav('fleet')}
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All <b>${fleet.length}</b></button>
         ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]} <b>${fleet.filter(x => x.cls === c).length}</b></button>`).join('')}
+        <span class="list-filters">
+          <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
+          <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
+          <label class="sort">Sort <select id="sort">
+            <option value="price-desc">price, high to low</option>
+            <option value="price-asc">price, low to high</option>
+            <option value="year-desc">newest first</option>
+          </select></label>
+        </span>
       </div>
-      <div class="list-tools">
-        <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
-        <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
-        <label class="sort">Sort <select id="sort">
-          <option value="price-desc">price, high to low</option>
-          <option value="price-asc">price, low to high</option>
-          <option value="year-desc">newest first</option>
-        </select></label>
-      </div>
+
     </div>
     <p class="rows-empty" id="rows-empty" hidden>No car matches those filters. <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
     <ol class="rows" id="rows">
@@ -323,7 +326,7 @@ ${nav('fleet')}
         </a>
       </li>`).join('\n')}
     </ol>
-    <p class="list-note" id="list-note">Daily rates as published by 24/7 Car Rental, covering the car, basic insurance and unlimited kilometres inside Albania. Longer rentals cost less per day, so ask for the total. Set dates in <a href="book.html">Book</a> to see the total for your stay.</p>
+    <p class="list-note" id="list-note">Rates are per day, as published by 24/7 Car Rental. Set dates in <a href="book.html">Book</a> to see the total for your stay.</p>
   </section>
 </main>
 ${footer()}`;
@@ -347,7 +350,12 @@ ${nav('fleet')}
 <main>
 <section class="hero-car">
   <h1 class="hero-nm">${c.name}</h1>
-  <img class="hero-img" src="img/cars/${c.slug}.webp" alt="${c.name}" width="1600" height="800" fetchpriority="high">
+  <div class="cargal" id="cargal">
+    <img class="hero-img" id="cargal-main" src="img/cars/${c.slug}.webp" alt="${c.name}" width="1400" height="800" fetchpriority="high">
+    ${(gallery[c.slug] || []).length > 1 ? `<div class="cargal-strip" role="group" aria-label="More photographs of this car">
+      ${(gallery[c.slug] || []).map((g, i) => `<button class="cargal-t${i === 0 ? ' is-on' : ''}" type="button" data-img="img/cars/${g}.webp" aria-label="Photo ${i + 1}"><img src="img/cars/${g}.webp" alt="" loading="lazy"></button>`).join('')}
+    </div>` : ''}
+  </div>
   <p class="hero-tag">${c.note}</p>
 </section>
 
@@ -364,7 +372,7 @@ ${nav('fleet')}
   <p class="gantry-top">${gantryChip('24/7')}<span class="sign">Every rental includes</span></p>
   <ul class="inc-list">
     <li>This car, photographed above, not a category with 'or similar' beside it</li>
-    <li>Basic insurance and unlimited kilometres inside Albania</li>
+    
     <li>Collection at Tirana airport or the city office, at any hour</li>
     <li>Delivery inside Tirana on request, cost confirmed before you book</li>
     <li>${c.gear === 'automatic' ? 'Automatic gearbox, which the mountain roads reward' : 'Manual gearbox, the only one in the fleet'}</li>
@@ -384,7 +392,7 @@ ${footer()}`;
 };
 
 // ---------- booking ----------
-const bookPage = () => `${head('Book a car. Four questions, then a human', 'Pick up at Tirana airport or the city office, choose your car and dates, and send it. You get a written confirmation the same day, usually within the hour.', 'book.html')}
+const bookPage = () => `${head('Book a car. Four questions, then a human', 'Pick up at Tirana airport or the city office, choose your car and dates, and send it. You get a written answer on WhatsApp.', 'book.html')}
 ${nav()}
 <main class="bookwrap">
   <ol class="chiprail" id="chiprail" aria-label="Progress">
@@ -427,7 +435,7 @@ ${nav()}
         <label class="dfield"><span class="sign">Email</span><input type="email" id="drv-mail" autocomplete="email" placeholder="you@somewhere.com"></label>
         <label class="dfield"><span class="sign">Phone or WhatsApp</span><input type="tel" id="drv-tel" autocomplete="tel" placeholder="+44"></label>
         <label class="dfield full"><span class="sign">Anything we should know</span><input type="text" id="drv-note" placeholder="Child seat, second driver, crossing a border"></label>
-        <p class="drv-note">No card, no deposit taken online. This sends your request to the office and a person confirms it, in writing, the same day.</p>
+        <p class="drv-note">No card, no deposit taken online. This sends your request to the office and a person confirms it in writing.</p>
       </div>
     </section>
 
@@ -596,7 +604,7 @@ ${nav('faq')}
       
       <div>
         <p class="faq-ask-h">Not answered here?</p>
-        <p class="faq-ask-p">Ask it directly. Both offices are staffed around the clock, and questions about dates, borders or which car suits a route get answered the same day.</p>
+        <p class="faq-ask-p">Ask it directly. Both offices are staffed around the clock, and questions about dates, borders or which car suits a route get answered by a person.</p>
       </div>
       <div class="faq-ask-btns">
         ${waLink('Hello 24/7 Car Rental, I have a question about renting a car in Albania:', 'gantry-wa', 'Ask on WhatsApp')}
@@ -608,7 +616,7 @@ ${nav('faq')}
 ${footer()}`;
 
 // ---------- how it works ----------
-const howPage = () => `${head('How renting from us works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing the same day, collect at Tirana airport or the city office at any hour.', 'how.html')}
+const howPage = () => `${head('How renting from us works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing, collect at Tirana airport or the city office at any hour.', 'how.html')}
 ${nav('how')}
 <main class="howwrap">
   <section class="how-hero">
@@ -646,7 +654,7 @@ ${nav('how')}
       
       <div>
         <p class="faq-ask-h">Ready when you are</p>
-        <p class="faq-ask-p">Send the dates and the car and you will have the total back today. If you would rather ask a question first, that is what the number is for.</p>
+        <p class="faq-ask-p">Send the dates and the car and you will have the total back. If you would rather ask a question first, that is what the number is for.</p>
       </div>
       <div class="faq-ask-btns">
         ${waLink('Hello 24/7 Car Rental, I would like to book a car. My dates are:', 'gantry-wa', 'Send my dates')}

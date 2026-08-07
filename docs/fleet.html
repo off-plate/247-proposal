@@ -15,7 +15,7 @@
 <link rel="icon" href="img/icon.png" sizes="any">
 <link rel="apple-touch-icon" href="img/icon.png">
 <link rel="preload" href="fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=0b93165d">
+<link rel="stylesheet" href="css/app.css?v=97d71a63">
 
 </head>
 <body data-page="fleet">
@@ -61,24 +61,25 @@
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All <b>20</b></button>
         <button class="chip" data-cls="city">City <b>3</b></button><button class="chip" data-cls="compact">Compact <b>3</b></button><button class="chip" data-cls="sedan">Sedan <b>6</b></button><button class="chip" data-cls="coupe">Coupé <b>4</b></button><button class="chip" data-cls="suv">SUV <b>3</b></button><button class="chip" data-cls="premium">Premium <b>1</b></button>
+        <span class="list-filters">
+          <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
+          <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
+          <label class="sort">Sort <select id="sort">
+            <option value="price-desc">price, high to low</option>
+            <option value="price-asc">price, low to high</option>
+            <option value="year-desc">newest first</option>
+          </select></label>
+        </span>
       </div>
-      <div class="list-tools">
-        <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
-        <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
-        <label class="sort">Sort <select id="sort">
-          <option value="price-desc">price, high to low</option>
-          <option value="price-asc">price, low to high</option>
-          <option value="year-desc">newest first</option>
-        </select></label>
-      </div>
+
     </div>
     <p class="rows-empty" id="rows-empty" hidden>No car matches those filters. <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
     <ol class="rows" id="rows">
-      <li class="row" data-slug="golf-5" data-cls="city" data-price="30" data-year="2005" data-trans="manual" data-seats="4" data-name="Golf 5" data-meta="2005 · manual · 1.4&nbsp;L gasoline · 4&nbsp;seats">
-        <a class="row-link" href="car-golf-5.html" aria-label="Open Golf 5">
-          <img src="img/cars/golf-5-s.webp" alt="Golf 5" loading="lazy" width="900" height="506">
+      <li class="row" data-slug="golf-5" data-cls="city" data-price="30" data-year="2005" data-trans="manual" data-seats="4" data-name="Golf 5 2005" data-meta="2005 · manual · 1.4&nbsp;L gasoline · 4&nbsp;seats">
+        <a class="row-link" href="car-golf-5.html" aria-label="Open Golf 5 2005">
+          <img src="img/cars/golf-5-s.webp" alt="Golf 5 2005" loading="lazy" width="900" height="506">
           <span class="row-tag">City</span>
-          <span class="row-nm">Golf 5</span>
+          <span class="row-nm">Golf 5 2005</span>
           <span class="row-spec">
             <b>Manual</b>
             <b>4 seats</b>
@@ -87,11 +88,11 @@
           <span class="row-price mono">30 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="hyundai-accent" data-cls="city" data-price="35" data-year="2012" data-trans="automatic" data-seats="4" data-name="Hyundai Accent" data-meta="2012 · automatic · 1.6&nbsp;L diesel · 4&nbsp;seats">
-        <a class="row-link" href="car-hyundai-accent.html" aria-label="Open Hyundai Accent">
-          <img src="img/cars/hyundai-accent-s.webp" alt="Hyundai Accent" loading="lazy" width="900" height="506">
+<li class="row" data-slug="hyundai-accent" data-cls="city" data-price="35" data-year="2012" data-trans="automatic" data-seats="4" data-name="Hyundai Accent 2012 (first car)" data-meta="2012 · automatic · 1.6&nbsp;L diesel · 4&nbsp;seats">
+        <a class="row-link" href="car-hyundai-accent.html" aria-label="Open Hyundai Accent 2012 (first car)">
+          <img src="img/cars/hyundai-accent-s.webp" alt="Hyundai Accent 2012 (first car)" loading="lazy" width="900" height="506">
           <span class="row-tag">City</span>
-          <span class="row-nm">Hyundai Accent</span>
+          <span class="row-nm">Hyundai Accent 2012 (first car)</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>4 seats</b>
@@ -100,11 +101,11 @@
           <span class="row-price mono">35 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="hyundai-accent-2" data-cls="city" data-price="35" data-year="2012" data-trans="automatic" data-seats="4" data-name="Hyundai Accent" data-meta="2012 · automatic · 1.6&nbsp;L diesel · 4&nbsp;seats">
-        <a class="row-link" href="car-hyundai-accent-2.html" aria-label="Open Hyundai Accent">
-          <img src="img/cars/hyundai-accent-2-s.webp" alt="Hyundai Accent" loading="lazy" width="900" height="506">
+<li class="row" data-slug="hyundai-accent-2" data-cls="city" data-price="35" data-year="2012" data-trans="automatic" data-seats="4" data-name="Hyundai Accent 2012 (second car)" data-meta="2012 · automatic · 1.6&nbsp;L diesel · 4&nbsp;seats">
+        <a class="row-link" href="car-hyundai-accent-2.html" aria-label="Open Hyundai Accent 2012 (second car)">
+          <img src="img/cars/hyundai-accent-2-s.webp" alt="Hyundai Accent 2012 (second car)" loading="lazy" width="900" height="506">
           <span class="row-tag">City</span>
-          <span class="row-nm">Hyundai Accent</span>
+          <span class="row-nm">Hyundai Accent 2012 (second car)</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>4 seats</b>
@@ -178,11 +179,11 @@
           <span class="row-price mono">40 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="audi-a4" data-cls="sedan" data-price="40" data-year="2012" data-trans="automatic" data-seats="5" data-name="Audi A4" data-meta="2012 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-audi-a4.html" aria-label="Open Audi A4">
-          <img src="img/cars/audi-a4-s.webp" alt="Audi A4" loading="lazy" width="900" height="506">
+<li class="row" data-slug="audi-a4" data-cls="sedan" data-price="40" data-year="2012" data-trans="automatic" data-seats="5" data-name="Audi A4 2012" data-meta="2012 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-audi-a4.html" aria-label="Open Audi A4 2012">
+          <img src="img/cars/audi-a4-s.webp" alt="Audi A4 2012" loading="lazy" width="900" height="506">
           <span class="row-tag">Sedan</span>
-          <span class="row-nm">Audi A4</span>
+          <span class="row-nm">Audi A4 2012</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -191,11 +192,11 @@
           <span class="row-price mono">40 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="volkswagen-passat" data-cls="sedan" data-price="40" data-year="2014" data-trans="automatic" data-seats="5" data-name="Volkswagen Passat" data-meta="2014 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-volkswagen-passat.html" aria-label="Open Volkswagen Passat">
-          <img src="img/cars/volkswagen-passat-s.webp" alt="Volkswagen Passat" loading="lazy" width="900" height="506">
+<li class="row" data-slug="volkswagen-passat" data-cls="sedan" data-price="40" data-year="2014" data-trans="automatic" data-seats="5" data-name="Volkswagen Passat 2014" data-meta="2014 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-volkswagen-passat.html" aria-label="Open Volkswagen Passat 2014">
+          <img src="img/cars/volkswagen-passat-s.webp" alt="Volkswagen Passat 2014" loading="lazy" width="900" height="506">
           <span class="row-tag">Sedan</span>
-          <span class="row-nm">Volkswagen Passat</span>
+          <span class="row-nm">Volkswagen Passat 2014</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -217,11 +218,11 @@
           <span class="row-price mono">40 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="audi-a6" data-cls="sedan" data-price="40" data-year="2007" data-trans="automatic" data-seats="5" data-name="Audi A6" data-meta="2007 · automatic · 3.0&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-audi-a6.html" aria-label="Open Audi A6">
-          <img src="img/cars/audi-a6-s.webp" alt="Audi A6" loading="lazy" width="900" height="506">
+<li class="row" data-slug="audi-a6" data-cls="sedan" data-price="40" data-year="2007" data-trans="automatic" data-seats="5" data-name="Audi A6 2007" data-meta="2007 · automatic · 3.0&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-audi-a6.html" aria-label="Open Audi A6 2007">
+          <img src="img/cars/audi-a6-s.webp" alt="Audi A6 2007" loading="lazy" width="900" height="506">
           <span class="row-tag">Sedan</span>
-          <span class="row-nm">Audi A6</span>
+          <span class="row-nm">Audi A6 2007</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -230,11 +231,11 @@
           <span class="row-price mono">40 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="volkswagen-golf-7" data-cls="compact" data-price="45" data-year="2014" data-trans="automatic" data-seats="5" data-name="VW Golf VII" data-meta="2014 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-volkswagen-golf-7.html" aria-label="Open VW Golf VII">
-          <img src="img/cars/volkswagen-golf-7-s.webp" alt="VW Golf VII" loading="lazy" width="900" height="506">
+<li class="row" data-slug="volkswagen-golf-7" data-cls="compact" data-price="45" data-year="2014" data-trans="automatic" data-seats="5" data-name="VW Golf VII 2014" data-meta="2014 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-volkswagen-golf-7.html" aria-label="Open VW Golf VII 2014">
+          <img src="img/cars/volkswagen-golf-7-s.webp" alt="VW Golf VII 2014" loading="lazy" width="900" height="506">
           <span class="row-tag">Compact</span>
-          <span class="row-nm">VW Golf VII</span>
+          <span class="row-nm">VW Golf VII 2014</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -243,11 +244,11 @@
           <span class="row-price mono">45 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="mercedes-benz-c220" data-cls="sedan" data-price="45" data-year="2013" data-trans="automatic" data-seats="5" data-name="Mercedes Benz c220" data-meta="2013 · automatic · 2.2&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-mercedes-benz-c220.html" aria-label="Open Mercedes Benz c220">
-          <img src="img/cars/mercedes-benz-c220-s.webp" alt="Mercedes Benz c220" loading="lazy" width="900" height="506">
+<li class="row" data-slug="mercedes-benz-c220" data-cls="sedan" data-price="45" data-year="2013" data-trans="automatic" data-seats="5" data-name="Mercedes Benz c220 2013" data-meta="2013 · automatic · 2.2&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-mercedes-benz-c220.html" aria-label="Open Mercedes Benz c220 2013">
+          <img src="img/cars/mercedes-benz-c220-s.webp" alt="Mercedes Benz c220 2013" loading="lazy" width="900" height="506">
           <span class="row-tag">Sedan</span>
-          <span class="row-nm">Mercedes Benz c220</span>
+          <span class="row-nm">Mercedes Benz c220 2013</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -256,11 +257,11 @@
           <span class="row-price mono">45 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="golf-6-cabrio" data-cls="coupe" data-price="45" data-year="2012" data-trans="automatic" data-seats="5" data-name="Golf 6 Cabrio" data-meta="2012 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-golf-6-cabrio.html" aria-label="Open Golf 6 Cabrio">
-          <img src="img/cars/golf-6-cabrio-s.webp" alt="Golf 6 Cabrio" loading="lazy" width="900" height="506">
+<li class="row" data-slug="golf-6-cabrio" data-cls="coupe" data-price="45" data-year="2012" data-trans="automatic" data-seats="5" data-name="Golf 6 Cabrio 2012" data-meta="2012 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-golf-6-cabrio.html" aria-label="Open Golf 6 Cabrio 2012">
+          <img src="img/cars/golf-6-cabrio-s.webp" alt="Golf 6 Cabrio 2012" loading="lazy" width="900" height="506">
           <span class="row-tag">Cabrio</span>
-          <span class="row-nm">Golf 6 Cabrio</span>
+          <span class="row-nm">Golf 6 Cabrio 2012</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -282,11 +283,11 @@
           <span class="row-price mono">50 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="hyundai-tucson" data-cls="suv" data-price="50" data-year="2014" data-trans="automatic" data-seats="5" data-name="Hyundai Tucson" data-meta="2014 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-hyundai-tucson.html" aria-label="Open Hyundai Tucson">
-          <img src="img/cars/hyundai-tucson-s.webp" alt="Hyundai Tucson" loading="lazy" width="900" height="506">
+<li class="row" data-slug="hyundai-tucson" data-cls="suv" data-price="50" data-year="2014" data-trans="automatic" data-seats="5" data-name="Hyundai Tucson 2014" data-meta="2014 · automatic · 2.0&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-hyundai-tucson.html" aria-label="Open Hyundai Tucson 2014">
+          <img src="img/cars/hyundai-tucson-s.webp" alt="Hyundai Tucson 2014" loading="lazy" width="900" height="506">
           <span class="row-tag">SUV</span>
-          <span class="row-nm">Hyundai Tucson</span>
+          <span class="row-nm">Hyundai Tucson 2014</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -308,11 +309,11 @@
           <span class="row-price mono">60 €<em>per day</em></span>
         </a>
       </li>
-<li class="row" data-slug="hyundai-santa-fe" data-cls="suv" data-price="60" data-year="2013" data-trans="automatic" data-seats="7" data-name="Hyundai Santa Fe" data-meta="2013 · automatic · 2.0&nbsp;L diesel · 7&nbsp;seats">
-        <a class="row-link" href="car-hyundai-santa-fe.html" aria-label="Open Hyundai Santa Fe">
-          <img src="img/cars/hyundai-santa-fe-s.webp" alt="Hyundai Santa Fe" loading="lazy" width="900" height="506">
+<li class="row" data-slug="hyundai-santa-fe" data-cls="suv" data-price="60" data-year="2013" data-trans="automatic" data-seats="7" data-name="Hyundai Santa Fe 2013" data-meta="2013 · automatic · 2.0&nbsp;L diesel · 7&nbsp;seats">
+        <a class="row-link" href="car-hyundai-santa-fe.html" aria-label="Open Hyundai Santa Fe 2013">
+          <img src="img/cars/hyundai-santa-fe-s.webp" alt="Hyundai Santa Fe 2013" loading="lazy" width="900" height="506">
           <span class="row-tag">SUV · 7 seats</span>
-          <span class="row-nm">Hyundai Santa Fe</span>
+          <span class="row-nm">Hyundai Santa Fe 2013</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>7 seats</b>
@@ -321,11 +322,11 @@
           <span class="row-price mono">60 €<em>per day</em></span>
         </a>
       </li>
-<li class="row is-flag" data-slug="jaguar-xf" data-cls="premium" data-price="65" data-year="2015" data-trans="automatic" data-seats="5" data-name="Jaguar XF" data-meta="2015 · automatic · 2.2&nbsp;L diesel · 5&nbsp;seats">
-        <a class="row-link" href="car-jaguar-xf.html" aria-label="Open Jaguar XF">
-          <img src="img/cars/jaguar-xf-s.webp" alt="Jaguar XF" loading="lazy" width="900" height="506">
+<li class="row is-flag" data-slug="jaguar-xf" data-cls="premium" data-price="65" data-year="2015" data-trans="automatic" data-seats="5" data-name="Jaguar XF 2015" data-meta="2015 · automatic · 2.2&nbsp;L diesel · 5&nbsp;seats">
+        <a class="row-link" href="car-jaguar-xf.html" aria-label="Open Jaguar XF 2015">
+          <img src="img/cars/jaguar-xf-s.webp" alt="Jaguar XF 2015" loading="lazy" width="900" height="506">
           <span class="row-tag">Premium</span>
-          <span class="row-nm">Jaguar XF</span>
+          <span class="row-nm">Jaguar XF 2015</span>
           <span class="row-spec">
             <b>Automatic</b>
             <b>5 seats</b>
@@ -335,7 +336,7 @@
         </a>
       </li>
     </ol>
-    <p class="list-note" id="list-note">Daily rates as published by 24/7 Car Rental, covering the car, basic insurance and unlimited kilometres inside Albania. Longer rentals cost less per day, so ask for the total. Set dates in <a href="book.html">Book</a> to see the total for your stay.</p>
+    <p class="list-note" id="list-note">Rates are per day, as published by 24/7 Car Rental. Set dates in <a href="book.html">Book</a> to see the total for your stay.</p>
   </section>
 </main>
 
@@ -347,7 +348,7 @@
         <img class="foot-logo" src="img/logo-dark.webp" alt="24/7 Car Rental" width="560" height="289" loading="lazy">
         <p class="foot-mission">Car rental in Tirana, open at every hour. Two offices, 20 cars.</p>
         <div class="foot-social">
-          <a href="https://instagram.com/24_7carrental" rel="noopener" target="_blank" aria-label="Instagram, 24_7carrental" title="@24_7carrental"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.42.7.83.92 1.4.17.44.37 1.1.42 2.3.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.3-.22.6-.5 1-.92 1.4-.42.43-.83.7-1.4.92-.44.17-1.1.37-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.3-.42-.6-.22-1-.5-1.4-.92-.42-.42-.7-.83-.9-1.4-.18-.44-.38-1.1-.43-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.3.22-.6.5-1 .91-1.4.42-.42.83-.7 1.4-.9.44-.18 1.1-.38 2.3-.43C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.83-.4.4-.63.78-.83 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.83 1.3.4.4.78.63 1.3.83.4.16 1 .35 2.1.4 1.2.06 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.83.4-.4.63-.78.83-1.3.16-.4.35-1 .4-2.1.06-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.83-1.3-.4-.4-.78-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm6.3-8.3a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg></a><a href="https://instagram.com/247.car.rental" rel="noopener" target="_blank" aria-label="Instagram, 247.car.rental" title="@247.car.rental"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.42.7.83.92 1.4.17.44.37 1.1.42 2.3.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.3-.22.6-.5 1-.92 1.4-.42.43-.83.7-1.4.92-.44.17-1.1.37-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.3-.42-.6-.22-1-.5-1.4-.92-.42-.42-.7-.83-.9-1.4-.18-.44-.38-1.1-.43-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.3.22-.6.5-1 .91-1.4.42-.42.83-.7 1.4-.9.44-.18 1.1-.38 2.3-.43C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.83-.4.4-.63.78-.83 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.83 1.3.4.4.78.63 1.3.83.4.16 1 .35 2.1.4 1.2.06 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.83.4-.4.63-.78.83-1.3.16-.4.35-1 .4-2.1.06-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.83-1.3-.4-.4-.78-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm6.3-8.3a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg></a>
+          <a href="https://instagram.com/24_7carrental" rel="noopener" target="_blank" aria-label="Instagram" title="@24_7carrental"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.42.7.83.92 1.4.17.44.37 1.1.42 2.3.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.3-.22.6-.5 1-.92 1.4-.42.43-.83.7-1.4.92-.44.17-1.1.37-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.3-.42-.6-.22-1-.5-1.4-.92-.42-.42-.7-.83-.9-1.4-.18-.44-.38-1.1-.43-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.3.22-.6.5-1 .91-1.4.42-.42.83-.7 1.4-.9.44-.18 1.1-.38 2.3-.43C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.83-.4.4-.63.78-.83 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.83 1.3.4.4.78.63 1.3.83.4.16 1 .35 2.1.4 1.2.06 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.83.4-.4.63-.78.83-1.3.16-.4.35-1 .4-2.1.06-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.83-1.3-.4-.4-.78-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm6.3-8.3a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg></a>
           <a href="https://24-7rentalcar.com/" rel="noopener" target="_blank" aria-label="24-7rentalcar.com" title="24-7rentalcar.com"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.6 5.6 3.6 9s-1.2 6.4-3.6 9c-2.4-2.6-3.6-5.6-3.6-9S9.6 5.6 12 3Z"/></svg></a>
         </div>
       </div>
@@ -387,5 +388,5 @@
   </div>
 </footer>
 <script src="js/fleet-data.js" defer></script>
-<script src="js/app.js?v=a9fd3140" defer></script>
+<script src="js/app.js?v=aef81dd9" defer></script>
 </body></html>
