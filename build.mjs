@@ -483,10 +483,12 @@ const roadsPage = () => {
       <h2 class="rd-h">${x.name}</h2>
       <p class="rd-story">${x.story || x.note}</p>
       <dl class="rd-facts">${facts.map(f => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('')}</dl>
-      <a class="roadcar" href="car-${x.car}.html"><img src="img/cars/${x.car}-s.webp" alt=""><span><strong>${carOf(x.car).name}</strong><em>${x.carWhy}</em></span><span class="mono">${eur(carOf(x.car).price)}/day</span></a>
       <div class="road-cta">${waLink(cta, 'btn-wa sm', 'Ask about this')}</div>
     </div>
-    <img class="rd-img" src="img/${img}.webp" alt="${x.name}, Albania"${i < 2 ? '' : ' loading="lazy"'} width="1600" height="1000">
+    <div class="rd-shot">
+      <img class="rd-img" src="img/${img}.webp" alt="${x.name}, Albania"${i < 2 ? '' : ' loading="lazy"'} width="1600" height="1000">
+      <a class="roadcar" href="car-${x.car}.html"><img src="img/cars/${x.car}-s.webp" alt=""><span><strong>${carOf(x.car).name}</strong><em>${x.carWhy}</em></span><span class="mono">${eur(carOf(x.car).price)}/day</span></a>
+    </div>
   </article>`;
 
   return `${head('Where to drive in Albania', 'Three routes worth the rental and eight places people go, each with the road time from Tirana and a car that can do it.', 'roads.html')}

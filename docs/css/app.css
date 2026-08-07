@@ -2644,3 +2644,32 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 /* the grid cell still carried 13px 44px of padding from the old list view, which is
    exactly the 88px the card was losing against the identical homepage card */
 .rows > .row { padding: 0 !important; display: block; border: 0; }
+
+/* the recommended car sits on the bottom of the photograph, inset, so it reads as
+   part of the picture rather than a fourth block stacked under the copy */
+.rd-shot { position: relative; display: block; align-self: stretch; height: 100%; min-height: 100%; }
+.rd-shot .rd-img { width: 100%; height: 100%; min-height: clamp(300px, 28vw, 480px); object-fit: cover; display: block; }
+.rd-shot .roadcar {
+  position: absolute; left: clamp(14px, 1.4vw, 24px); right: clamp(14px, 1.4vw, 24px);
+  bottom: clamp(14px, 1.4vw, 24px);
+  display: grid; grid-template-columns: clamp(58px, 5vw, 84px) minmax(0, 1fr) auto;
+  align-items: center; gap: clamp(10px, 1vw, 16px);
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(10px, .9vw, 14px); text-decoration: none; box-shadow: var(--e1);
+}
+.rd-shot .roadcar > img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--r-sm);
+  background: var(--card-2); margin: 0;
+}
+.rd-shot .roadcar span { display: grid; gap: 2px; min-width: 0; }
+.rd-shot .roadcar strong { font-size: clamp(13.5px, 1.05vw, 15.5px); font-weight: 700; letter-spacing: -.015em; }
+.rd-shot .roadcar em { font-style: normal; font-size: 12.5px; color: var(--dim); }
+.rd-shot .roadcar .mono { font-size: clamp(13px, 1vw, 15px); font-weight: 700; white-space: nowrap; }
+@media (max-width: 1000px) {
+  .rd-shot { order: -1; height: auto; min-height: 0; }
+  .rd-shot .rd-img { aspect-ratio: 16/10; min-height: 0; }
+}
+@media (max-width: 560px) {
+  .rd-shot .roadcar { grid-template-columns: 52px minmax(0, 1fr); row-gap: 6px; }
+  .rd-shot .roadcar .mono { grid-column: 2; }
+}
