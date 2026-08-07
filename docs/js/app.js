@@ -107,25 +107,6 @@
     });
     ['#sort', '#f-auto', '#f-5seats'].forEach(s => $(s).addEventListener('change', apply));
 
-    /* list or grid. The choice is the visitor's and it survives the next page. */
-    const sw = $('#viewswitch');
-    if (sw) {
-      const setView = v => {
-        rows.classList.toggle('is-grid', v === 'grid');
-        $$('.vbtn', sw).forEach(b => {
-          const on = b.dataset.view === v;
-          b.classList.toggle('is-on', on);
-          b.setAttribute('aria-pressed', String(on));
-        });
-        try { localStorage.setItem('fleet-view', v); } catch (e) {}
-      };
-      let saved = 'list';
-      try { saved = localStorage.getItem('fleet-view') || 'list'; } catch (e) {}
-      setView(saved);
-      sw.addEventListener('click', e => {
-        const b = e.target.closest('.vbtn'); if (b) setView(b.dataset.view);
-      });
-    }
     apply();
   }
 

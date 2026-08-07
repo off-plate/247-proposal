@@ -316,14 +316,6 @@ ${nav('fleet')}
         </select></label>
         <label class="tog"><input type="checkbox" id="f-auto"> automatic</label>
         <label class="tog"><input type="checkbox" id="f-5seats"> 5+ seats</label>
-        <div class="viewswitch" id="viewswitch" role="group" aria-label="Layout">
-          <button class="vbtn is-on" data-view="list" aria-pressed="true">
-            <svg viewBox="0 0 18 18" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg>List
-          </button>
-          <button class="vbtn" data-view="grid" aria-pressed="false">
-            <svg viewBox="0 0 18 18" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="5.6" height="5.6" rx="1"/><rect x="10.4" y="2" width="5.6" height="5.6" rx="1"/><rect x="2" y="10.4" width="5.6" height="5.6" rx="1"/><rect x="10.4" y="10.4" width="5.6" height="5.6" rx="1"/></svg>Grid
-          </button>
-        </div>
       </div>
       <div class="list-ask">
         <span>Cannot decide?</span>
@@ -537,35 +529,49 @@ ${footer()}`;
 };
 
 // ---------- company ----------
-const companyPage = () => `${head('About 24/7 Car Rental Tirana', 'Car rental in Tirana, Albania. Two locations, the city office on Rruga Njazi Meka and Tirana International Airport. A fleet of ' + fleet.length + ' maintained cars for city driving, family trips and business.', 'company.html')}
+const companyPage = () => `${head('About us. 24/7 Car Rental, Tirana', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania.', 'company.html')}
 ${nav('company')}
 <main class="companywrap">
 
 <section class="manifesto">
   <h1 class="man-h">We make finding the right car simple</h1>
   <div class="man-body">
-    <p>Welcome to 24/7 Car Rental, a car rental company in Tirana, Albania. Whether you are exploring the streets of Tirana or setting off across the country, we are here so you have the right vehicle for the journey.</p>
-    <p>Our mission is straightforward: good service, quality vehicles, and rental that fits around you. Travel plans are not the same for everyone, which is why the fleet covers a range of well maintained cars for different occasions and budgets.</p>
-    <p>Albania is a country of rich history, striking landscapes and warm hospitality. With a car you are free to find it at your own pace, from Tirana city out to the beaches of the Albanian Riviera.</p>
+    <p>Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania. Whether you are exploring the vibrant streets of Tirana city or embarking on an Albanian adventure, we are here to ensure you have the perfect vehicle for your journey.</p>
   </div>
 </section>
 
+<section class="abouttext">
+  <!-- slop-lint-ignore their own About Us paragraphs, verbatim on request --><article class="about-block">
+    <h2>Our mission</h2>
+    <p>At 24/7 Car Rental, our mission is simple: to provide our customers with top-notch service, quality vehicles, and unbeatable convenience. We understand that your travel needs are unique, which is why we offer a diverse fleet of well-maintained cars to suit every occasion and budget.</p>
+  </article>
+  <article class="about-block">
+    <h2>Explore Albania with ease</h2>
+    <p>Albania is a country of rich history, stunning landscapes, and warm hospitality. With your rental car from 24/7 Car Rental, you have the freedom to explore its hidden gems at your own pace. From the bustling city life of Tirana to the breathtaking beaches of the Albanian Riviera, the possibilities are endless.</p>
+  </article>
+  <article class="about-block">
+    <h2>Contact us</h2>
+    <p>Ready to start your Albanian adventure? Get in touch with us today to book your rental car or to learn more about our services. Whether you are a visitor or a local in need of temporary wheels, 24/7 Car Rental is here to make your journey unforgettable.</p>
+    <p class="about-thanks">Thank you for choosing 24/7 Car Rental for your car rental needs in Tirana, Albania.</p>
+  </article>
+</section>
+
 <section class="promises" aria-label="Why choose us">
-  <h2 class="sec-h">Why choose us</h2>
+  <h2 class="sec-h">Why choose us?</h2>
   <ol class="prom-list">
-    ${[
-      { t: 'Convenience', d: 'Two locations, the city office in Tirana and Tirana International Airport at Rinas, so collecting and returning the car fits your arrival rather than the other way round.' },
-      { t: 'Variety', d: 'A compact car for the city, a roomier one for a family trip, a sedan for business. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' to ' + eur(FLAG.price) + ' a day, each with its own page.' },
-      { t: 'Quality', d: 'Your safety and comfort come first. The fleet is modern and maintained, from brands you already know, so the car behaves the way you expect it to.' },
-      { t: 'Service', d: 'The people who answer the phone are the people who hand you the key. From the first message to the return, someone in Tirana is dealing with it.' },
+    <!-- slop-lint-ignore 24/7 Car Rental's own About Us wording, verbatim on request -->${[
+      { t: 'Convenience', d: 'With two convenient locations, including Tirana city and Tirana International Airport (Rinas), picking up and dropping off your rental car has never been easier.' },
+      { t: 'Variety', d: 'Whether you need a compact car for zipping around the city, a spacious SUV for family vacations, or a luxurious sedan for business trips, we have the perfect vehicle for you.' },
+      { t: 'Quality', d: 'Your safety and comfort are our top priorities. Our fleet consists of modern, well-maintained cars from trusted brands, ensuring a smooth and reliable ride every time.' },
+      { t: 'Exceptional service', d: 'Our friendly and knowledgeable staff are dedicated to providing you with a seamless rental experience. From reservation to return, we are here to assist you every step of the way.' },
     ].map((p, i) => `<li class="prom"><span class="gchip">${String(i + 1).padStart(2, '0')}</span><div><strong>${p.t}</strong><p>${p.d}</p></div></li>`).join('')}
   </ol>
 </section>
 
 <section class="aboutcta">
   <div class="aboutcta-card">
-    <h2>Ready when you are</h2>
-    <p>Get in touch to book a car or to ask about anything that is not answered here. Visitor or local, in Tirana for a week or for an afternoon, the number is answered at every hour.</p>
+    <h2>Contact us today to book your rental car</h2>
+    <p>Get in touch now and let us get you on the road with 24/7 Car Rental. Your next adventure awaits.</p>
     <div class="aboutcta-btns">
       ${waLink('Hello 24/7 Car Rental, I would like to ask about renting a car in Tirana.', 'btn-wa', 'Message us on WhatsApp')}
       <a class="foot-call" href="tel:${TEL}">${site.phone}</a>
@@ -577,23 +583,12 @@ ${nav('company')}
   </div>
 </section>
 
-<section class="faq-teaser">
-  <div>
-    <h2 class="sec-h">Questions get straight answers</h2>
-    <p>Licences, borders, night pickups, which car survives the road to Theth, and what the daily price actually covers. ${site.faq.length} of them, grouped and written plainly.</p>
-    <a class="btn-verde" href="faq.html">Read the answers <span aria-hidden="true">&rarr;</span></a>
-  </div>
-  <ul class="faq-teaser-list">
-    ${site.faq.slice(0, 4).map(f => `<li><a href="faq.html">${f.q}</a></li>`).join('')}
-  </ul>
-</section>
-
 <section class="colophon" id="colophon">
   <h2 class="sec-h">Colophon</h2>
-  <p>This is an unsolicited redesign proposal for <a href="https://24-7rentalcar.com/">24-7rentalcar.com</a>, built by <a href="https://off-plate.com">Off-Plate</a>. Every car, price, specification, phone number and location on this site was taken from their live website on 5 August 2026, and the wording on this page follows their own About Us. Nothing here is invented: where a fact was missing, the question is listed rather than answered. The car photographs are the exception and are labelled as such: they are stand-in shots of the same models, not their cars, because their own photography is between 446 and 735 pixels wide.</p>
+  <p>This is an unsolicited redesign proposal for <a href="https://24-7rentalcar.com/">24-7rentalcar.com</a>, built by <a href="https://off-plate.com">Off-Plate</a>. The wording on this page is theirs, taken from their own About Us. Every car, price, specification, phone number and location elsewhere on this site was taken from their live website on 5 August 2026. Nothing here is invented: where a fact was missing, the question is listed rather than answered. The car photographs are the exception and are labelled as such: they are stand-in shots of the same models, not their cars, because their own photography is between 446 and 735 pixels wide.</p>
   <p>Type is Switzer, one variable file under the Fontshare licence, used at two weights. No framework, no tracker, no analytics, no cookie banner because there are no cookies to consent to. The whole site is hand-built static HTML, CSS and one file of JavaScript.</p>
   <details class="credits"><summary>Photography credits</summary><ul id="credit-list">
-    <li>The car photographs in this demo are stand-ins: one photograph of the same model, sourced from Wikimedia Commons and Wikipedia, for each of the ${fleet.length} cars. They are <strong>not</strong> the actual cars 24/7 Car Rental rents. On a live site every car would carry its own photograph, which is the whole point of listing cars individually rather than by category.</li>
+    <li>The car photographs in this demo are stand-ins: one photograph of the same model, sourced from Wikimedia Commons and Wikipedia, for each of the ${fleet.length} cars. They are <strong>not</strong> the actual cars 24/7 Car Rental rents.</li>
     ${JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-roads.json'))).concat(JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-dest.json')))).map(cr => `<li>${cr.slug}: ${cr.author.replace(/<[^>]+>/g, '')}, ${cr.license}, via <a href="${cr.source_url}" rel="license external">Wikimedia Commons</a></li>`).join('')}
   </ul></details>
 </section>
