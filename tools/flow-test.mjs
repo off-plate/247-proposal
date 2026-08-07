@@ -66,11 +66,23 @@ chip.includes('5') ? ok('5 days computed') : fail(`days: ${chip}`);
 (await disabled()) ? fail('continue still disabled with location and dates set') : ok('step 1 opens once both are set');
 await snap('1-where-and-when'); await next();
 
-const picked = await page.$eval('.pick.is-on', e => e.dataset.slug).catch(() => null);
-picked === 'hyundai-santa-fe-2016' ? ok('car preselected from the query string') : fail(`preselected ${picked}`);
-const tile = await page.textContent('.pick[data-slug="golf-5"] .pick-total');
-tile.includes('150') ? ok('Golf 5 shows 150 € for 5 days (30 x 5, no invented uplift)') : fail(`golf tile: ${tile}`);
-await snap('3-car'); await next();
+// step 2 is the upgrade, not a picker: nobody reaches this page without a car
+const upHint = await page.textContent('#up-hint');
+upHint.includes('Hyundai Santa Fe 2016') ? ok('the chosen car carried into the flow') : fail(`hint: ${upHint}`);
+const upOffer = await page.textContent('#up-off-nm');
+const upShown = await page.$eval('#upgrade', e => !e.hidden);
+upShown && upOffer === 'Jaguar XF 2015'
+  ? ok('the 60 € Santa Fe is offered the 65 € Jaguar, the next car up')
+  : fail(`offer: ${upOffer}, shown ${upShown}`);
+const upDiff = await page.textContent('#up-diff');
+upDiff.includes('5 €') && upDiff.includes('25 €')
+  ? ok('both numbers stated: 5 € a day and 25 € across 5 days')
+  : fail(`diff: ${upDiff}`);
+await snap('2-upgrade');
+await page.click('#up-take');
+const afterTake = await page.textContent('#up-cur-nm');
+afterTake === 'Jaguar XF 2015' ? ok('taking the upgrade swaps the car') : fail(`after take: ${afterTake}`);
+await page.click('#up-keep');
 
 (await disabled()) ? ok('contact step gated') : fail('contact step not gated');
 await page.fill('#drv-name', 'Michael Florian');
@@ -82,13 +94,13 @@ await snap('4-you'); await next();
 
 await page.waitForSelector('#done-ref');
 const board = await page.textContent('#done-t');
-board.includes('300') ? ok('estimate is exactly 300 € (60 x 5)') : fail(`estimate wrong: ${board.slice(0,300)}`);
+board.includes('325') ? ok('estimate is exactly 325 € (65 x 5, the upgrade taken)') : fail(`estimate wrong: ${board.slice(0,300)}`);
 board.includes('W6 3021') ? ok('flight number carried to the request') : fail('flight missing');
 board.includes('CHILD SEAT') ? ok('free-text note carried') : fail('note missing');
 const wa = await page.getAttribute('#send-wa', 'href');
 wa && wa.startsWith('https://wa.me/355685000700?text=') ? ok('WhatsApp deep link targets their real number') : fail(`wa href: ${wa}`);
 const msg = decodeURIComponent((wa || '').split('text=')[1] || '');
-msg.includes('Hyundai Santa Fe 2016') && msg.includes('300 EUR') ? ok('message body carries car and total') : fail(`msg: ${msg.slice(0,160)}`);
+msg.includes('Jaguar XF 2015') && msg.includes('325 EUR') ? ok('message body carries the upgraded car and its total') : fail(`msg: ${msg.slice(0,160)}`);
 await snap('5-send');
 
 errors.length ? fail('JS errors: ' + errors.join(' | ')) : ok('zero console/page errors across the walk');

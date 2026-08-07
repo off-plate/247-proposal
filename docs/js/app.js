@@ -206,7 +206,7 @@
       switch (step) {
         // where and when are one screen now, so step 0 needs both
         case 0: return !!b.loc && (!$('#oneway').checked || !!b.loc2) && days(b) > 0;
-        case 1: return !!carOf();
+        case 1: return !!carOf();   // always true when arriving from a car page
         case 2: return $('#drv-name').value.trim().length > 2 && $('#drv-mail').validity.valid && !!$('#drv-mail').value && $('#drv-tel').value.trim().length > 5;
         default: return false;
       }
@@ -291,30 +291,61 @@
     df.addEventListener('change', dateChange); dt.addEventListener('change', dateChange);
     $('#t-from').addEventListener('change', dateChange); $('#t-to').addEventListener('change', dateChange);
 
-    /* step 2: cars */
-    const paintPicks = () => {
-      const n = days(b);
-      $$('.pick').forEach(p => {
-        p.classList.toggle('is-on', p.dataset.slug === b.car);
-        const el = $('.pick-total', p);
-        if (n > 0) {
-          const perDay = +p.dataset.price;
-          // days x the published daily rate. There is no weekly formula and no free day:
-          // they publish neither, and SITE.week was undefined, which printed NaN.
-          const total = perDay * n;
-          el.textContent = `${eur(total)} for ${n} day${n > 1 ? 's' : ''}`;
-        } else el.textContent = `${eur(+p.dataset.price)}/day`;
-      });
+    /* step 2: the one place a better car is offered, and it says both numbers */
+    // The nearest car above the current one in price. Class first so an SUV is not
+    // offered a coupe, then the smallest step up. Null when nothing is dearer.
+    const upsellFor = c => {
+      if (!c) return null;
+      const dearer = (window.FLEET || []).filter(x => x.price > c.price);
+      if (!dearer.length) return null;
+      const sameCls = dearer.filter(x => x.cls === c.cls);
+      const pool = sameCls.length ? sameCls : dearer;
+      return pool.sort((a, z) => (a.price - c.price) - (z.price - c.price))[0];
     };
-    $('#pickrail').addEventListener('click', e => {
-      const p = e.target.closest('.pick'); if (!p) return;
-      b.car = p.dataset.slug; paintPicks(); paint();
+    const paintPicks = () => {
+      const cur = carOf(), n = days(b), wrap = $('#upgrade');
+      if (!wrap) return;
+      const up = upsellFor(cur);
+      const hint = $('#up-hint'), keep = $('#up-keep');
+      if (!cur || !up) {
+        wrap.hidden = true;
+        // keep the current name true even when there is nothing to offer against it
+        if (cur) { const e = $('#up-cur-nm'); if (e) e.textContent = cur.name; }
+        if (hint) hint.textContent = cur
+          ? `Nothing in the fleet costs more than the ${cur.name}. Carry on.`
+          : 'Choose a car from the fleet first.';
+        if (keep) keep.textContent = 'Continue';
+        return;
+      }
+      wrap.hidden = false;
+      const perDay = up.price - cur.price;
+      const total = n > 0 ? perDay * n : 0;
+      const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
+      $('#up-cur-img').src = `${window.BASE || ''}img/cars/${cur.slug}-s.webp`;
+      $('#up-cur-img').alt = cur.name;
+      $('#up-off-img').src = `${window.BASE || ''}img/cars/${up.slug}-s.webp`;
+      $('#up-off-img').alt = up.name;
+      set('#up-cur-nm', cur.name); set('#up-off-nm', up.name);
+      const spec = c => `${c.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${c.seats} seats, ${c.clsLabel || c.cls}`;
+      set('#up-cur-spec', spec(cur)); set('#up-off-spec', spec(up));
+      set('#up-cur-fig', n > 0 ? `${eur(cur.price * n)} for ${n} day${n > 1 ? 's' : ''}` : `${eur(cur.price)} a day`);
+      set('#up-off-fig', n > 0 ? `${eur(up.price * n)} for ${n} day${n > 1 ? 's' : ''}` : `${eur(up.price)} a day`);
+      set('#up-hint', `You picked the ${cur.name}. The ${up.name} is the next car up.`);
+      // both numbers, always. The daily one flatters the offer and the total does not,
+      // so a visitor who is told only the first has been sold something.
+      set('#up-diff', n > 0
+        ? `${eur(perDay)} more a day, ${eur(total)} more across your ${n} days.`
+        : `${eur(perDay)} more a day.`);
+      set('#up-take', `Take the ${up.name}`);
+      if (keep) keep.textContent = `Keep the ${cur.name}`;
+      wrap.dataset.up = up.slug;
+    };
+    const upTake = $('#up-take'), upKeep = $('#up-keep');
+    if (upTake) upTake.addEventListener('click', () => {
+      const slug = $('#upgrade').dataset.up;
+      if (slug) { b.car = slug; writeBook(b); paintPicks(); paint(); }
     });
-
-    $('#pickrail').addEventListener('click', e => {
-      const p = e.target.closest('.pick'); if (!p) return;
-      b.car = p.dataset.slug; paintPicks(); paint();
-    });
+    if (upKeep) upKeep.addEventListener('click', () => { if (valid()) { step += 1; paint(); toStepTop(); } });
 
     /* step 3: extras */
     /* nav */

@@ -68,13 +68,13 @@ const nav = (active = '') => `
       <span class="nav-num">${site.phone}</span>
     </a>
     ${waLink(WA_GENERIC, 'nav-wa', 'WhatsApp')}
-    <a class="reserve-cta" href="book.html">Book a car</a>
+    <a class="reserve-cta" href="fleet.html">Book a car</a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   </div>
 </nav>
 <div class="sheet" id="sheet" hidden>
   <a href="how.html">How it works</a><a href="fleet.html">Fleet</a><a href="roads.html">Roads</a><a href="faq.html">FAQ</a><a href="company.html">About</a>
-  <a href="book.html" class="sheet-go">Book a car →</a>
+  <a href="fleet.html" class="sheet-go">Book a car →</a>
   ${waLink(WA_GENERIC, 'sheet-wa', 'Ask on WhatsApp')}
 </div>`;
 
@@ -441,14 +441,28 @@ ${nav()}
       <p class="daysline"><span class="mono" id="days-chip">–</span><span id="season-note"></span></p>
     </section>
 
-    <section class="step" data-step="1" aria-label="Car" hidden>
-      <h1 class="step-h">Which car exactly?</h1>
-      <div class="pickrail" id="pickrail">
-        ${fleet.map(c => `<button class="pick" data-slug="${c.slug}" data-price="${c.price}" data-cls="${c.cls}" data-name="${c.name}">
-          <img src="img/cars/${c.slug}-s.webp" alt="" loading="lazy"><strong>${c.name}</strong>
-          <span class="pick-spec">${c.gear === 'automatic' ? 'Automatic' : 'Manual'} · ${c.seats} seats · ${c.clsLabel}</span>
-          <span class="mono pick-total" data-base="${c.price}">${eur(c.price)}/day</span></button>`).join('')}
+    <section class="step" data-step="1" aria-label="A better car" hidden>
+      <h1 class="step-h" id="up-h">Before you send it</h1>
+      <p class="step-hint" id="up-hint"></p>
+      <div class="upgrade" id="upgrade" hidden>
+        <article class="up-card is-current" id="up-current">
+          <span class="up-role">Your choice</span>
+          <img id="up-cur-img" src="" alt="">
+          <strong id="up-cur-nm"></strong>
+          <span class="up-spec" id="up-cur-spec"></span>
+          <span class="up-fig" id="up-cur-fig"></span>
+        </article>
+        <article class="up-card is-offer" id="up-offer">
+          <span class="up-role">For a little more</span>
+          <img id="up-off-img" src="" alt="">
+          <strong id="up-off-nm"></strong>
+          <span class="up-spec" id="up-off-spec"></span>
+          <span class="up-fig" id="up-off-fig"></span>
+          <p class="up-diff" id="up-diff"></p>
+          <button class="btn-verde up-take" type="button" id="up-take">Take this one instead</button>
+        </article>
       </div>
+      <p class="up-keep"><button class="up-keep-btn" type="button" id="up-keep">Keep the one I chose</button></p>
     </section>
 
     <section class="step" data-step="2" aria-label="You" hidden>
@@ -761,5 +775,5 @@ for (const [name, html] of Object.entries(pages)) {
   mkdirSync(dirname(full), { recursive: true });
   writeFileSync(full, rewrite(html, out));
 }
-writeFileSync(join(D, 'js/fleet-data.js'), 'window.FLEET=' + JSON.stringify(fleet.map(({ slug, name, price, cls }) => ({ slug, name, price, cls }))) + ';window.SITE=' + JSON.stringify({ locations: site.locations, wa: site.wa, tel: site.tel, phone: site.phone }) + ';');
+writeFileSync(join(D, 'js/fleet-data.js'), 'window.FLEET=' + JSON.stringify(fleet.map(({ slug, name, price, cls, clsLabel, gear, seats }) => ({ slug, name, price, cls, clsLabel, gear, seats }))) + ';window.SITE=' + JSON.stringify({ locations: site.locations, wa: site.wa, tel: site.tel, phone: site.phone }) + ';');
 console.log(`built ${Object.keys(pages).length} pages at clean URLs`);

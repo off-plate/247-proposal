@@ -2847,3 +2847,39 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 .pillnav .nav-wa,
 .pillnav .nav-call { border-radius: var(--r-nav); }
 .pillnav .nav-wa { width: 40px; height: 40px; }
+
+/* ==========================================================================
+   THE UPGRADE STEP. It replaced the car picker, because nobody reaches this
+   page without a car. It states the daily difference and the difference across
+   the whole rental, in that order, and neither is hidden.
+   ========================================================================== */
+.upgrade {
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 1.4vw, 24px);
+  margin-top: clamp(18px, 2vw, 30px); align-items: start;
+}
+.up-card {
+  display: grid; gap: 8px; padding: clamp(16px, 1.6vw, 24px);
+  border: 1px solid var(--line); border-radius: var(--r); background: var(--card);
+}
+.up-card.is-offer { border-color: var(--ink); }
+.up-role { font-size: 12.5px; color: var(--dim); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.up-card.is-offer .up-role { color: var(--verde-t); }
+.up-card img {
+  width: 100%; aspect-ratio: 3/2; object-fit: cover;
+  border-radius: var(--r-sm); background: var(--card-2); margin: 2px 0 4px;
+}
+.up-card strong { font-size: clamp(16px, 1.3vw, 20px); font-weight: 700; letter-spacing: -.02em; }
+.up-spec { font-size: 13.5px; color: var(--dim); }
+.up-fig { font-weight: 700; font-size: clamp(17px, 1.4vw, 22px); font-variant-numeric: tabular-nums; }
+.up-diff {
+  color: var(--ink); font-size: 14.5px; margin: 6px 0 2px;
+  padding-top: 12px; border-top: 1px solid var(--line);
+}
+.up-take { justify-self: start; margin-top: 4px; }
+.up-keep { margin-top: clamp(16px, 1.8vw, 26px); }
+.up-keep-btn {
+  background: none; border: 1px solid var(--line-2); border-radius: var(--r-pill);
+  padding: 12px 22px; font-size: 15px; font-weight: 500; color: var(--ink);
+}
+.up-keep-btn:hover { border-color: var(--ink); }
+@media (max-width: 760px) { .upgrade { grid-template-columns: 1fr; } }
