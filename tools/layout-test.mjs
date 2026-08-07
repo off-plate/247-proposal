@@ -50,7 +50,7 @@ for (const w of [2560, 1600, 390]) {
   // Checked at desktop widths, where two of them can be compared side by side.
   if (w >= 1200) {
     const hs = [], fills = [];
-    for (const pg of ['how-it-works/', 'roads/', 'faq/', 'about/']) {
+    for (const pg of ['fleet/', 'how-it-works/', 'roads/', 'faq/', 'about/']) {
       await p.goto(`${B}/${pg}`, { waitUntil: 'networkidle' });
       const r = await p.evaluate(() => {
         const h = document.querySelector('.phero'), f = h.querySelector('.phero-grid');
@@ -59,7 +59,7 @@ for (const w of [2560, 1600, 390]) {
       });
       hs.push(r[0]); fills.push(r[1]);
     }
-    new Set(hs).size === 1 ? ok(`${w}: all four sub-page heroes are ${hs[0]}px tall`)
+    new Set(hs).size === 1 ? ok(`${w}: all five sub-page heroes are ${hs[0]}px tall`)
                            : fail(`${w}: hero heights differ: ${hs.join(', ')}`);
     fills.every(f => f >= 95) ? ok(`${w}: every hero uses the full shell width`)
                               : fail(`${w}: heroes fill only ${fills.join('%, ')}%`);

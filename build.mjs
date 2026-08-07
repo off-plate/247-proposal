@@ -333,15 +333,10 @@ ${footer()}`;
 const fleetPage = () => `${head('Our fleet. ' + fleet.length + ' cars from ' + eur(CHEAP.price) + ' a day', 'Every car we own, photographed and priced. ' + fleet.filter(c => c.gear === 'automatic').length + ' of ' + fleet.length + ' are automatic. Book the exact car, not a category.', 'fleet.html')}
 ${nav('fleet')}
 <main class="fleetwrap">
+  ${pageHero('Our fleet', `${fleet.length} cars from ${eur(CHEAP.price)} a day, ${fleet.filter(c => c.gear === 'automatic').length} of them automatic. Set your dates to see what is free.`, 'Fleet',
+    `<a class="btn-ink" href="how.html">How it works <span class="x-arrow" aria-hidden="true">&rarr;</span></a>` + waLink('Hello 24/7 Car Rental, I am not sure which car suits my trip. Can you help me choose?', 'btn-wa', 'Ask us on WhatsApp'))}
   <section class="list">
     <div class="list-head">
-      <div class="list-topline">
-        <h1 class="list-title">Our fleet</h1>
-        <div class="list-ask">
-          <span>Not sure which car to take?</span>
-          ${waLink('Hello 24/7 Car Rental, I am not sure which car suits my trip. Can you help me choose?', 'btn-wa sm', 'Ask us on WhatsApp')}
-        </div>
-      </div>
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All <b>${fleet.length}</b></button>
         ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]} <b>${fleet.filter(x => x.cls === c).length}</b></button>`).join('')}

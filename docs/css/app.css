@@ -3162,3 +3162,10 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
 /* the fleet header: one row for the title and the ask, one for the filters */
 .list-topline { align-items: center; }
 .list-ask { gap: 10px; }
+/* the fleet joins the shared page hero, so its list starts as the list */
+.fleetwrap { margin-top: 0; padding-top: calc(70px + 1vh); }
+/* the fleet hero takes the shared padding, so all five come out the same height */
+.fleetwrap .list-head { padding-top: 0; border-top: 0; }
+.list-topline, .list-title, .list-ask { display: none; }
+/* the hero sits inside an already-inset wrapper here, so it must not inset again */
+.fleetwrap > .phero { width: 100% !important; margin-inline: 0 !important; }
