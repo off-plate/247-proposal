@@ -15,7 +15,7 @@
 <link rel="icon" href="img/icon.png" sizes="any">
 <link rel="apple-touch-icon" href="img/icon.png">
 <link rel="preload" href="fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=7255da4b">
+<link rel="stylesheet" href="css/app.css?v=0b93165d">
 
 </head>
 <body data-page="book">
@@ -50,11 +50,11 @@
 </div>
 <main class="bookwrap">
   <ol class="chiprail" id="chiprail" aria-label="Progress">
-    <li class="pchip is-now" data-step="0"><span class="gchip">1</span>Where</li><li class="pchip" data-step="1"><span class="gchip">2</span>When</li><li class="pchip" data-step="2"><span class="gchip">3</span>Car</li><li class="pchip" data-step="3"><span class="gchip">4</span>You</li><li class="pchip" data-step="4"><span class="gchip">5</span>Send</li>
+    <li class="pchip is-now" data-step="0"><span class="gchip">1</span>Where and when</li><li class="pchip" data-step="1"><span class="gchip">2</span>Car</li><li class="pchip" data-step="2"><span class="gchip">3</span>You</li><li class="pchip" data-step="3"><span class="gchip">4</span>Send</li>
   </ol>
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
-      <h1 class="step-h">Where do you collect?</h1>
+      <h1 class="step-h">Where and when?</h1>
       <p class="step-hint" id="loc-hint">Pick one to continue.</p>
       <div class="locgrid" id="locgrid">
         <button class="loc" data-loc="tia" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>Tirana International Airport</strong><span class="sign">Nënë Tereza, arrivals hall</span><span class="openlight">Open now</span></button><button class="loc" data-loc="cty" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>Rruga Njazi Meka, Tiranë</strong><span class="sign">City office</span><span class="openlight">Open now</span></button>
@@ -62,10 +62,8 @@
       <label class="dfield flight" id="flight-wrap" hidden><span class="sign">Flight number, so the car waits if you land late</span><input type="text" id="flight" placeholder="W6 3021" autocomplete="off"></label>
       <label class="tog oneway"><input type="checkbox" id="oneway"> Return to the other location <em id="oneway-note" hidden>no extra charge, they are ten minutes apart</em></label>
       <div class="locgrid" id="locgrid2" hidden></div>
-    </section>
 
-    <section class="step" data-step="1" aria-label="Dates" hidden>
-      <h1 class="step-h">Which dates?</h1>
+      <h2 class="step-sub">When?</h2>
       <div class="dategrid">
         <label class="dfield"><span class="sign">Pickup</span><input type="date" id="d-from"><select id="t-from"><option>00:00</option><option>00:30</option><option>01:00</option><option>01:30</option><option>02:00</option><option>02:30</option><option>03:00</option><option>03:30</option><option>04:00</option><option>04:30</option><option>05:00</option><option>05:30</option><option>06:00</option><option>06:30</option><option>07:00</option><option>07:30</option><option>08:00</option><option>08:30</option><option>09:00</option><option>09:30</option><option selected>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option><option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option><option>22:30</option><option>23:00</option><option>23:30</option></select></label>
         <span class="garrow big" aria-hidden="true">→</span>
@@ -74,54 +72,74 @@
       <p class="daysline"><span class="mono" id="days-chip">–</span><span id="season-note"></span></p>
     </section>
 
-    <section class="step" data-step="2" aria-label="Car" hidden>
+    <section class="step" data-step="1" aria-label="Car" hidden>
       <h1 class="step-h">Which car exactly?</h1>
       <div class="pickrail" id="pickrail">
         <button class="pick" data-slug="golf-5" data-price="30" data-cls="city" data-name="Golf 5">
           <img src="img/cars/golf-5-s.webp" alt="" loading="lazy"><strong>Golf 5</strong>
+          <span class="pick-spec">Manual · 4 seats · City</span>
           <span class="mono pick-total" data-base="30">30 €/day</span></button><button class="pick" data-slug="hyundai-accent" data-price="35" data-cls="city" data-name="Hyundai Accent">
           <img src="img/cars/hyundai-accent-s.webp" alt="" loading="lazy"><strong>Hyundai Accent</strong>
+          <span class="pick-spec">Automatic · 4 seats · City</span>
           <span class="mono pick-total" data-base="35">35 €/day</span></button><button class="pick" data-slug="hyundai-accent-2" data-price="35" data-cls="city" data-name="Hyundai Accent">
           <img src="img/cars/hyundai-accent-2-s.webp" alt="" loading="lazy"><strong>Hyundai Accent</strong>
+          <span class="pick-spec">Automatic · 4 seats · City</span>
           <span class="mono pick-total" data-base="35">35 €/day</span></button><button class="pick" data-slug="audi-a3-2014" data-price="40" data-cls="compact" data-name="Audi A3 2014">
           <img src="img/cars/audi-a3-2014-s.webp" alt="" loading="lazy"><strong>Audi A3 2014</strong>
+          <span class="pick-spec">Automatic · 5 seats · Compact</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat-sel-2014" data-price="40" data-cls="sedan" data-name="Volkswagen Passat Sel 2014">
           <img src="img/cars/volkswagen-passat-sel-2014-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat Sel 2014</strong>
+          <span class="pick-spec">Automatic · 5 seats · Sedan</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a3-2015" data-price="40" data-cls="compact" data-name="Audi A3 2015">
           <img src="img/cars/audi-a3-2015-s.webp" alt="" loading="lazy"><strong>Audi A3 2015</strong>
+          <span class="pick-spec">Automatic · 5 seats · Compact</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a4-2014" data-price="40" data-cls="sedan" data-name="Audi A4 2014">
           <img src="img/cars/audi-a4-2014-s.webp" alt="" loading="lazy"><strong>Audi A4 2014</strong>
+          <span class="pick-spec">Automatic · 5 seats · Sedan</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat-cc-2014" data-price="40" data-cls="coupe" data-name="Volkswagen Passat CC 2014">
           <img src="img/cars/volkswagen-passat-cc-2014-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat CC 2014</strong>
+          <span class="pick-spec">Automatic · 5 seats · Coupé</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a4" data-price="40" data-cls="sedan" data-name="Audi A4">
           <img src="img/cars/audi-a4-s.webp" alt="" loading="lazy"><strong>Audi A4</strong>
+          <span class="pick-spec">Automatic · 5 seats · Sedan</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat" data-price="40" data-cls="sedan" data-name="Volkswagen Passat">
           <img src="img/cars/volkswagen-passat-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat</strong>
+          <span class="pick-spec">Automatic · 5 seats · Sedan</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-passat-cc" data-price="40" data-cls="coupe" data-name="Volkswagen Passat CC 2012">
           <img src="img/cars/volkswagen-passat-cc-s.webp" alt="" loading="lazy"><strong>Volkswagen Passat CC 2012</strong>
+          <span class="pick-spec">Automatic · 5 seats · Coupé</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="audi-a6" data-price="40" data-cls="sedan" data-name="Audi A6">
           <img src="img/cars/audi-a6-s.webp" alt="" loading="lazy"><strong>Audi A6</strong>
+          <span class="pick-spec">Automatic · 5 seats · Sedan</span>
           <span class="mono pick-total" data-base="40">40 €/day</span></button><button class="pick" data-slug="volkswagen-golf-7" data-price="45" data-cls="compact" data-name="VW Golf VII">
           <img src="img/cars/volkswagen-golf-7-s.webp" alt="" loading="lazy"><strong>VW Golf VII</strong>
+          <span class="pick-spec">Automatic · 5 seats · Compact</span>
           <span class="mono pick-total" data-base="45">45 €/day</span></button><button class="pick" data-slug="mercedes-benz-c220" data-price="45" data-cls="sedan" data-name="Mercedes Benz c220">
           <img src="img/cars/mercedes-benz-c220-s.webp" alt="" loading="lazy"><strong>Mercedes Benz c220</strong>
+          <span class="pick-spec">Automatic · 5 seats · Sedan</span>
           <span class="mono pick-total" data-base="45">45 €/day</span></button><button class="pick" data-slug="golf-6-cabrio" data-price="45" data-cls="coupe" data-name="Golf 6 Cabrio">
           <img src="img/cars/golf-6-cabrio-s.webp" alt="" loading="lazy"><strong>Golf 6 Cabrio</strong>
+          <span class="pick-spec">Automatic · 5 seats · Cabrio</span>
           <span class="mono pick-total" data-base="45">45 €/day</span></button><button class="pick" data-slug="audi-a5-2014" data-price="50" data-cls="coupe" data-name="Audi A5 2014">
           <img src="img/cars/audi-a5-2014-s.webp" alt="" loading="lazy"><strong>Audi A5 2014</strong>
+          <span class="pick-spec">Automatic · 5 seats · Coupé</span>
           <span class="mono pick-total" data-base="50">50 €/day</span></button><button class="pick" data-slug="hyundai-tucson" data-price="50" data-cls="suv" data-name="Hyundai Tucson">
           <img src="img/cars/hyundai-tucson-s.webp" alt="" loading="lazy"><strong>Hyundai Tucson</strong>
+          <span class="pick-spec">Automatic · 5 seats · SUV</span>
           <span class="mono pick-total" data-base="50">50 €/day</span></button><button class="pick" data-slug="hyundai-santa-fe-2016" data-price="60" data-cls="suv" data-name="Hyundai Santa Fe 2016">
           <img src="img/cars/hyundai-santa-fe-2016-s.webp" alt="" loading="lazy"><strong>Hyundai Santa Fe 2016</strong>
+          <span class="pick-spec">Automatic · 7 seats · SUV · 7 seats</span>
           <span class="mono pick-total" data-base="60">60 €/day</span></button><button class="pick" data-slug="hyundai-santa-fe" data-price="60" data-cls="suv" data-name="Hyundai Santa Fe">
           <img src="img/cars/hyundai-santa-fe-s.webp" alt="" loading="lazy"><strong>Hyundai Santa Fe</strong>
+          <span class="pick-spec">Automatic · 7 seats · SUV · 7 seats</span>
           <span class="mono pick-total" data-base="60">60 €/day</span></button><button class="pick" data-slug="jaguar-xf" data-price="65" data-cls="premium" data-name="Jaguar XF">
           <img src="img/cars/jaguar-xf-s.webp" alt="" loading="lazy"><strong>Jaguar XF</strong>
+          <span class="pick-spec">Automatic · 5 seats · Premium</span>
           <span class="mono pick-total" data-base="65">65 €/day</span></button>
       </div>
     </section>
 
-    <section class="step" data-step="3" aria-label="You" hidden>
+    <section class="step" data-step="2" aria-label="You" hidden>
       <h1 class="step-h">Who is driving?</h1>
       <div class="drv">
         <label class="dfield full"><span class="sign">Name</span><input type="text" id="drv-name" autocomplete="name" placeholder="As printed on the licence"></label>
@@ -132,7 +150,7 @@
       </div>
     </section>
 
-    <section class="step" data-step="4" aria-label="Send" hidden>
+    <section class="step" data-step="3" aria-label="Send" hidden>
       <div class="gantry doneboard" id="doneboard">
         <p class="gantry-top"><span class="gchip">24/7</span><span class="openlight">Request ready</span></p>
         <p class="done-ref mono" id="done-ref"></p>
@@ -210,5 +228,5 @@
   </div>
 </footer>
 <script src="js/fleet-data.js" defer></script>
-<script src="js/app.js?v=c7a425c8" defer></script>
+<script src="js/app.js?v=a9fd3140" defer></script>
 </body></html>

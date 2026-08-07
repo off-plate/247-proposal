@@ -180,25 +180,42 @@
 
     const valid = () => {
       switch (step) {
-        case 0: return !!b.loc && (!$('#oneway').checked || !!b.loc2);
-        case 1: return days(b) > 0;
-        case 2: return !!carOf();
-        case 3: return $('#drv-name').value.trim().length > 2 && $('#drv-mail').validity.valid && !!$('#drv-mail').value && $('#drv-tel').value.trim().length > 5;
+        // where and when are one screen now, so step 0 needs both
+        case 0: return !!b.loc && (!$('#oneway').checked || !!b.loc2) && days(b) > 0;
+        case 1: return !!carOf();
+        case 2: return $('#drv-name').value.trim().length > 2 && $('#drv-mail').validity.valid && !!$('#drv-mail').value && $('#drv-tel').value.trim().length > 5;
         default: return false;
       }
     };
+    // the hero search collects where, when and gearbox. Carry them in instead of
+    // making the visitor type the same four things twice.
+    const heroParams = () => {
+      const q = new URLSearchParams(location.search);
+      if (!q.size) return;
+      const loc = q.get('loc'), ret = q.get('ret'), from = q.get('from'), to = q.get('to');
+      if (loc) b.loc = loc;
+      if (ret && ret !== loc) { b.loc2 = ret; const ow = $('#oneway'); if (ow) ow.checked = true; }
+      if (from) { b.from = from; const el = $('#d-from'); if (el) el.value = from; }
+      if (to) { b.to = to; const el = $('#d-to'); if (el) el.value = to; }
+      const tf = q.get('tfrom'), tt = q.get('tto');
+      if (tf) { b.tfrom = tf; const el = $('#t-from'); if (el) el.value = tf; }
+      if (tt) { b.tto = tt; const el = $('#t-to'); if (el) el.value = tt; }
+      writeBook(b);
+    };
+    heroParams();
+
     const paint = () => {
       $$('.step').forEach(s => { s.hidden = +s.dataset.step !== step; });
-      const sb = $('.sumboard'); if (sb) sb.hidden = step === 4;
+      const sb = $('.sumboard'); if (sb) sb.hidden = step === 3;
       $$('.pchip').forEach(c => {
         c.classList.toggle('is-now', +c.dataset.step === step);
         c.classList.toggle('is-done', +c.dataset.step < step);
       });
       $('#back').hidden = step === 0;
       const next = $('#next');
-      next.hidden = step === 4;
+      next.hidden = step === 3;
       next.disabled = !valid();
-      next.innerHTML = step === 3 ? 'Review request <span aria-hidden="true">→</span>' : 'Continue <span aria-hidden="true">→</span>';
+      next.innerHTML = step === 2 ? 'Review request <span aria-hidden="true">→</span>' : 'Continue <span aria-hidden="true">→</span>';
       board();
       writeBook(b);
     };
@@ -284,17 +301,17 @@
     };
     $('#next').addEventListener('click', () => { toStepTop();
       if (!valid()) return;
-      if (step === 3) return confirmBooking();
+      if (step === 2) return confirmBooking();
       step += 1; paint();
     });
     ['drv-name', 'drv-mail', 'drv-tel'].forEach(id => $('#' + id).addEventListener('input', paint));
 
     const confirmBooking = () => {
-      if (!carOf()) { step = 2; paint(); return; }
+      if (!carOf()) { step = 1; paint(); return; }
       const p = price(), c = carOf(), nd = days(b);
       const ref = 'REQ-' + String(Date.now()).slice(-5);
       b.ref = ref; writeBook(b);
-      step = 4; paint();
+      step = 3; paint();
       $('#next').hidden = true;
       $('#done-ref').textContent = ref;
       const pickup = locOf(b.loc)?.label || '';

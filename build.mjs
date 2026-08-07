@@ -182,11 +182,11 @@ ${nav()}
 
   <form class="hz-bar" action="book.html" method="get">
     <div class="hz-bar-fields">
-      <label class="hz-f">
+      <label class="hz-f hz-sel">
         <span class="hz-f-k">Collect at</span>
         <select name="loc">${site.locations.map(l => `<option value="${l.id}">${l.label}</option>`).join('')}</select>
       </label>
-      <label class="hz-f">
+      <label class="hz-f hz-sel">
         <span class="hz-f-k">Return to</span>
         <select name="ret">${site.locations.map((l, i) => `<option value="${l.id}"${i === 0 ? ' selected' : ''}>${l.label}</option>`).join('')}</select>
       </label>
@@ -209,7 +209,7 @@ ${nav()}
       </span>
       <span class="hz-bar-go">
         ${waLink(WA_GENERIC, 'btn-wa hz-bar-wa', 'WhatsApp')}
-        <button class="hz-search" type="submit">Search <span class="x-arrow" aria-hidden="true">&rarr;</span></button>
+        <button class="hz-search" type="submit">See cars <span class="x-arrow" aria-hidden="true">&rarr;</span></button>
       </span>
     </div>
   </form>
@@ -298,13 +298,13 @@ ${nav('fleet')}
         ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]} <b>${fleet.filter(x => x.cls === c).length}</b></button>`).join('')}
       </div>
       <div class="list-tools">
+        <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
+        <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
         <label class="sort">Sort <select id="sort">
-          <option value="price-asc">price, low to high</option>
           <option value="price-desc">price, high to low</option>
+          <option value="price-asc">price, low to high</option>
           <option value="year-desc">newest first</option>
         </select></label>
-        <label class="tog"><input type="checkbox" id="f-auto"> automatic</label>
-        <label class="tog"><input type="checkbox" id="f-5seats"> 5+ seats</label>
       </div>
     </div>
     <p class="rows-empty" id="rows-empty" hidden>No car matches those filters. <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
@@ -388,11 +388,11 @@ const bookPage = () => `${head('Book a car. Four questions, then a human', 'Pick
 ${nav()}
 <main class="bookwrap">
   <ol class="chiprail" id="chiprail" aria-label="Progress">
-    ${['Where', 'When', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip">${i + 1}</span>${s}</li>`).join('')}
+    ${['Where and when', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip">${i + 1}</span>${s}</li>`).join('')}
   </ol>
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
-      <h1 class="step-h">Where do you collect?</h1>
+      <h1 class="step-h">Where and when?</h1>
       <p class="step-hint" id="loc-hint">Pick one to continue.</p>
       <div class="locgrid" id="locgrid">
         ${site.locations.map((l, i) => `<button class="loc" data-loc="${l.id}" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>${l.label}</strong><span class="sign">${l.sub}</span><span class="openlight">Open now</span></button>`).join('')}
@@ -400,10 +400,8 @@ ${nav()}
       <label class="dfield flight" id="flight-wrap" hidden><span class="sign">Flight number, so the car waits if you land late</span><input type="text" id="flight" placeholder="W6 3021" autocomplete="off"></label>
       <label class="tog oneway"><input type="checkbox" id="oneway"> Return to the other location <em id="oneway-note" hidden>no extra charge, they are ten minutes apart</em></label>
       <div class="locgrid" id="locgrid2" hidden></div>
-    </section>
 
-    <section class="step" data-step="1" aria-label="Dates" hidden>
-      <h1 class="step-h">Which dates?</h1>
+      <h2 class="step-sub">When?</h2>
       <div class="dategrid">
         <label class="dfield"><span class="sign">Pickup</span><input type="date" id="d-from"><select id="t-from">${TIMES.map(t => `<option${t === '10:00' ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
         <span class="garrow big" aria-hidden="true">→</span>
@@ -412,16 +410,17 @@ ${nav()}
       <p class="daysline"><span class="mono" id="days-chip">–</span><span id="season-note"></span></p>
     </section>
 
-    <section class="step" data-step="2" aria-label="Car" hidden>
+    <section class="step" data-step="1" aria-label="Car" hidden>
       <h1 class="step-h">Which car exactly?</h1>
       <div class="pickrail" id="pickrail">
         ${fleet.map(c => `<button class="pick" data-slug="${c.slug}" data-price="${c.price}" data-cls="${c.cls}" data-name="${c.name}">
           <img src="img/cars/${c.slug}-s.webp" alt="" loading="lazy"><strong>${c.name}</strong>
+          <span class="pick-spec">${c.gear === 'automatic' ? 'Automatic' : 'Manual'} · ${c.seats} seats · ${c.clsLabel}</span>
           <span class="mono pick-total" data-base="${c.price}">${eur(c.price)}/day</span></button>`).join('')}
       </div>
     </section>
 
-    <section class="step" data-step="3" aria-label="You" hidden>
+    <section class="step" data-step="2" aria-label="You" hidden>
       <h1 class="step-h">Who is driving?</h1>
       <div class="drv">
         <label class="dfield full"><span class="sign">Name</span><input type="text" id="drv-name" autocomplete="name" placeholder="As printed on the licence"></label>
@@ -432,7 +431,7 @@ ${nav()}
       </div>
     </section>
 
-    <section class="step" data-step="4" aria-label="Send" hidden>
+    <section class="step" data-step="3" aria-label="Send" hidden>
       <div class="gantry doneboard" id="doneboard">
         <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Request ready</span></p>
         <p class="done-ref mono" id="done-ref"></p>
@@ -511,16 +510,20 @@ ${nav('company')}
   </div>
 </section>
 
+<figure class="about-shot">
+  <img src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albania" width="2400" height="1051" loading="lazy">
+</figure>
+
 <section class="abouttext">
-  <!-- slop-lint-ignore their own About Us paragraphs, verbatim on request --><article class="about-block">
+  <!-- slop-lint-ignore their own About Us paragraphs, verbatim on request --><article class="about-b">
     <h2>Our mission</h2>
     <p>At 24/7 Car Rental, our mission is simple: to provide our customers with top-notch service, quality vehicles, and unbeatable convenience. We understand that your travel needs are unique, which is why we offer a diverse fleet of well-maintained cars to suit every occasion and budget.</p>
   </article>
-  <article class="about-block">
+  <article class="about-b">
     <h2>Explore Albania with ease</h2>
     <p>Albania is a country of rich history, stunning landscapes, and warm hospitality. With your rental car from 24/7 Car Rental, you have the freedom to explore its hidden gems at your own pace. From the bustling city life of Tirana to the breathtaking beaches of the Albanian Riviera, the possibilities are endless.</p>
   </article>
-  <article class="about-block">
+  <article class="about-b">
     <h2>Contact us</h2>
     <p>Ready to start your Albanian adventure? Get in touch with us today to book your rental car or to learn more about our services. Whether you are a visitor or a local in need of temporary wheels, 24/7 Car Rental is here to make your journey unforgettable.</p>
     <p class="about-thanks">Thank you for choosing 24/7 Car Rental for your car rental needs in Tirana, Albania.</p>

@@ -54,7 +54,8 @@ await page.click('.loc[data-loc="tia"]');
 const flightShown = await page.$eval('#flight-wrap', e => !e.hidden);
 flightShown ? ok('airport pickup reveals the flight-number field') : fail('flight field hidden at airport');
 await page.fill('#flight', 'W6 3021');
-await snap('1-where'); await next();
+// where and when are one screen, so Continue must stay gated until the dates are in
+(await disabled()) ? ok('step 1 still gated with a location but no dates') : fail('continue enabled with no dates');
 
 const from = new Date(Date.now() + 9 * 864e5).toISOString().slice(0, 10);
 const to = new Date(Date.now() + 14 * 864e5).toISOString().slice(0, 10);
@@ -62,7 +63,8 @@ await page.fill('#d-from', from); await page.$eval('#d-from', e => e.dispatchEve
 await page.fill('#d-to', to); await page.$eval('#d-to', e => e.dispatchEvent(new Event('change')));
 const chip = await page.textContent('#days-chip');
 chip.includes('5') ? ok('5 days computed') : fail(`days: ${chip}`);
-await snap('2-when'); await next();
+(await disabled()) ? fail('continue still disabled with location and dates set') : ok('step 1 opens once both are set');
+await snap('1-where-and-when'); await next();
 
 const picked = await page.$eval('.pick.is-on', e => e.dataset.slug).catch(() => null);
 picked === 'hyundai-santa-fe-2016' ? ok('car preselected from the query string') : fail(`preselected ${picked}`);
@@ -90,5 +92,19 @@ msg.includes('Hyundai Santa Fe 2016') && msg.includes('300 EUR') ? ok('message b
 await snap('5-send');
 
 errors.length ? fail('JS errors: ' + errors.join(' | ')) : ok('zero console/page errors across the walk');
+/* the hero search collects four values; the booking page must not ask for them again */
+await page.goto(`${BASE}/book.html?loc=cty&ret=tia&from=2026-09-10&to=2026-09-15&tfrom=23:30&tto=10:00`, { waitUntil: 'networkidle' });
+const carried = await page.evaluate(() => ({
+  loc: document.querySelector('.loc.is-on')?.dataset.loc,
+  oneway: document.getElementById('oneway')?.checked,
+  from: document.getElementById('d-from')?.value,
+  to: document.getElementById('d-to')?.value,
+  tfrom: document.getElementById('t-from')?.value,
+}));
+carried.loc === 'cty' ? ok('hero collect location carried into booking') : fail(`loc carried as ${carried.loc}`);
+carried.oneway === true ? ok('a different return office ticks the one-way box') : fail('one-way not ticked');
+carried.from === '2026-09-10' && carried.to === '2026-09-15' ? ok('hero dates carried into booking') : fail(`dates ${carried.from} to ${carried.to}`);
+carried.tfrom === '23:30' ? ok('a 23:30 pickup survives the handoff') : fail(`tfrom ${carried.tfrom}`);
+
 await browser.close();
 console.log(process.exitCode ? 'FLOW: FAILURES' : 'FLOW CLEAN');
