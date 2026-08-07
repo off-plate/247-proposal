@@ -88,10 +88,16 @@ for (const w of [2560, 1600, 390]) {
 
   // no hover moves a car card or its photograph
   await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
-  const before = await p.$eval('.row:not([hidden]) img', e => JSON.stringify(e.getBoundingClientRect()));
+  // measure against the document, not the viewport: hovering scrolls the card into
+  // view on a phone, which moves the viewport rect without anything having moved
+  const box = e => { const r = e.getBoundingClientRect();
+    return JSON.stringify([Math.round(r.width), Math.round(r.height), Math.round(r.left + scrollX), Math.round(r.top + scrollY)]); };
+  await p.$eval('.row:not([hidden]) .row-link', e => e.scrollIntoView({ block: 'center' }));
+  await p.waitForTimeout(200);
+  const before = await p.$eval('.row:not([hidden]) img', box);
   await p.hover('.row:not([hidden]) .row-link');
   await p.waitForTimeout(350);
-  const after = await p.$eval('.row:not([hidden]) img', e => JSON.stringify(e.getBoundingClientRect()));
+  const after = await p.$eval('.row:not([hidden]) img', box);
   before === after ? ok(`${w}: hovering a card does not move its photograph`) : fail(`${w}: photo moved on hover`);
   await p.close();
 }

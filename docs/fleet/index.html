@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" href="../img/icon.png">
 <link rel="preload" href="../fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>window.BASE="../"</script>
-<link rel="stylesheet" href="../css/app.css?v=50b170ee">
+<link rel="stylesheet" href="../css/app.css?v=b09e01a8">
 
 </head>
 <body data-page="fleet">
@@ -73,6 +73,11 @@
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All <b>20</b></button>
         <button class="chip" data-cls="city">City <b>3</b></button><button class="chip" data-cls="compact">Compact <b>3</b></button><button class="chip" data-cls="sedan">Sedan <b>6</b></button><button class="chip" data-cls="coupe">Coupé <b>4</b></button><button class="chip" data-cls="suv">SUV <b>3</b></button><button class="chip" data-cls="premium">Premium <b>1</b></button>
+        <span class="list-dates">
+          <label class="datefilter"><span>From</span><input type="date" id="f-from"></label>
+          <label class="datefilter"><span>To</span><input type="date" id="f-to"></label>
+          <button class="datefilter-clear" type="button" id="f-dates-clear" hidden>Clear dates</button>
+        </span>
         <span class="list-filters">
           <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
           <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
@@ -85,7 +90,7 @@
       </div>
 
     </div>
-    <p class="rows-empty" id="rows-empty" hidden>No car matches those filters. <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
+    <p class="rows-empty" id="rows-empty" hidden><span id="rows-empty-line">No car matches those filters.</span> <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
     <ol class="rows" id="rows">
       <li class="row" data-slug="golf-5" data-cls="city" data-price="30" data-year="2005" data-trans="manual" data-seats="4" data-name="Golf 5 2005" data-meta="2005 · manual · 1.4&nbsp;L gasoline · 4&nbsp;seats">
         <a class="row-link" href="../cars/golf-5/" aria-label="Open Golf 5 2005">
@@ -400,5 +405,5 @@
   </div>
 </footer>
 <script src="../js/fleet-data.js" defer></script>
-<script src="../js/app.js?v=2b876801" defer></script>
+<script src="../js/app.js?v=ad080ab2" defer></script>
 </body></html>

@@ -9,6 +9,7 @@ const ROOT = dirname(fileURLToPath(import.meta.url));
 const fleet = JSON.parse(readFileSync(join(ROOT, 'data/fleet.json'), 'utf8'));
 const site  = JSON.parse(readFileSync(join(ROOT, 'data/site.json'), 'utf8'));
 const gallery = JSON.parse(readFileSync(join(ROOT, 'data/gallery.json'), 'utf8'));
+const avail = JSON.parse(readFileSync(join(ROOT, 'data/availability.json'), 'utf8'));
 const D = join(ROOT, 'docs');
 mkdirSync(join(D, 'fonts'), { recursive: true });
 cpSync(join(ROOT, 'assets/fonts/switzer-var.woff2'), join(D, 'fonts/switzer-var.woff2'));
@@ -220,7 +221,7 @@ ${nav()}
     </div>
   </div>
 
-  <form class="hz-bar" action="book.html" method="get">
+  <form class="hz-bar" action="fleet.html" method="get">
     <div class="hz-bar-fields">
       <label class="hz-f hz-sel">
         <span class="hz-f-k">Collect at</span>
@@ -336,6 +337,11 @@ ${nav('fleet')}
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
         <button class="chip is-on" data-cls="all">All <b>${fleet.length}</b></button>
         ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]} <b>${fleet.filter(x => x.cls === c).length}</b></button>`).join('')}
+        <span class="list-dates">
+          <label class="datefilter"><span>From</span><input type="date" id="f-from"></label>
+          <label class="datefilter"><span>To</span><input type="date" id="f-to"></label>
+          <button class="datefilter-clear" type="button" id="f-dates-clear" hidden>Clear dates</button>
+        </span>
         <span class="list-filters">
           <label class="tog"><input type="checkbox" id="f-auto"><span>Automatic</span></label>
           <label class="tog"><input type="checkbox" id="f-5seats"><span>5 seats or more</span></label>
@@ -348,7 +354,7 @@ ${nav('fleet')}
       </div>
 
     </div>
-    <p class="rows-empty" id="rows-empty" hidden>No car matches those filters. <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
+    <p class="rows-empty" id="rows-empty" hidden><span id="rows-empty-line">No car matches those filters.</span> <button type="button" class="rows-clear" id="rows-clear">Clear them</button></p>
     <ol class="rows" id="rows">
       ${fleet.map(c => `<li class="row${c.flagship ? ' is-flag' : ''}" data-slug="${c.slug}" data-cls="${c.cls}" data-price="${c.price}" data-year="${c.year}" data-trans="${c.gear}" data-seats="${c.seats}" data-name="${c.name}" data-meta="${c.year} · ${c.gear} · ${c.engine.toFixed(1)}&nbsp;L ${c.fuel} · ${c.seats}&nbsp;seats">
         <a class="row-link" href="car-${c.slug}.html" aria-label="Open ${c.name}">
@@ -403,6 +409,15 @@ ${nav('fleet')}
     <tr><td>Engine</td><td>${c.engine.toFixed(1)} L ${c.fuel}</td><td>Gearbox</td><td>${c.gear}</td></tr>
     <tr><td>Seats</td><td>${c.seats}</td><td>Rate</td><td>${eur(c.price)} per day</td></tr>
   </table>
+</section>
+
+<section class="calwrap" aria-label="Availability">
+  <div class="cal-head">
+    <h2>When this car is free</h2>
+    <p class="cal-legend"><span class="cal-key cal-key-free"></span>Available<span class="cal-key cal-key-busy"></span>Booked</p>
+  </div>
+  <div class="cal" id="cal" data-slug="${c.slug}"></div>
+  <p class="cal-note">Demo availability. 24/7 Car Rental publish no booking calendar, so these dates are generated to show the feature working. Send your dates and the office confirms what is actually free.</p>
 </section>
 
 <div class="incwrap"><section class="gantry included" aria-label="Included">
@@ -789,5 +804,5 @@ for (const [name, html] of Object.entries(pages)) {
   mkdirSync(dirname(full), { recursive: true });
   writeFileSync(full, rewrite(html, out));
 }
-writeFileSync(join(D, 'js/fleet-data.js'), 'window.FLEET=' + JSON.stringify(fleet.map(({ slug, name, price, cls, clsLabel, gear, seats }) => ({ slug, name, price, cls, clsLabel, gear, seats }))) + ';window.SITE=' + JSON.stringify({ locations: site.locations, wa: site.wa, tel: site.tel, phone: site.phone }) + ';');
+writeFileSync(join(D, 'js/fleet-data.js'), 'window.FLEET=' + JSON.stringify(fleet.map(({ slug, name, price, cls, clsLabel, gear, seats }) => ({ slug, name, price, cls, clsLabel, gear, seats }))) + ';window.SITE=' + JSON.stringify({ locations: site.locations, wa: site.wa, tel: site.tel, phone: site.phone }) + ';window.AVAIL=' + JSON.stringify(avail.booked) + ';');
 console.log(`built ${Object.keys(pages).length} pages at clean URLs`);

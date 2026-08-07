@@ -57,6 +57,18 @@
 
   const tripTotal = (perDay, n) => perDay * n;  // no weekly formula invented; longer stays are negotiated
 
+  /* ---------- availability: shared by the car calendar and the fleet filter ---------- */
+  const AV = window.AVAIL || {};
+  const iso = d => d.toISOString().slice(0, 10);
+  const busyOn = (slug, day) => (AV[slug] || []).some(([a, z]) => day >= a && day <= z);
+  // a car is free for a stay only if every night in it is free
+  const freeBetween = (slug, from, to) => {
+    if (!from || !to || from > to) return true;
+    const d = new Date(from + 'T00:00:00'), end = new Date(to + 'T00:00:00');
+    while (d <= end) { if (busyOn(slug, iso(d))) return false; d.setDate(d.getDate() + 1); }
+    return true;
+  };
+
   /* ---------- fleet page ---------- */
   const rows = $('#rows');
   if (rows) {
@@ -84,6 +96,10 @@
     const apply = () => {
       $$('#chips .chip').forEach(c => c.classList.toggle('is-on', c.dataset.cls === cls));
       const wantAuto = $('#f-auto').checked, want5 = $('#f-5seats').checked;
+      const dFrom = $('#f-from')?.value || '', dTo = $('#f-to')?.value || '';
+      const dated = !!(dFrom && dTo && dFrom <= dTo);
+      const clearBtn = $('#f-dates-clear');
+      if (clearBtn) clearBtn.hidden = !(dFrom || dTo);
       const [key, dir] = $('#sort').value.split('-');
       const items = $$('.row', rows);
       items.sort((a, z) => (dir === 'asc' ? 1 : -1) * (+a.dataset[key] - +z.dataset[key]));
@@ -91,25 +107,68 @@
       items.forEach(el => {
         const ok = (laneSet ? laneSet.includes(el.dataset.slug) : (cls === 'all' || el.dataset.cls === cls)) &&
           (!wantAuto || el.dataset.trans === 'automatic') &&
-          (!want5 || +el.dataset.seats >= 5);
+          (!want5 || +el.dataset.seats >= 5) &&
+          (!dated || freeBetween(el.dataset.slug, dFrom, dTo));
         el.hidden = !ok;
         if (ok) shown++;
         rows.appendChild(el);
       });
       const empty = $('#rows-empty');
-      if (empty) empty.hidden = shown > 0;
+      if (empty) {
+        empty.hidden = shown > 0;
+        const line = $('#rows-empty-line');
+        if (line) line.textContent = dated
+          ? `No car is free for ${dFrom} to ${dTo} with those filters.`
+          : 'No car matches those filters.';
+      }
     };
     $('#chips').addEventListener('click', e => {
       const c = e.target.closest('.chip'); if (!c) return;
       laneSet = null; cls = c.dataset.cls; apply();
     });
-    ['#sort', '#f-auto', '#f-5seats'].forEach(s => $(s).addEventListener('change', apply));
+    ['#sort', '#f-auto', '#f-5seats', '#f-from', '#f-to'].forEach(sel => { const e = $(sel); if (e) e.addEventListener('change', apply); });
+    // dates arriving from the homepage search
+    const q = new URLSearchParams(location.search);
+    if (q.get('from') && $('#f-from')) $('#f-from').value = q.get('from');
+    if (q.get('to') && $('#f-to')) $('#f-to').value = q.get('to');
+    if (q.get('gear') === 'automatic' && $('#f-auto')) $('#f-auto').checked = true;
+    const dc = $('#f-dates-clear');
+    if (dc) dc.addEventListener('click', () => { $('#f-from').value = ''; $('#f-to').value = ''; apply(); });
     const clear = $('#rows-clear');
     if (clear) clear.addEventListener('click', () => {
-      laneSet = null; cls = 'all'; $('#f-auto').checked = false; $('#f-5seats').checked = false; apply();
+      laneSet = null; cls = 'all'; $('#f-auto').checked = false; $('#f-5seats').checked = false;
+      if ($('#f-from')) $('#f-from').value = ''; if ($('#f-to')) $('#f-to').value = ''; apply();
     });
 
     apply();
+  }
+
+  /* ---------- car page calendar ---------- */
+  const calEl = $('#cal');
+  if (calEl) {
+    const slug = calEl.dataset.slug;
+    const MONTHS = 3;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    let html = '';
+    for (let m = 0; m < MONTHS; m++) {
+      const first = new Date(today.getFullYear(), today.getMonth() + m, 1);
+      const last = new Date(today.getFullYear(), today.getMonth() + m + 1, 0);
+      const lead = (first.getDay() + 6) % 7; // weeks start on Monday
+      html += `<div class="cal-month"><p class="cal-m">${first.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</p>`
+        + `<div class="cal-dow">${['M','T','W','T','F','S','S'].map(d => `<span>${d}</span>`).join('')}</div><div class="cal-grid">`
+        + '<span class="cal-pad"></span>'.repeat(lead);
+      for (let day = 1; day <= last.getDate(); day++) {
+        const d = new Date(first.getFullYear(), first.getMonth(), day);
+        const k = iso(d);
+        const past = d < today;
+        const busy = busyOn(slug, k);
+        const cls = past ? 'is-past' : busy ? 'is-busy' : 'is-free';
+        const label = past ? 'past' : busy ? 'booked' : 'available';
+        html += `<span class="cal-d ${cls}" title="${d.toLocaleDateString('en-GB')}: ${label}"><b>${day}</b></span>`;
+      }
+      html += '</div></div>';
+    }
+    calEl.innerHTML = html;
   }
 
   /* ---------- language switcher ---------- */
