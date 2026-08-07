@@ -21,7 +21,11 @@ const CSS = readFileSync(resolve(fileURLToPath(import.meta.url), '../../docs/css
 const fail = m => { console.log('FAIL: ' + m); process.exitCode = 1; };
 const ok = m => console.log('ok: ' + m);
 
-// 1. the stylesheet declares radius only through the four tokens
+// The one exception, by name: the header morphs from a bar into a pill, and a pill
+// with 4px corners is neither. Nothing else may borrow --r-nav.
+const NAV_EXEMPT = ['.pillnav', '.reserve-cta', '.nav-wa', '.nav-call'];
+
+// 1. the stylesheet declares radius only through the four tokens, plus --r-nav
 const decls = [...CSS.matchAll(/border-radius:\s*([^;]+)/g)].map(m => m[1].trim());
 const literals = decls.filter(v => /\d+(px|%|em|rem)/.test(v.replace(/var\(--[a-z-]+\)/g, '')));
 literals.length === 0
@@ -40,9 +44,10 @@ const p = await (await b.newContext({ viewport: { width: 1600, height: 1000 } })
 let worst = 0, offender = '';
 for (const page of ['', 'fleet/', 'roads/', 'faq/', 'how-it-works/', 'about/', 'book/', 'cars/jaguar-xf/', '404.html']) {
   await p.goto(`${B}/${page}`, { waitUntil: 'networkidle' });
-  const found = await p.evaluate(max => {
+  const found = await p.evaluate(([max, exempt]) => {
     const out = [];
     for (const el of document.querySelectorAll('*')) {
+      if (exempt.some(sel => el.matches(sel) || el.closest(sel))) continue;
       const cs = getComputedStyle(el);
       for (const corner of ['borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomLeftRadius', 'borderBottomRightRadius']) {
         const v = parseFloat(cs[corner]);
@@ -50,10 +55,16 @@ for (const page of ['', 'fleet/', 'roads/', 'faq/', 'how-it-works/', 'about/', '
       }
     }
     return out.sort((a, z) => z[1] - a[1]).slice(0, 3);
-  }, MAX);
+  }, [MAX, NAV_EXEMPT]);
   for (const [sel, v] of found) if (v > worst) { worst = v; offender = `${page || 'index'} ${sel}`; }
 }
-worst === 0 ? ok(`nothing on any page renders rounder than ${MAX}px`)
+worst === 0 ? ok(`nothing outside the header renders rounder than ${MAX}px`)
             : fail(`${offender} renders at ${worst}px, over the ${MAX}px ceiling`);
+// the exception has to hold up too: the pinned header is a pill or the rule is a lie
+await p.goto(`${B}/`, { waitUntil: 'networkidle' });
+await p.evaluate(() => scrollTo(0, 800));
+await p.waitForTimeout(900);
+const navR = await p.$eval('#pillnav', e => parseFloat(getComputedStyle(e).borderTopLeftRadius));
+navR > 20 ? ok(`the pinned header is a pill (${Math.round(navR)}px)`) : fail(`pinned header radius ${navR}px, expected a pill`);
 await b.close();
 console.log(process.exitCode ? 'RADIUS: FAILURES' : 'RADIUS CLEAN');

@@ -2833,3 +2833,17 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 /* the roads title is one line where the other three take two, so the block
    reserves two and all four heroes come out the same height */
 .phero h1 { min-height: 2.08em; }
+
+/* ==========================================================================
+   THE ONE RADIUS EXCEPTION: the navigation.
+   Everything else lives inside the 8px ceiling. The header is allowed to be
+   round because its whole behaviour is a bar morphing into a pill, and a pill
+   with 4px corners is neither. Named here, allowed by name in radius-test.mjs,
+   and nothing else may borrow it.
+   ========================================================================== */
+:root { --r-nav: 999px; }
+.pillnav.is-pinned { border-radius: var(--r-nav); }
+.pillnav .reserve-cta,
+.pillnav .nav-wa,
+.pillnav .nav-call { border-radius: var(--r-nav); }
+.pillnav .nav-wa { width: 40px; height: 40px; }

@@ -26,10 +26,21 @@ Forbidden outright:
 `--r-pill` survives as a name because 29 rules reference it, but it is 4px. A button
 is a rectangle with its corners taken off, not a lozenge.
 
-**Gate:** `node tools/radius-test.mjs <base-url>`. It checks three things: that no
-literal px, % or em radius appears in `docs/css/app.css`, that each of the four
-tokens is at or under the 8px ceiling, and that no element on any of the nine page
-types renders rounder than 8px whatever the source. All three must pass.
+### The one exception: the navigation
+
+`--r-nav: 999px`, and it applies to four things only: the pinned header bar and the
+three controls inside it (`.reserve-cta`, `.nav-wa`, `.nav-call`). The header's whole
+behaviour is a full-width bar morphing into a pill on scroll, and a pill with 4px
+corners is neither shape. Nothing outside `.pillnav` may reference `--r-nav`.
+
+The gate knows this exception by name rather than ignoring large radii in general,
+and it also asserts the exception still holds: it scrolls the homepage and fails if
+the pinned header is not actually a pill.
+
+**Gate:** `node tools/radius-test.mjs <base-url>`. Four checks, all must pass: no
+literal px, % or em radius in `docs/css/app.css`; each of the four tokens at or under
+the 8px ceiling; nothing outside the header rendering rounder than 8px on any of the
+nine page types; and the pinned header still a real pill.
 
 ---
 
