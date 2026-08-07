@@ -53,8 +53,12 @@
    "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour. There is no checkout to fight with and no account to create."
   },
   {
+   "q": "Is there a deposit?",
+   "a": "A deposit is settled at the desk when you collect, not through this website, and nothing is taken before then. The amount and whether it is cash or a card hold depend on the car, so ask when you send your dates and it comes back in writing with the total, before you travel."
+  },
+  {
    "q": "Do I pay online?",
-   "a": "No. Nothing is charged in advance and no card details are taken through this website. You settle at pickup, which is also why the confirmation always comes in writing first."
+   "a": "No. Nothing is charged in advance and no card details are taken through this website. You settle at pickup, once you have seen the car."
   },
   {
    "q": "Is the price per day the final price?",
@@ -70,11 +74,11 @@
   },
   {
    "q": "Is the car in the photo the car I get?",
-   "a": "Yes. Every one of the 20 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
+   "a": "You book a named car, not a category with 'or similar' beside it. The photographs on this demo are stand-ins of the same model, so ask for a picture of the actual car when you book and it comes back with the confirmation."
   },
   {
    "q": "Are the cars automatic?",
-   "a": "Eighteen of the twenty are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
+   "a": "Nineteen of the twenty are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
   },
   {
    "q": "Do you have a seven-seater?",
@@ -264,8 +268,12 @@
      "a": "Send the dates, the car you want and your flight number by WhatsApp or phone. You get a written confirmation the same day, usually within the hour. There is no checkout to fight with and no account to create."
     },
     {
+     "q": "Is there a deposit?",
+     "a": "A deposit is settled at the desk when you collect, not through this website, and nothing is taken before then. The amount and whether it is cash or a card hold depend on the car, so ask when you send your dates and it comes back in writing with the total, before you travel."
+    },
+    {
      "q": "Do I pay online?",
-     "a": "No. Nothing is charged in advance and no card details are taken through this website. You settle at pickup, which is also why the confirmation always comes in writing first."
+     "a": "No. Nothing is charged in advance and no card details are taken through this website. You settle at pickup, once you have seen the car."
     },
     {
      "q": "Is the price per day the final price?",
@@ -287,11 +295,11 @@
    "q": [
     {
      "q": "Is the car in the photo the car I get?",
-     "a": "Yes. Every one of the 20 cars on this site is a specific car with its own photograph, price and year. You are booking that car, not a category with 'or similar' next to it."
+     "a": "You book a named car, not a category with 'or similar' beside it. The photographs on this demo are stand-ins of the same model, so ask for a picture of the actual car when you book and it comes back with the confirmation."
     },
     {
      "q": "Are the cars automatic?",
-     "a": "Eighteen of the twenty are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
+     "a": "Nineteen of the twenty are automatic. The only manual is the Golf 5, which is also the cheapest car on the board at 30 euro a day. On Albanian mountain roads the automatic is worth having."
     },
     {
      "q": "Do you have a seven-seater?",

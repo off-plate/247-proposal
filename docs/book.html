@@ -15,7 +15,7 @@
 <link rel="icon" href="img/icon.png" sizes="any">
 <link rel="apple-touch-icon" href="img/icon.png">
 <link rel="preload" href="fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=59c58df1">
+<link rel="stylesheet" href="css/app.css?v=80852cf0">
 
 </head>
 <body data-page="book">
@@ -55,8 +55,9 @@
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
       <h1 class="step-h">Where do you collect?</h1>
+      <p class="step-hint" id="loc-hint">Pick one to continue.</p>
       <div class="locgrid" id="locgrid">
-        <button class="loc" data-loc="tia"><strong>Tirana International Airport</strong><span class="sign">Nënë Tereza, arrivals hall</span><span class="openlight">Open now</span></button><button class="loc" data-loc="cty"><strong>Rruga Njazi Meka, Tiranë</strong><span class="sign">City office</span><span class="openlight">Open now</span></button>
+        <button class="loc" data-loc="tia" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>Tirana International Airport</strong><span class="sign">Nënë Tereza, arrivals hall</span><span class="openlight">Open now</span></button><button class="loc" data-loc="cty" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>Rruga Njazi Meka, Tiranë</strong><span class="sign">City office</span><span class="openlight">Open now</span></button>
       </div>
       <label class="dfield flight" id="flight-wrap" hidden><span class="sign">Flight number, so the car waits if you land late</span><input type="text" id="flight" placeholder="W6 3021" autocomplete="off"></label>
       <label class="tog oneway"><input type="checkbox" id="oneway"> Return to the other location <em id="oneway-note" hidden>no extra charge, they are ten minutes apart</em></label>
@@ -151,7 +152,7 @@
         <tr data-k="dates"><td>Dates</td><td>not set</td></tr>
         <tr data-k="car"><td>Car</td><td>not set</td></tr>
         <tr data-k="days"><td>Days</td><td>not set</td></tr>
-        <tr data-k="total" class="sum-total"><td>Estimate</td><td>not set</td></tr>
+        <tr data-k="total" class="sum-total"><td>Estimate</td><td>after dates and car</td></tr>
       </table>
     </aside>
   </div>
@@ -206,15 +207,8 @@
       <p>&copy; 2026 24/7 Car Rental, Tiran&euml;, Albania.</p>
       <p><a href="faq.html">Good to know</a> <a href="book.html">Book a car</a></p>
     </div>
-    <details class="foot-creditlist">
-      <summary>Photography credits</summary>
-      <ul>
-        <li>Car photographs are stand-ins for this demo: one shot of the same model per car, from Wikimedia Commons and Wikipedia. They are not 24/7 Car Rental's own cars.</li>
-        <li>road-riviera: Pasztilla aka Attila Terbócs, CC BY-SA 4.0, via <a href="https://commons.wikimedia.org/wiki/File%3AAlbanian_Riviera_from_Llogara_Pass_2015-09-22.jpg" rel="license external">Wikimedia Commons</a></li><li>road-north: Tom.whitehead337, CC BY-SA 4.0, via <a href="https://commons.wikimedia.org/wiki/File%3ABunkerisation%2C_Theth_National_Park_%28June_2024%29.jpg" rel="license external">Wikimedia Commons</a></li><li>road-berat: Jocelyn Erskine-Kellie, CC BY-SA 4.0, via <a href="https://commons.wikimedia.org/wiki/File%3ATraditional_Houses_in_Berat.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-ksamil: DieliAlla, CC0, via <a href="https://commons.wikimedia.org/wiki/File%3AKsamil_beach.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-blue-eye: Christoph Strässler, CC BY-SA 2.0, via <a href="https://commons.wikimedia.org/wiki/File%3ABlue_Eye_spring%2C_Albania.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-butrint: Marcin Konsek, CC BY-SA 4.0, via <a href="https://commons.wikimedia.org/wiki/File%3A2011_Butrint_10_-_Greek_scripts_at_the_theatre.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-gjirokaster: Radosław Botev, CC BY-SA 4.0, via <a href="https://commons.wikimedia.org/wiki/File%3AGjirokaster_clock_tower.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-koman: You may re-use this image under the terms of the license usi, CC BY-SA 3.0, via <a href="https://commons.wikimedia.org/wiki/File%3A2013-10-04_Lake_Koman%2C_Albania_-_Ferry_0765.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-valbona: Alexkom000, CC BY 4.0, via <a href="https://commons.wikimedia.org/wiki/File%3A2024-10-14_Valbona_Valley_6.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-kruja: Diego Delso, CC BY-SA 3.0, via <a href="https://commons.wikimedia.org/wiki/File%3AMuseo_Skanderbeg%2C_Kruja%2C_Albania%2C_2014-04-18%2C_DD_17.jpg" rel="license external">Wikimedia Commons</a></li><li>dest-shkodra: Diego Delso, CC BY-SA 3.0, via <a href="https://commons.wikimedia.org/wiki/File%3ACastillo_de_Rozafa%2C_Shkodra%2C_Albania%2C_2014-04-18%2C_DD_07.JPG" rel="license external">Wikimedia Commons</a></li>
-      </ul>
-    </details>
   </div>
 </footer>
 <script src="js/fleet-data.js" defer></script>
-<script src="js/app.js?v=e62a0af8" defer></script>
+<script src="js/app.js?v=b32f0fe3" defer></script>
 </body></html>

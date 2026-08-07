@@ -128,13 +128,6 @@ const footer = () => `
       <p>&copy; 2026 24/7 Car Rental, Tiran&euml;, Albania.</p>
       <p><a href="faq.html">Good to know</a> <a href="book.html">Book a car</a></p>
     </div>
-    <details class="foot-creditlist">
-      <summary>Photography credits</summary>
-      <ul>
-        <li>Car photographs are stand-ins for this demo: one shot of the same model per car, from Wikimedia Commons and Wikipedia. They are not 24/7 Car Rental's own cars.</li>
-        ${JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-roads.json'))).concat(JSON.parse(readFileSync(join(ROOT, 'sourcing/credits-dest.json')))).map(cr => `<li>${cr.slug}: ${cr.author.replace(/<[^>]+>/g, '')}, ${cr.license}, via <a href="${cr.source_url}" rel="license external">Wikimedia Commons</a></li>`).join('')}
-      </ul>
-    </details>
   </div>
 </footer>
 <script src="js/fleet-data.js" defer></script>
@@ -183,7 +176,7 @@ ${nav()}
   <div class="hz-hero">
     <img class="hz-hero-img" src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albanian Riviera" width="2400" height="1051" fetchpriority="high">
     <div class="hz-hero-copy">
-      <h1>A car in Tirana at the hour you actually land</h1>
+      <h1>A car at the hour you land</h1>
     </div>
   </div>
 
@@ -275,12 +268,12 @@ ${nav()}
 
   <div class="mo-stat">
     <img src="img/road-north.webp" alt="The valley road into Theth, northern Albania" loading="lazy" width="2400" height="1600">
-    <span class="mo-stat-body"><em>Both desks are staffed</em><strong>24 hours</strong></span>
+    <span class="mo-stat-body"><strong>Both desks, 24 hours</strong></span>
   </div>
 
   <div class="mo-tall">
     <img src="img/dest-ksamil.webp" alt="Ksamil, on the far south coast of Albania" loading="lazy" width="1600" height="1000">
-    <p>Albania is a country you drive, not one you are driven around.</p>
+    <p>The good parts of Albania are down roads no bus takes.</p>
   </div>
 </section>
 
@@ -301,8 +294,8 @@ ${nav('fleet')}
         </div>
       </div>
       <div class="chips" id="chips" role="group" aria-label="Filter by class">
-        <button class="chip is-on" data-cls="all">All ${fleet.length}</button>
-        ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]}</button>`).join('')}
+        <button class="chip is-on" data-cls="all">All <b>${fleet.length}</b></button>
+        ${classes.map(c => `<button class="chip" data-cls="${c}">${fleet.find(x => x.cls === c).clsLabel.split(' ·')[0]} <b>${fleet.filter(x => x.cls === c).length}</b></button>`).join('')}
       </div>
       <div class="list-tools">
         <label class="sort">Sort <select id="sort">
@@ -319,7 +312,7 @@ ${nav('fleet')}
         <a class="row-link" href="car-${c.slug}.html" aria-label="Open ${c.name}">
           <img src="img/cars/${c.slug}-s.webp" alt="${c.name}" loading="lazy" width="900" height="506">
           <span class="row-tag">${c.clsLabel}</span>
-          <span class="row-nm">${c.name}<i>${c.year}</i></span>
+          <span class="row-nm">${c.name}</span>
           <span class="row-spec">
             <b>${c.gear === 'automatic' ? 'Automatic' : 'Manual'}</b>
             <b>${c.seats} seats</b>
@@ -336,9 +329,17 @@ ${footer()}`;
 
 // ---------- car detail ----------
 const carPage = c => {
-  const sameCls = fleet.filter(x => x.cls === c.cls && x.slug !== c.slug);
-  const byPrice = fleet.filter(x => x.slug !== c.slug && !sameCls.includes(x))
-    .sort((a, z) => Math.abs(a.price - c.price) - Math.abs(z.price - c.price));
+  // class first, then nearest price, and never two of the same model side by side
+  const seenModel = new Set([c.name.replace(/\s+\d{4}$/, '')]);
+  const uniq = list => list.filter(x => {
+    const model = x.name.replace(/\s+\d{4}$/, '');
+    if (seenModel.has(model)) return false;
+    seenModel.add(model); return true;
+  });
+  const sameCls = uniq(fleet.filter(x => x.cls === c.cls && x.slug !== c.slug)
+    .sort((a, z) => Math.abs(a.price - c.price) - Math.abs(z.price - c.price)));
+  const byPrice = uniq(fleet.filter(x => x.slug !== c.slug && x.cls !== c.cls)
+    .sort((a, z) => Math.abs(a.price - c.price) - Math.abs(z.price - c.price)));
   const similar = [...sameCls, ...byPrice].slice(0, 3);
   return `${head(`${c.name}, ${eur(c.price)} a day in Tirana`, `${c.note} ${c.year}, ${c.engine.toFixed(1)} L ${c.fuel}, ${c.gear}, ${c.seats} seats. Collect at Tirana airport or the city office, any hour.`, `car-${c.slug}.html`, `img/cars/${c.slug}.webp`)}
 ${nav('fleet')}
@@ -346,7 +347,7 @@ ${nav('fleet')}
 <section class="hero-car">
   <h1 class="hero-nm">${c.name}</h1>
   <img class="hero-img" src="img/cars/${c.slug}.webp" alt="${c.name}" width="1600" height="800" fetchpriority="high">
-  <p class="hero-tag">${c.note}</p>
+  <p class="hero-tag">${c.note} Availability is confirmed in writing when you send your dates.</p>
 </section>
 
 <section class="specsheet" aria-label="Specification">
@@ -354,17 +355,17 @@ ${nav('fleet')}
     <tr><td>Class</td><td>${c.clsLabel}</td><td>Year</td><td>${c.year}</td></tr>
     <tr><td>Engine</td><td>${c.engine.toFixed(1)} L ${c.fuel}</td><td>Gearbox</td><td>${c.gear}</td></tr>
     <tr><td>Seats</td><td>${c.seats}</td><td>Doors</td><td>${c.doors}</td></tr>
-    <tr><td>Rate</td><td>${eur(c.price)} per day</td><td>Trim</td><td>${c.fullOption ? 'Full option' : 'Standard'}</td></tr>
+    <tr><td>Rate</td><td>${eur(c.price)} per day</td><td>Luggage</td><td>${c.seats >= 7 ? 'Ask us, it depends on the row you fold' : 'Ask us before you book'}</td></tr>
   </table>
 </section>
 
 <div class="incwrap"><section class="gantry included" aria-label="Included">
   <p class="gantry-top">${gantryChip('24/7')}<span class="sign">Every rental includes</span></p>
   <ul class="inc-list">
-    <li>This exact car, photographed above, not a category</li>
+    <li>One named car with its own year and rate, not a category</li>
     <li>Basic insurance and unlimited kilometres inside Albania</li>
     <li>Collection at Tirana airport or the city office, at any hour</li>
-    <li>Free delivery anywhere inside Tirana</li>
+    <li>Delivery inside Tirana on request, cost confirmed before you book</li>
     <li>${c.gear === 'automatic' ? 'Automatic gearbox, which the mountain roads reward' : 'Manual gearbox, the only one in the fleet'}</li>
   </ul>
 </section></div>
@@ -391,8 +392,9 @@ ${nav()}
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
       <h1 class="step-h">Where do you collect?</h1>
+      <p class="step-hint" id="loc-hint">Pick one to continue.</p>
       <div class="locgrid" id="locgrid">
-        ${site.locations.map(l => `<button class="loc" data-loc="${l.id}"><strong>${l.label}</strong><span class="sign">${l.sub}</span><span class="openlight">Open now</span></button>`).join('')}
+        ${site.locations.map((l, i) => `<button class="loc" data-loc="${l.id}" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>${l.label}</strong><span class="sign">${l.sub}</span><span class="openlight">Open now</span></button>`).join('')}
       </div>
       <label class="dfield flight" id="flight-wrap" hidden><span class="sign">Flight number, so the car waits if you land late</span><input type="text" id="flight" placeholder="W6 3021" autocomplete="off"></label>
       <label class="tog oneway"><input type="checkbox" id="oneway"> Return to the other location <em id="oneway-note" hidden>no extra charge, they are ten minutes apart</em></label>
@@ -449,7 +451,7 @@ ${nav()}
         <tr data-k="dates"><td>Dates</td><td>not set</td></tr>
         <tr data-k="car"><td>Car</td><td>not set</td></tr>
         <tr data-k="days"><td>Days</td><td>not set</td></tr>
-        <tr data-k="total" class="sum-total"><td>Estimate</td><td>not set</td></tr>
+        <tr data-k="total" class="sum-total"><td>Estimate</td><td>after dates and car</td></tr>
       </table>
     </aside>
   </div>
@@ -462,66 +464,35 @@ ${footer()}`;
 
 // ---------- roads ----------
 const roadsPage = () => {
-  const [a1, am, st] = site.roads;
   const carOf = id => fleet.find(c => c.slug === id);
-  return `${head('Three drives worth the rental', 'The Albanian Riviera over Llogara, the mountain road north to Theth, and the Ottoman towns of Berat and Gjirokastër. Timed, and matched to a car that can do it.', 'roads.html')}
+  // one component, eleven times. Routes and places differ in their facts, not their shape.
+  const place = (x, i, img, facts, cta) => `
+  <article class="rd" id="${x.id}">
+    <div class="rd-body">
+      <h2 class="rd-h">${x.name}</h2>
+      <p class="rd-story">${x.story || x.note}</p>
+      <dl class="rd-facts">${facts.map(f => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('')}</dl>
+      <a class="roadcar" href="car-${x.car}.html"><img src="img/cars/${x.car}-s.webp" alt=""><span><strong>${carOf(x.car).name}</strong><em>${x.carWhy}</em></span><span class="mono">${eur(carOf(x.car).price)}/day</span></a>
+      <div class="road-cta">${waLink(cta, 'btn-wa sm', 'Ask about this')}</div>
+    </div>
+    <img class="rd-img" src="img/${img}.webp" alt="${x.name}, Albania"${i < 2 ? '' : ' loading="lazy"'} width="1600" height="1000">
+  </article>`;
+
+  return `${head('Where to drive in Albania', 'Three routes worth the rental and eight places people go, each with the road time from Tirana and a car that can do it.', 'roads.html')}
 ${nav('roads')}
 <main class="roadswrap">
 <section class="roads-head">
   <h1>Where to drive</h1>
-  <p>Three routes worth the rental, then eight places people actually go. Times and distances are one way from Tirana unless the card says otherwise.</p>
-</section>
-<section class="road-a1">
-  <img class="ra1-img" src="img/road-${a1.id}.webp" alt="${a1.name}" fetchpriority="high">
-  <div class="ra1-panel">
-    <h1 class="ra1-h">${a1.name}</h1>
-    <p class="road-story">${a1.story}</p>
-    <dl class="facts-col mono"><dt>Route</dt><dd>${a1.route}</dd><dt>Length</dt><dd>${a1.km} km</dd><dt>Time</dt><dd>${a1.hours}</dd><dt>Best</dt><dd>${a1.best}</dd></dl>
-    <a class="roadcar" href="car-${a1.car}.html"><img src="img/cars/${a1.car}-s.webp" alt=""><span><strong>${carOf(a1.car).name}</strong><em>${a1.carWhy}</em></span><span class="mono">${eur(carOf(a1.car).price)}/day</span></a>
-    <div class="road-cta">${waLink(`Hello, I want to drive ${a1.name} (${a1.route}). Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about this route')}</div>
-  </div>
+  <p>Three routes worth the rental, then eight places people go. Road times are from Tirana one way unless the card says otherwise.</p>
 </section>
 
-<section class="road-amalfi">
-  <div class="ram-facts">
-    <h2 class="ram-h">${am.name}</h2>
-    <p class="road-story">${am.story}</p>
-    <dl class="facts-col mono"><dt>Route</dt><dd>${am.route}</dd><dt>Length</dt><dd>${am.km} km</dd><dt>Time</dt><dd>${am.hours}</dd><dt>Best</dt><dd>${am.best}</dd></dl>
-    <a class="roadcar" href="car-${am.car}.html"><img src="img/cars/${am.car}-s.webp" alt=""><span><strong>${carOf(am.car).name}</strong><em>${am.carWhy}</em></span><span class="mono">${eur(carOf(am.car).price)}/day</span></a>
-    <div class="road-cta">${waLink(`Hello, I want to drive ${am.name} (${am.route}). Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about this route')}</div>
-  </div>
-  <img class="ram-img" src="img/road-${am.id}.webp" alt="${am.name}" loading="lazy">
-</section>
-
-<section class="road-stelvio">
-  <div class="rst-type">
-    <div class="rst-copy">
-      <h2 class="rst-h">${st.name}</h2>
-      <p class="road-story">${st.story}</p>
-      <dl class="facts-col mono"><dt>Route</dt><dd>${st.route}</dd><dt>Length</dt><dd>${st.km} km</dd><dt>Time</dt><dd>${st.hours}</dd><dt>Best</dt><dd>${st.best}</dd></dl>
-      <a class="roadcar" href="car-${st.car}.html"><img src="img/cars/${st.car}-s.webp" alt=""><span><strong>${carOf(st.car).name}</strong><em>${st.carWhy}</em></span><span class="mono">${eur(carOf(st.car).price)}/day</span></a>
-      <div class="road-cta">${waLink(`Hello, I want to drive ${st.name} (${st.route}). Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about this route')}</div>
-    </div>
-  </div>
-  <img class="rst-img" src="img/road-${st.id}.webp" alt="${st.name}" loading="lazy">
-</section>
-<section class="dests" aria-label="Where to go in Albania">
-  <div class="dests-head">
-    <h2 class="sec-h">Where people actually go</h2>
-    <p>Eight places worth the drive, with the road time from Tirana and a car that can do it. Distances are one way.</p>
-  </div>
-  ${site.destinations.map((d, i) => `
-  <article class="dest" id="${d.id}" style="--i:${i}">
-    <img src="img/${d.img}.webp" alt="${d.name}, Albania" loading="lazy" width="1600" height="1000">
-    <div class="dest-body">
-      <h3 class="dest-name">${d.name}</h3>
-      <p class="dest-region mono">${d.region}</p>
-      <p class="dest-note">${d.note}</p>
-      <table class="dest-facts mono"><tr><td>${d.km} km</td><td>${d.hours}</td></tr></table>
-      <a class="roadcar" href="car-${d.car}.html"><img src="img/cars/${d.car}-s.webp" alt=""><span><strong>${carOf(d.car).name}</strong><em>${d.carWhy}</em></span><span class="mono">${eur(carOf(d.car).price)}/day</span></a>
-      <div class="road-cta">${waLink(`Hello, I want to visit ${d.name} in Albania. Which car do you recommend and is it free?`, 'btn-wa sm', 'Ask about ' + d.name)}</div>
-    </div>
-  </article>`).join('')}
+<section class="rd-list" aria-label="Routes and places">
+  ${site.roads.map((r, i) => place(r, i, 'road-' + r.id,
+      [['Route', r.route], ['Length', r.km + ' km'], ['Time', r.hours], ['Best', r.best]],
+      `Hello, I want to drive ${r.name} (${r.route}). Which car do you recommend and is it free?`)).join('')}
+  ${site.destinations.map((d, i) => place(d, i + 3, d.img,
+      [['Where', d.region], ['Distance', d.km + ' km'], ['Road time', d.hours]],
+      `Hello, I want to visit ${d.name} in Albania. Which car do you recommend and is it free?`)).join('')}
 </section>
 </main>
 ${footer()}`;
@@ -563,7 +534,7 @@ ${nav('company')}
       { t: 'Variety', d: 'Whether you need a compact car for zipping around the city, a spacious SUV for family vacations, or a luxurious sedan for business trips, we have the perfect vehicle for you.' },
       { t: 'Quality', d: 'Your safety and comfort are our top priorities. Our fleet consists of modern, well-maintained cars from trusted brands, ensuring a smooth and reliable ride every time.' },
       { t: 'Exceptional service', d: 'Our friendly and knowledgeable staff are dedicated to providing you with a seamless rental experience. From reservation to return, we are here to assist you every step of the way.' },
-    ].map((p, i) => `<li class="prom"><span class="gchip">${String(i + 1).padStart(2, '0')}</span><div><strong>${p.t}</strong><p>${p.d}</p></div></li>`).join('')}
+    ].map((p, i) => `<li class="prom"><div><strong>${p.t}</strong><p>${p.d}</p></div></li>`).join('')}
   </ol>
 </section>
 
@@ -607,7 +578,7 @@ ${nav('faq')}
 
   ${site.faqGroups.map((g, gi) => `
   <section class="faq-group" id="${g.id}">
-    <h2 class="faq-gh"><span class="mono">${String(gi + 1).padStart(2, '0')}</span>${g.g}</h2>
+    <h2 class="faq-gh">${g.g}</h2>
     <div class="faq-cols">
       ${[0, 1].map(col => `<div class="faq-list">
         ${g.q.map((f, i) => ({ f, i })).filter(({ i }) => (i < Math.ceil(g.q.length / 2)) === (col === 0)).map(({ f, i }) => `<details class="qa-item" id="${g.id}-${i + 1}"${gi === 0 && i === 0 ? ' open' : ''}>
@@ -620,7 +591,7 @@ ${nav('faq')}
 
   <section class="faq-ask">
     <div class="gantry">
-      <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Someone is awake</span></p>
+      
       <div>
         <p class="faq-ask-h">Not answered here?</p>
         <p class="faq-ask-p">Ask it directly. Both offices are staffed around the clock, and questions about dates, borders or which car suits a route get answered the same day.</p>
@@ -635,12 +606,12 @@ ${nav('faq')}
 ${footer()}`;
 
 // ---------- how it works ----------
-const howPage = () => `${head('How renting from us actually works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing the same day, collect at Tirana airport or the city office at any hour.', 'how.html')}
+const howPage = () => `${head('How renting from us works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing the same day, collect at Tirana airport or the city office at any hour.', 'how.html')}
 ${nav('how')}
 <main class="howwrap">
   <section class="how-hero">
     <h1 class="how-h1">No checkout.<br>A person instead.</h1>
-    <p class="how-lede">There is no payment form on this website and that is deliberate. You send two lines, a person in Tirana answers with the real total, and the car is waiting when you land. Here is the whole thing, start to finish.</p>
+    <p class="how-lede">There is no payment form on this website and that is deliberate. You send two lines, the office answers with the real total, and the car is waiting when you land.</p>
     <div class="how-cta">
       ${waLink(WA_GENERIC, 'btn-wa', 'Start on WhatsApp')}
       <a class="btn-paper" href="tel:${TEL}">Call ${site.phone}</a>
@@ -670,7 +641,7 @@ ${nav('how')}
 
   <section class="how-ask">
     <div class="gantry">
-      <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Someone is awake</span></p>
+      
       <div>
         <p class="faq-ask-h">Ready when you are</p>
         <p class="faq-ask-p">Send the dates and the car and you will have the total back today. If you would rather ask a question first, that is what the number is for.</p>

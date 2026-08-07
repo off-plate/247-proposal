@@ -2043,3 +2043,227 @@ body { background: var(--tint); }
 /* the WhatsApp icon was sitting on its own label in the footer */
 .foot-wa { gap: 10px; padding: 13px 22px; }
 .foot-wa svg { flex: none; }
+
+
+/* ==========================================================================
+   ONE SHELL, ONE LEFT EDGE, EVERY PAGE.
+   The page had four different container widths. Everything that holds content
+   now resolves to the same value, and nothing computes its own.
+   ========================================================================== */
+:root { --gut: clamp(16px, 3vw, 56px); }
+.shell,
+.hz-top, .hz-picks, .hz-tags, .hz-range, .hz-mosaic,
+.fleetwrap, .roadswrap > section, .roads-head,
+.road-a1, .road-amalfi, .road-stelvio,
+.dests > .dest, .dests-head,
+.faq-hero, .faq-group, .faq-ask,
+.how-hero, .how-ask, .steps, .bring,
+.manifesto, .abouttext, .aboutcta, .promises > *,
+.specsheet, .incwrap, .similar, .hero-car, .bookwrap,
+.foot-card {
+  width: min(100% - 2 * var(--gut), var(--shell));
+  max-width: none; margin-inline: auto; padding-inline: 0;
+}
+.foot { padding-inline: 0; }
+.dests { padding-inline: 0; }
+.promises { padding-inline: 0; }
+
+/* the hero and the section under it are one surface, not two colours meeting */
+body { background: var(--card); }
+.hz-picks, .hz-tags, .hz-range { background: transparent; border: 0; padding-inline: 0; }
+.hz-picks, .hz-tags, .hz-range, .hz-mosaic {
+  border-radius: 0; padding-block: clamp(46px, 5vw, 86px) 0; margin-bottom: 0;
+}
+.hz-top { margin-top: 8px; }
+.foot { background: var(--card); }
+
+/* no dots anywhere. Not under a status, not as a separator, not anywhere. */
+.openlight::before { display: none; }
+.openlight { gap: 0; font-weight: 600; }
+
+/* the hover made the photograph jump */
+.row-link:hover img, .pcard:hover .pcard-bed img, .rcard:hover .rcard-bed img,
+.sim-card:hover img, .dest:hover > img { scale: 1; translate: 0 0; }
+
+/* their photographs are whole, portrait and landscape both, so the frame holds the
+   car rather than cutting it. Bed is 4:3 and the image is contained inside it. */
+.row-link img, .pcard-bed img, .rcard-bed img, .sim-card img {
+  object-fit: contain; background: var(--card-2);
+}
+.row-link img { aspect-ratio: 4/3; padding: 6%; }
+.pcard-bed { aspect-ratio: 4/3; }
+.pcard-bed img { padding: 5%; }
+.hero-car .hero-img { object-fit: contain; aspect-ratio: 16/9; padding: clamp(14px, 2vw, 40px); }
+.stage-img { object-fit: contain; }
+.roadcar img { object-fit: contain; background: var(--card-2); }
+.pick img { object-fit: contain; background: var(--card-2); }
+
+/* ==========================================================================
+   FLEET: the homepage card, four across, one behaviour.
+   ========================================================================== */
+.rows { grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 1.2vw, 20px); padding: clamp(18px, 1.8vw, 26px); }
+@media (min-width: 1900px) { .rows { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 1400px) { .rows { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1000px) { .rows { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px)  { .rows { grid-template-columns: 1fr; } }
+.chip b { font-weight: 600; opacity: .62; margin-left: 2px; }
+.chip.is-on b { opacity: .8; }
+
+/* the card holds the whole car, whatever shape their photograph is */
+.row-link img { aspect-ratio: 4/3; padding: 5%; background: var(--card-2); }
+.row-link { transition: border-color 160ms var(--out), box-shadow 160ms var(--out); }
+.row-link:hover { border-color: var(--ink); box-shadow: var(--e1); }
+.row-link:hover img { scale: 1; translate: 0 0; }
+
+/* filtering is a state change, so it gets one, and it degrades to nothing */
+@media (prefers-reduced-motion: no-preference) {
+  .row { animation: card-in 260ms var(--out) both; }
+  @keyframes card-in { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+  .row:nth-child(2)  { animation-delay: 20ms; }
+  .row:nth-child(3)  { animation-delay: 40ms; }
+  .row:nth-child(4)  { animation-delay: 60ms; }
+  .row:nth-child(n+5){ animation-delay: 80ms; }
+}
+
+/* ==========================================================================
+   ROADS: one card, eleven times. Copy left, photograph right, always.
+   ========================================================================== */
+.rd-list { display: grid; gap: clamp(14px, 1.4vw, 24px); }
+.rd {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: stretch; background: var(--card);
+  border: 1px solid var(--line); border-radius: var(--r-lg); overflow: clip;
+}
+.rd-body { padding: clamp(24px, 2.6vw, 46px); display: grid; align-content: start; gap: 16px; }
+.rd-h { font-weight: 700; font-size: clamp(24px, 2.2vw, 38px); letter-spacing: -.028em; line-height: 1.05; }
+.rd-h::after { content: ''; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--verde); margin-top: 14px; }
+.rd-story { color: var(--dim); max-width: 54ch; }
+.rd-facts { display: grid; grid-template-columns: auto 1fr; margin: 0; }
+.rd-facts dt { padding: 11px 0; border-top: 1px solid var(--line); color: var(--dim); font-size: 13.5px; }
+.rd-facts dd { padding: 11px 0; border-top: 1px solid var(--line); margin: 0; text-align: right; font-size: 14.5px; }
+.rd-img { width: 100%; height: 100%; min-height: clamp(280px, 26vw, 460px); object-fit: cover; align-self: stretch; max-width: none; }
+@media (max-width: 1000px) {
+  .rd { grid-template-columns: 1fr; }
+  .rd-img { order: -1; min-height: 0; aspect-ratio: 16/10; }
+}
+
+/* ==========================================================================
+   BOOKING: an order page, not a form spread over a screen.
+   One column of steps at a reading width, the summary beside it, both starting
+   at the same line, and the controls under the choices they advance.
+   ========================================================================== */
+.bookwrap { padding-block: calc(84px + 2vh) clamp(50px, 6vw, 90px); }
+.chiprail { gap: 6px; margin-bottom: clamp(18px, 2vw, 30px); }
+.pchip { border-radius: var(--r-pill); padding: 7px 15px; font-size: 13.5px; border: 1px solid var(--line); color: var(--dim); }
+.pchip .gchip { background: none; padding: 0 6px 0 0; color: inherit; font-weight: 600; }
+.pchip.is-now { background: var(--ink); border-color: var(--ink); color: #fff; }
+.pchip.is-done { border-color: var(--verde); color: var(--verde-t); background: var(--card); }
+.bookgrid {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  gap: clamp(16px, 1.6vw, 28px); align-items: start;
+}
+.step {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: clamp(24px, 2.6vw, 44px); min-height: clamp(320px, 34vw, 460px);
+  align-content: start;
+}
+.step-h { font-size: clamp(24px, 2.2vw, 36px); margin-bottom: 6px; }
+.step-h::after { content: ''; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--verde); margin-top: 14px; }
+.step-hint { color: var(--dim); font-size: 14.5px; margin: 12px 0 20px; }
+.locgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.loc {
+  position: relative; text-align: left; background: var(--card);
+  border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(18px, 1.8vw, 26px) clamp(18px, 1.8vw, 26px) clamp(18px, 1.8vw, 26px) 54px;
+  display: grid; gap: 5px; box-shadow: none;
+  transition: border-color 160ms var(--out), background 160ms var(--out);
+}
+.loc-tick {
+  position: absolute; left: 20px; top: 50%; translate: 0 -50%;
+  width: 20px; height: 20px; border: 1.5px solid var(--line-2); border-radius: 50%;
+}
+.loc:hover { border-color: var(--ink); }
+.loc.is-on { border-color: var(--ink); background: #FBFAF9; box-shadow: none; }
+.loc.is-on .loc-tick { border-color: var(--ink); background: var(--ink); }
+.loc.is-on .loc-tick::after {
+  content: ''; position: absolute; inset: 0; margin: auto; width: 6px; height: 10px;
+  border: solid #fff; border-width: 0 2px 2px 0; rotate: 45deg; translate: 0 -1px;
+}
+.loc strong { font-size: clamp(16px, 1.25vw, 19px); font-weight: 700; letter-spacing: -.018em; }
+.loc .sign { color: var(--dim); font-size: 13.5px; }
+.loc .openlight { color: var(--open); font-size: 12.5px; }
+.dategrid { gap: 14px; }
+.dfield { border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 7px; }
+.dfield .sign { color: var(--dim); }
+.pickrail { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; max-height: none; }
+.pick { border: 1px solid var(--line); border-radius: var(--r); padding: 10px; background: var(--card); text-align: left; display: grid; gap: 6px; }
+.pick img { aspect-ratio: 4/3; padding: 5%; border-radius: var(--r-sm); }
+.pick.is-on { border-color: var(--ink); box-shadow: none; background: #FBFAF9; }
+.sumboard {
+  position: sticky; top: 96px; background: var(--night); color: #fff;
+  border-radius: var(--r-lg); padding: clamp(20px, 2vw, 30px); box-shadow: none; border: 0;
+}
+.sumboard::after { display: none; }
+.sum-t { width: 100%; }
+.sum-t td { padding: 11px 0; border-top: 1px solid var(--night-line); font-size: 14px; }
+.sum-t td:first-child { color: var(--night-dim); }
+.sum-t td:last-child { text-align: right; }
+.sum-total td { font-weight: 700; font-size: 17px; }
+.stepnav {
+  grid-column: 1 / -1; display: flex; gap: 12px; justify-content: flex-start;
+  margin-top: clamp(16px, 1.6vw, 24px);
+}
+.stepnav .btn-verde { background: var(--verde); }
+.stepnav .btn-verde:hover { background: var(--verde-2); }
+.stepnav .btn-verde:disabled { background: var(--card-2); color: var(--dim); }
+@media (max-width: 980px) {
+  .bookgrid { grid-template-columns: 1fr; }
+  .sumboard { position: static; order: 2; }
+  .locgrid { grid-template-columns: 1fr; }
+  .sumboard .sum-t tr { display: table-row; }
+}
+
+/* ==========================================================================
+   CAR PAGE: on the design language, and the mobile bar stops covering the spec.
+   ========================================================================== */
+.hero-car { padding-block: calc(84px + 2vh) 0; }
+.hero-nm { font-size: clamp(30px, 3.2vw, 58px); }
+.hero-nm::after { content: ''; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--verde); margin-top: 14px; }
+.hero-car .hero-img { border: 1px solid var(--line); border-radius: var(--r-lg); }
+.hero-tag { color: var(--dim); max-width: 62ch; }
+.spec-t { border-radius: var(--r-lg); }
+.spec-t td { border-top: 1px solid var(--line); }
+.spec-t tr:first-child td { border-top: 0; }
+.similar .sec-h::after { margin-top: 14px; }
+.reservebar { border: 1px solid var(--line); box-shadow: var(--e2); }
+body[data-page^="car-"] main { padding-bottom: clamp(96px, 10vw, 130px); }
+
+/* ==========================================================================
+   MOBILE: the header was crushing five things into 390px.
+   ========================================================================== */
+@media (max-width: 780px) {
+  .pillnav { padding: 8px 14px; gap: 10px; }
+  .brand-logo { height: 32px; }
+  .nav-call { display: none; }
+  .nav-wa { width: 38px; height: 38px; }
+  .reserve-cta { padding: 9px 16px; font-size: 13.5px; white-space: nowrap; }
+  .burger { width: 40px; height: 40px; }
+  body[data-page="index"] .pillnav:not(.is-pinned) { padding-inline: 14px; }
+  .foot-top { grid-template-columns: 1fr; gap: 26px; }
+  .foot-legal { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .faq-cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) { .foot-top { grid-template-columns: 1fr; } }
+
+/* FAQ: the accordions were pinned to the edges of their card */
+.faq-group { padding: clamp(22px, 2.4vw, 40px) clamp(22px, 2.4vw, 40px) clamp(10px, 1.4vw, 22px); }
+.qa-a p { padding-right: 8%; }
+
+/* the step controls belong under the choice they advance, not in the far corner */
+.stepnav { justify-content: flex-start; }
+.stepnav #next, .stepnav .btn-verde { margin-left: 0; }
+.step { min-height: 0; }
+.bookgrid { align-items: start; }
+.sum-total td:last-child { font-size: 15px; }
+/* the logo was riding the hero's rounded corner */
+body[data-page="index"] .pillnav:not(.is-pinned) { padding-block: 18px; }

@@ -169,7 +169,8 @@
       const nd = days(b);
       set('days', nd > 0 ? `${nd} day${nd > 1 ? 's' : ''}` : 'not set');
       const p = price();
-      set('total', p.total ? eur(p.total) : '0 €');
+      // a zero total on a rental page reads as free or broken. Say what is missing instead.
+      set('total', p.total ? eur(p.total) : 'after dates and car');
     };
     const fmt = d => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase();
 

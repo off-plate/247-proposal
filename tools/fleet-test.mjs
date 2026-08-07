@@ -13,7 +13,7 @@ const fail = m => { console.log('FAIL: ' + m); process.exitCode = 1; };
 const ok = m => console.log('ok: ' + m);
 const b = await chromium.launch();
 
-for (const [w, want] of [[2560, 3], [1600, 3], [1000, 2], [390, 1]]) {
+for (const [w, want] of [[2560, 4], [1600, 4], [1300, 3], [1000, 2], [390, 1]]) {
   const p = await (await b.newContext({ viewport: { width: w, height: 1000 } })).newPage();
   await p.goto(`${B}/fleet.html`, { waitUntil: 'networkidle' });
   const cols = await p.$eval('#rows', e => getComputedStyle(e).gridTemplateColumns.split(' ').length);
