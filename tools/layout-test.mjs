@@ -46,6 +46,25 @@ for (const w of [2560, 1600, 390]) {
   });
   foot[0] === foot[1] ? ok(`${w}: footer legal aligns with the columns (${foot[0]})`) : fail(`${w}: footer legal at ${foot[1]}, columns at ${foot[0]}`);
 
+  // the four sub-page heroes are one component: same height, and they use the width.
+  // Checked at desktop widths, where two of them can be compared side by side.
+  if (w >= 1200) {
+    const hs = [], fills = [];
+    for (const pg of ['how-it-works/', 'roads/', 'faq/', 'about/']) {
+      await p.goto(`${B}/${pg}`, { waitUntil: 'networkidle' });
+      const r = await p.evaluate(() => {
+        const h = document.querySelector('.phero'), f = h.querySelector('.phero-foot');
+        return [Math.round(h.getBoundingClientRect().height),
+                Math.round(f.getBoundingClientRect().width / h.getBoundingClientRect().width * 100)];
+      });
+      hs.push(r[0]); fills.push(r[1]);
+    }
+    new Set(hs).size === 1 ? ok(`${w}: all four sub-page heroes are ${hs[0]}px tall`)
+                           : fail(`${w}: hero heights differ: ${hs.join(', ')}`);
+    fills.every(f => f >= 95) ? ok(`${w}: every hero uses the full shell width`)
+                              : fail(`${w}: heroes fill only ${fills.join('%, ')}%`);
+  }
+
   // the fleet card must be the homepage card, to the pixel, at desktop widths
   if (w >= 1600) {
     await p.goto(`${B}/`, { waitUntil: 'networkidle' });

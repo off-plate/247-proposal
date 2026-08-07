@@ -2741,3 +2741,45 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 .sign404-list span { font-size: clamp(17px, 1.6vw, 26px); }
 .sign404-list em { font-size: 13.5px; }
 .sign404-post { height: clamp(70px, 8vw, 130px); width: 14px; }
+
+/* ==========================================================================
+   SUB-PAGE HERO, SECOND PASS. Measured: the old one filled 28 to 33 percent of
+   a 2200px canvas and came out four different heights. The title is display
+   type across the full width, and a hairline row under it carries the sentence
+   on the left and the action on the right, so the width is actually used.
+   ========================================================================== */
+.phero {
+  padding-block: clamp(36px, 4vw, 78px) clamp(24px, 2.6vw, 46px);
+  display: grid; gap: clamp(22px, 2.4vw, 44px); justify-items: stretch;
+  min-height: clamp(280px, 26vw, 460px); align-content: end;
+}
+.phero h1 {
+  font-weight: 700; letter-spacing: -.042em; line-height: .96;
+  font-size: clamp(40px, 7.4vw, 150px); max-width: 20ch; text-wrap: balance;
+}
+.phero-foot {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(16px, 2vw, 40px); align-items: end;
+  border-top: 1px solid var(--line); padding-top: clamp(18px, 1.8vw, 30px);
+}
+.phero-lede { color: var(--dim); font-size: clamp(16px, 1.2vw, 20px); line-height: 1.5; max-width: 62ch; margin: 0; }
+.phero-act { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin: 0; justify-content: flex-end; }
+@media (max-width: 900px) {
+  .phero { min-height: 0; }
+  .phero-foot { grid-template-columns: 1fr; }
+  .phero-act { justify-content: flex-start; }
+}
+/* a one-line title must still reserve the two lines the others take, and the lede
+   uses the column it has instead of wrapping to three lines inside a 62ch cap */
+.phero h1 { min-height: 1.92em; }
+.phero-lede { max-width: 92ch; }
+/* the lede reserves two lines so a short one does not shrink its own hero */
+.phero-lede { min-height: 3em; }
+/* on a phone the longest title takes a third line, so the block reserves three */
+@media (max-width: 900px) {
+  /* on a phone the titles are different lengths and nothing is seen side by side,
+     so reserving lines here only adds dead space. The block sizes to its content. */
+  .phero h1 { min-height: 0; }
+  .phero-lede { min-height: 0; }
+  .phero { min-height: 0; padding-block: clamp(26px, 6vw, 44px) clamp(18px, 4vw, 28px); }
+}

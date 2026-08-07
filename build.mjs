@@ -140,8 +140,10 @@ const footer = () => `
 const pageHero = (h1, lede, actions = '') => `
 <section class="phero">
   <h1>${h1}</h1>
-  <p class="phero-lede">${lede}</p>
-  ${actions ? `<div class="phero-act">${actions}</div>` : ''}
+  <div class="phero-foot">
+    <p class="phero-lede">${lede}</p>
+    ${actions ? `<div class="phero-act">${actions}</div>` : ''}
+  </div>
 </section>`;
 
 const gantryChip = t => `<span class="gchip">${t}</span>`;
@@ -522,7 +524,7 @@ const companyPage = () => `${head('About us. 24/7 Car Rental, Tirana', 'Welcome 
 ${nav('company')}
 <main class="companywrap">
 
-${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania. Whether you are exploring the vibrant streets of Tirana city or embarking on an Albanian adventure, we are here to ensure you have the perfect vehicle for your journey.', `<a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>`)}
+${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania.', `<a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>`)}
 
 <figure class="about-shot">
   <img src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albania" width="2400" height="1051" loading="lazy">
@@ -531,6 +533,7 @@ ${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, 
 <section class="abouttext">
   <!-- slop-lint-ignore their own About Us paragraphs, verbatim on request --><article class="about-b">
     <h2>Our mission</h2>
+    <p>Whether you are exploring the vibrant streets of Tirana city or embarking on an Albanian adventure, we are here to ensure you have the perfect vehicle for your journey.</p>
     <p>At 24/7 Car Rental, our mission is simple: to provide our customers with top-notch service, quality vehicles, and unbeatable convenience. We understand that your travel needs are unique, which is why we offer a diverse fleet of well-maintained cars to suit every occasion and budget.</p>
   </article>
   <article class="about-b">
@@ -703,9 +706,12 @@ const ROUTES = {
 for (const c of fleet) ROUTES[`car-${c.slug}.html`] = { out: `cars/${c.slug}/index.html`, url: `cars/${c.slug}/` };
 
 const ASSET_DIRS = ['css', 'js', 'img', 'fonts'];
+// The 404 is served from whatever path the visitor mistyped, so relative paths
+// resolve against that path and every asset 404s with it. It gets absolute ones.
+const SITE_ROOT = new URL(site.base).pathname.replace(/\/?$/, '/');
 const rewrite = (html, out) => {
   const depth = out.split('/').length - 1;
-  const up = '../'.repeat(depth);
+  const up = out === '404.html' ? SITE_ROOT : '../'.repeat(depth);
   // internal page links, including any query string or fragment
   html = html.replace(/(href|action)="([a-z0-9-]+\.html)((?:[?#][^"]*)?)"/gi, (m, attr, file, tail) => {
     const r = ROUTES[file];
@@ -714,7 +720,7 @@ const rewrite = (html, out) => {
     return `${attr}="${href}"`;
   });
   // assets sit at the site root, so they need the same climb
-  if (depth) {
+  if (depth || out === '404.html') {
     for (const d of ASSET_DIRS) {
       html = html.replace(new RegExp(`(href|src)="${d}/`, 'g'), `$1="${up}${d}/`);
     }
