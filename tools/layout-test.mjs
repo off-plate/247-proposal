@@ -81,6 +81,22 @@ for (const w of [2560, 1600, 390]) {
   heroTop === 0 ? ok(`${w}: the hero photograph starts at the top of the page`)
                 : fail(`${w}: ${heroTop}px of page background above the hero`);
 
+  // the nav links sit with the logo, not centred, and close up further when pinned
+  if (w >= 1200) {
+    await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
+    const gap = () => p.evaluate(() => {
+      const l = document.querySelector('.brand'), a = document.querySelector('.pillnav-links a');
+      return Math.round(a.getBoundingClientRect().left - l.getBoundingClientRect().right);
+    });
+    const rest = await gap();
+    await p.evaluate(() => scrollTo(0, 900));
+    await p.waitForTimeout(800);
+    const pinned = await gap();
+    rest < 120 && pinned < rest
+      ? ok(`${w}: nav links sit ${rest}px after the logo, ${pinned}px once pinned`)
+      : fail(`${w}: nav gap ${rest}px at rest, ${pinned}px pinned`);
+  }
+
   // every select is drawn by us, never by the OS on top of our own chevron
   await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
   const native = await p.$$eval('select', els => els.filter(e => getComputedStyle(e).appearance !== 'none').length);

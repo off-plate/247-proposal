@@ -3169,3 +3169,8 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
 .list-topline, .list-title, .list-ask { display: none; }
 /* the hero sits inside an already-inset wrapper here, so it must not inset again */
 .fleetwrap > .phero { width: 100% !important; margin-inline: 0 !important; }
+
+/* the nav links sit with the logo rather than centred in the bar, and they close
+   the gap a little further once the bar has compacted */
+.pillnav-links { margin-inline: clamp(18px, 2.2vw, 44px) auto; padding-left: 0; }
+.is-pinned .pillnav-links { margin-inline: clamp(4px, 0.6vw, 12px) auto; }
