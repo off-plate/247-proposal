@@ -20,7 +20,12 @@ for (const f of files) {
     const [path] = u.split(/[?#]/);
     if (!path) continue;
     if (/\.html$/.test(path) && !/404\.html$/.test(path)) { dotHtml++; if (dotHtml < 4) fail(`${f.slice(DOCS.length+1)} still links to ${u}`); }
-    const target = normalize(join(dirname(f), path));
+    // the 404 is served from any depth so it uses site-absolute paths; resolve those
+    // against the site root rather than the filesystem root
+    const SITE_ROOT = '/247-proposal/';
+    const target = path.startsWith('/')
+      ? normalize(join(DOCS, path.startsWith(SITE_ROOT) ? path.slice(SITE_ROOT.length) : path.slice(1)))
+      : normalize(join(dirname(f), path));
     const candidates = [target, join(target, 'index.html')];
     checked++;
     if (!candidates.some(existsSync)) { broken++; if (broken < 6) fail(`${f.slice(DOCS.length+1)} -> ${u} does not exist`); }
