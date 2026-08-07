@@ -1903,3 +1903,143 @@ body[data-page="index"] .pillnav:not(.is-pinned) .nav-call:hover { color: #fff; 
 .step-body h2, .step-body p, .step-aside, .step-n { grid-column: auto; }
 .step-row { align-content: start; }
 .colophon { padding-block: clamp(34px, 4vw, 68px) clamp(60px, 8vw, 120px); }
+
+/* ==========================================================================
+   ROUND OF FIXES. Twelve named problems, each addressed here.
+   ========================================================================== */
+
+/* 3. colour is back. The page was one long sheet of white with black text on it.
+   Sections alternate against a warm tint, the accent does real work, and every
+   major block ends on a band rather than dissolving into the next one. */
+:root { --tint: #F5F2EF; }
+body { background: var(--tint); }
+.home, main { background: transparent; }
+.hz-picks, .hz-range { background: var(--card); }
+.hz-picks, .hz-tags, .hz-range, .hz-mosaic {
+  border-radius: var(--r-lg); padding: clamp(34px, 3.6vw, 62px) clamp(24px, 2.6vw, 46px);
+  margin-bottom: clamp(14px, 1.4vw, 24px);
+}
+.hz-tags { background: var(--card); }
+.hz-mosaic { padding-inline: 0; background: none; }
+.list, .faq-group, .about-block, .bring-card, .prom, .dest, .step-row,
+.road-a1, .road-amalfi, .road-stelvio, .pcard, .rcard, .row-link, .sim-card {
+  background: var(--card);
+}
+.chip.is-on { background: var(--verde); border-color: var(--verde); color: #fff; }
+.faq-jump a:hover, .tag:hover, .hz-pill:hover { background: var(--verde); border-color: var(--verde); color: #fff; }
+.hz-head h2::after {
+  content: ''; display: block; width: 46px; height: 3px; border-radius: 2px;
+  background: var(--verde); margin-top: 14px;
+}
+.sec-h::after, .roads-head h1::after, .list-title::after, .faq-h1::after, .how-h1::after, .man-h::after {
+  content: ''; display: block; width: 46px; height: 3px; border-radius: 2px;
+  background: var(--verde); margin-top: 16px;
+}
+
+/* 1 + 6: the card. No dot separators, no stranded gaps, one rhythm. */
+.rows { gap: clamp(14px, 1.3vw, 22px); }
+.row-link {
+  display: grid; align-content: start; gap: 0; padding: 0; overflow: clip;
+  border-radius: var(--r); border: 1px solid var(--line);
+}
+.row-link img { aspect-ratio: 3/2; margin: 0; border-radius: 0; }
+.row-tag { top: 14px; left: 14px; }
+.row-nm {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: clamp(14px, 1.2vw, 18px) clamp(15px, 1.3vw, 20px) 0;
+  font-size: clamp(17px, 1.3vw, 20px);
+}
+.row-nm i { font-style: normal; font-weight: 500; font-size: 14px; color: var(--dim); }
+.row-spec {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px clamp(15px, 1.3vw, 20px) clamp(14px, 1.2vw, 18px);
+}
+.row-spec b {
+  font-weight: 500; font-size: 12.5px; color: var(--dim);
+  background: var(--card-2); border-radius: 5px; padding: 4px 9px; white-space: nowrap;
+}
+.row-price {
+  margin: 0; padding: clamp(12px, 1.1vw, 16px) clamp(15px, 1.3vw, 20px);
+  border-top: 1px solid var(--line); background: #FBFAF9;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  font-size: clamp(21px, 1.7vw, 26px);
+}
+.row-price em { font-size: 13px; }
+
+/* 5: the hover was a scaling photo inside a clipped box. One border, nothing moves. */
+.row-link:hover img { scale: 1; }
+.row-link { transition: border-color var(--t1) var(--out), box-shadow var(--t1) var(--out); }
+.row-link:hover { background: var(--card); border-color: var(--ink); box-shadow: var(--e1); }
+
+/* 4: nothing in the grid is singled out with a red frame */
+.is-flag .row-link { border-color: var(--line); }
+.is-flag .row-link:hover { border-color: var(--ink); }
+
+/* 2: the fleet header held its title, chips and filters in the left half */
+.list-head { gap: 18px; }
+.list-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.list-title { margin: 0; }
+.list-title::after { display: none; }
+.list-tools { justify-content: space-between; }
+.list-ask { margin: 0; }
+
+/* 7: the fleet stopped an inch above the footer */
+.fleetwrap { margin-bottom: clamp(40px, 5vw, 90px); }
+.list-note { background: var(--card); border-radius: 0 0 var(--r-lg) var(--r-lg); }
+
+/* 8 + 9: a footer with four equal columns and nothing in it that is not needed */
+.foot { background: var(--tint); }
+.foot-top { grid-template-columns: 1.5fr 1fr 1.25fr 1fr; align-items: start; }
+.foot-brand { gap: 14px; }
+.foot-mission { max-width: 34ch; }
+.foot-col ul { gap: 12px; }
+.foot-col a { display: inline-block; }
+.foot-place { display: grid; gap: 3px; font-size: 15px; color: rgba(255,255,255,.9); }
+.foot-place em { font-style: normal; color: var(--night-dim); font-size: 13.5px; }
+.foot-place .openlight { color: var(--open-board); font-size: 12.5px; margin-bottom: 2px; }
+.foot-contact { gap: 10px; }
+.foot-legal { align-items: center; }
+.foot-legal p:last-child { display: flex; gap: 22px; flex-wrap: wrap; }
+.foot-creditlist { margin-top: 18px; color: var(--night-dim); font-size: 12.5px; }
+.foot-creditlist summary { cursor: pointer; }
+.foot-creditlist ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 5px; columns: 2; }
+.foot-creditlist a { color: #fff; }
+.foot-credits { cursor: pointer; }
+
+/* 10: the routes page gets a title and three blocks that are the same shape */
+.roadswrap { padding-top: calc(84px + 2vh); }
+.roads-head { width: min(100% - 2 * var(--pad), var(--shell)); margin: 0 auto clamp(20px, 2.4vw, 40px); }
+.roads-head h1 { font-weight: 700; font-size: clamp(34px, 3.6vw, 62px); letter-spacing: -.03em; line-height: 1.04; }
+.roads-head p { color: var(--dim); max-width: 62ch; margin-top: 16px; }
+.road-a1 { margin-top: 0; }
+.rst-type { display: grid; }
+.rst-copy { display: grid; gap: 14px; }
+
+/* 11: the FAQ column rule and the floating markers */
+.faq-cols { gap: 0 clamp(24px, 3vw, 56px); }
+.faq-list { border-top: 0; }
+.qa-item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  list-style: none; padding: clamp(15px, 1.3vw, 19px) 0;
+}
+.qa-mark { flex: none; }
+.qa-item[open] .qa-q { color: var(--ink); }
+.qa-item summary:hover .qa-q { color: var(--verde-t); }
+.qa-q { font-weight: 600; font-size: clamp(15px, 1.15vw, 17px); }
+
+/* three per row, as asked, at every desktop width */
+@media (min-width: 1900px) { .rows { grid-template-columns: repeat(3, 1fr); } }
+
+/* the filter row was spread edge to edge by space-between */
+.list-tools { justify-content: flex-start; gap: 14px 26px; }
+
+/* routes: copy sits at the top of its card, not floated in the middle of it */
+.ra1-panel, .ram-facts, .rst-type { align-content: start; padding-block: clamp(26px, 2.8vw, 50px); }
+.facts-col { display: grid; grid-template-columns: auto 1fr; gap: 0; width: 100%; }
+.facts-col dt { padding: 11px 0; border-top: 1px solid var(--line); color: var(--dim); font-size: 13.5px; }
+.facts-col dd { padding: 11px 0; border-top: 1px solid var(--line); margin: 0; text-align: right; font-size: 14.5px; }
+.roadcar { margin-top: 4px; }
+
+/* the WhatsApp icon was sitting on its own label in the footer */
+.foot-wa { gap: 10px; padding: 13px 22px; }
+.foot-wa svg { flex: none; }
