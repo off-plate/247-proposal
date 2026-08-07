@@ -95,5 +95,32 @@ for (const w of [2560, 1600, 390]) {
   before === after ? ok(`${w}: hovering a card does not move its photograph`) : fail(`${w}: photo moved on hover`);
   await p.close();
 }
+/* the booking page is a checkout: it fits the screen at every step, the steps stay
+   in view, and the page itself never scrolls. Short laptops are the real test. */
+for (const [w, h] of [[1440, 760], [1600, 900], [1920, 1080]]) {
+  const p = await (await b.newContext({ viewport: { width: w, height: h } })).newPage();
+  const from = new Date(Date.now() + 9 * 864e5).toISOString().slice(0, 10);
+  const to = new Date(Date.now() + 26 * 864e5).toISOString().slice(0, 10);
+  await p.goto(`${B}/book/?car=hyundai-accent`, { waitUntil: 'networkidle' });
+  const check = async label => {
+    const r = await p.evaluate(() => ({
+      overflow: document.documentElement.scrollHeight - document.documentElement.clientHeight,
+      chips: Math.round(document.querySelector('.chiprail').getBoundingClientRect().top),
+      controls: document.querySelector('.stepnav').getBoundingClientRect().bottom <= innerHeight + 1,
+      footer: !!document.querySelector('.foot') && getComputedStyle(document.querySelector('.foot')).display !== 'none',
+    }));
+    r.overflow === 0 && r.chips > 0 && r.controls && !r.footer
+      ? ok(`${w}x${h} ${label}: fits the screen, steps and controls in view`)
+      : fail(`${w}x${h} ${label}: overflow ${r.overflow}px, chips ${r.chips}, controls ${r.controls}, footer ${r.footer}`);
+  };
+  await check('where and when');
+  await p.click('.loc[data-loc="tia"]');
+  await p.fill('#d-from', from); await p.$eval('#d-from', e => e.dispatchEvent(new Event('change')));
+  await p.fill('#d-to', to); await p.$eval('#d-to', e => e.dispatchEvent(new Event('change')));
+  await p.click('#next'); await p.waitForTimeout(250); await check('upgrade');
+  await p.click('#up-keep'); await p.waitForTimeout(250); await check('contact');
+  await p.close();
+}
+
 await b.close();
 console.log(process.exitCode ? 'LAYOUT: FAILURES' : 'LAYOUT CLEAN');
