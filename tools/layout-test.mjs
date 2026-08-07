@@ -53,7 +53,7 @@ for (const w of [2560, 1600, 390]) {
     for (const pg of ['how-it-works/', 'roads/', 'faq/', 'about/']) {
       await p.goto(`${B}/${pg}`, { waitUntil: 'networkidle' });
       const r = await p.evaluate(() => {
-        const h = document.querySelector('.phero'), f = h.querySelector('.phero-foot');
+        const h = document.querySelector('.phero'), f = h.querySelector('.phero-grid');
         return [Math.round(h.getBoundingClientRect().height),
                 Math.round(f.getBoundingClientRect().width / h.getBoundingClientRect().width * 100)];
       });
@@ -74,6 +74,11 @@ for (const w of [2560, 1600, 390]) {
     home === flt ? ok(`${w}: fleet card matches the homepage card (${home}px)`)
                  : fail(`${w}: fleet card ${flt}px against homepage ${home}px`);
   }
+
+  // every select is drawn by us, never by the OS on top of our own chevron
+  await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
+  const native = await p.$$eval('select', els => els.filter(e => getComputedStyle(e).appearance !== 'none').length);
+  native === 0 ? ok(`${w}: no select shows an OS chevron over ours`) : fail(`${w}: ${native} selects still native`);
 
   // no hover moves a car card or its photograph
   await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });

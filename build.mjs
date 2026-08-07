@@ -137,14 +137,27 @@ const footer = () => `
 
 // One hero for every sub page. Type first, one column, one primary action.
 // No rule under the title, no two-column split, no eyebrow.
-const pageHero = (h1, lede, actions = '') => `
+const pageHero = (h1, lede, crumb) => `
 <section class="phero">
-  <h1>${h1}</h1>
-  <div class="phero-foot">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="index.html">Home</a></li>
+      <li aria-current="page">${crumb}</li>
+    </ol>
+  </nav>
+  <div class="phero-grid">
+    <h1>${h1}</h1>
     <p class="phero-lede">${lede}</p>
-    ${actions ? `<div class="phero-act">${actions}</div>` : ''}
   </div>
 </section>`;
+
+const crumbSchema = (crumb, url) => JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site.base + '/' },
+    { '@type': 'ListItem', position: 2, name: crumb, item: site.base + '/' + url },
+  ],
+});
 
 const gantryChip = t => `<span class="gchip">${t}</span>`;
 const WA_ICON = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>`;
@@ -505,7 +518,7 @@ const roadsPage = () => {
   return `${head('Where to drive in Albania', 'Three routes worth the rental and eight places people go, each with the road time from Tirana and a car that can do it.', 'roads.html')}
 ${nav('roads')}
 <main class="roadswrap">
-${pageHero('Where to drive', 'Three routes worth the rental, then eight places people go. Road times are from Tirana one way unless the card says otherwise.', `<a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>`)}
+${pageHero('Where to drive', 'Three routes worth the rental, then eight places people go. Road times are from Tirana one way unless the card says otherwise.', 'Roads')}
 
 <section class="rd-list" aria-label="Routes and places">
   ${site.roads.map((r, i) => place(r, i, 'road-' + r.id,
@@ -524,7 +537,7 @@ const companyPage = () => `${head('About us. 24/7 Car Rental, Tirana', 'Welcome 
 ${nav('company')}
 <main class="companywrap">
 
-${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania.', `<a class="btn-ink" href="fleet.html">See the cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>`)}
+${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania.', 'About us')}
 
 <figure class="about-shot">
   <img src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albania" width="2400" height="1051" loading="lazy">
@@ -589,7 +602,7 @@ const faqSchema = () => JSON.stringify({
 const faqPage = () => `${head('Questions about renting a car in Tirana', 'Licences, borders, deposits, night pickups, mountain roads and what the daily price covers. ' + site.faq.length + ' straight answers from a rental company in Tirana that is open at every hour.', 'faq.html', 'img/cars/jaguar-xf.webp', faqSchema())}
 ${nav('faq')}
 <main class="faqwrap">
-  ${pageHero('Questions, answered straight', 'Everything renters ask before they land, and the things they wish they had asked. If yours is not here, send it and someone in Tirana answers it.', waLink('Hello 24/7 Car Rental, I have a question before I book.', 'btn-wa', 'Ask on WhatsApp'))}
+  ${pageHero('Questions, answered straight', 'Everything renters ask before they land, and the things they wish they had asked. If yours is not here, send it and someone in Tirana answers it.', 'FAQ')}
 
   ${site.faqGroups.map((g, gi) => `
   <section class="faq-group" id="${g.id}">
@@ -624,7 +637,7 @@ ${footer()}`;
 const howPage = () => `${head('How renting from us works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing, collect at Tirana airport or the city office at any hour.', 'how.html')}
 ${nav('how')}
 <main class="howwrap">
-  ${pageHero('Book it in two lines on WhatsApp', 'You send two lines, the office answers with the real total, and the car is waiting when you land.', waLink(WA_GENERIC, 'btn-wa', 'Start on WhatsApp') + `<a class="phero-alt" href="tel:${TEL}">or call ${site.phone}</a>`)}
+  ${pageHero('Book it in two lines on WhatsApp', 'You send two lines, the office answers with the real total, and the car is waiting when you land.', 'How it works')}
 
   <ol class="steps">
     ${site.steps.map(s => `<li class="step-row">

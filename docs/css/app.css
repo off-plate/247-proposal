@@ -2783,3 +2783,48 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
   .phero-lede { min-height: 0; }
   .phero { min-height: 0; padding-block: clamp(26px, 6vw, 44px) clamp(18px, 4vw, 28px); }
 }
+
+/* ==========================================================================
+   SUB-PAGE HERO, THIRD PASS. Breadcrumb, then the title on the left and the
+   sentence on the right, both starting on the same line. Built to the reference.
+   ========================================================================== */
+.phero {
+  padding-block: clamp(30px, 3.2vw, 62px) clamp(30px, 3.4vw, 66px);
+  display: grid; gap: clamp(24px, 2.8vw, 54px); min-height: 0; align-content: start;
+}
+.crumb ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding: 0; }
+.crumb li { font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.crumb li + li::before { content: '/'; margin-right: 8px; color: var(--line-2); font-weight: 500; }
+.crumb a { color: var(--verde-t); text-decoration: none; }
+.crumb a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.phero-grid {
+  display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  gap: clamp(24px, 3vw, 80px); align-items: start;
+}
+.phero h1 {
+  font-weight: 700; letter-spacing: -.035em; line-height: 1.04;
+  font-size: clamp(38px, 5.2vw, 104px); max-width: 15ch; min-height: 0; margin: 0;
+}
+.phero h1::after { display: none; }
+.phero-lede {
+  color: var(--dim); font-size: clamp(16px, 1.15vw, 20px); line-height: 1.55;
+  max-width: 46ch; min-height: 0; margin: 0; padding-top: .35em;
+}
+.phero-foot, .phero-act { display: none; }
+@media (max-width: 900px) {
+  .phero-grid { grid-template-columns: 1fr; gap: 18px; }
+  .phero h1 { max-width: none; }
+  .phero-lede { padding-top: 0; }
+}
+
+/* the sort control was drawing a chevron on its label while the select kept its
+   own, so it read as a dropdown inside a dropdown */
+.sort select, .list-filters select, .hz-f select, .db-field select, .dfield select {
+  appearance: none; -webkit-appearance: none; background-image: none;
+}
+.sort select { padding-right: 4px; }
+
+/* the roads title is one line where the other three take two, so the block
+   reserves two and all four heroes come out the same height */
+.phero h1 { min-height: 2.08em; }
