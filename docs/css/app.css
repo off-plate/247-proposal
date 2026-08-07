@@ -2886,3 +2886,20 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 /* the hero carried an 8px top margin, so a strip of page background sat above the
    photograph and read as a white line through the transparent header */
 .hz-top { margin-top: 0; }
+
+/* a finished step reads as finished: filled, ticked, and quieter than the live one */
+.pchip { gap: 0; }
+.pchip-tick { display: none; align-items: center; padding-right: 8px; }
+.pchip.is-done .gchip { display: none; }
+.pchip.is-done .pchip-tick { display: inline-flex; }
+.pchip.is-done {
+  background: var(--verde); border-color: var(--verde); color: #fff;
+}
+.pchip.is-done, .pchip.is-done .pchip-tick { color: rgba(255,255,255,.92); }
+.pchip.is-now { background: var(--ink); border-color: var(--ink); color: #fff; }
+.pchip.is-now .gchip { color: rgba(255,255,255,.72); }
+
+/* the settled step shows the car, alone, at the width it deserves */
+.upgrade.is-settled { grid-template-columns: minmax(0, 460px); }
+.upgrade.is-settled .up-card.is-offer { display: none; }
+.upgrade.is-settled .up-card.is-current { border-color: var(--ink); }

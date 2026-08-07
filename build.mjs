@@ -419,7 +419,7 @@ const bookPage = () => `${head('Book a car. Four questions, then a human', 'Pick
 ${nav()}
 <main class="bookwrap">
   <ol class="chiprail" id="chiprail" aria-label="Progress">
-    ${['Where and when', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip">${i + 1}</span>${s}</li>`).join('')}
+    ${['Where and when', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip" aria-hidden="true">${i + 1}</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>${s}</li>`).join('')}
   </ol>
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">

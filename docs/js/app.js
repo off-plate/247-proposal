@@ -313,9 +313,19 @@
       const up = offerSettled ? null : (offer || null);
       const hint = $('#up-hint'), keep = $('#up-keep');
       if (!cur || !up) {
-        wrap.hidden = true;
-        // keep the current name true even when there is nothing to offer against it
-        if (cur) { const e = $('#up-cur-nm'); if (e) e.textContent = cur.name; }
+        // show the choice rather than an empty panel: the offer is over, the car is not
+        wrap.hidden = !cur;
+        wrap.classList.toggle('is-settled', true);
+        if (cur) {
+          $('#up-cur-img').src = `${window.BASE || ''}img/cars/${cur.slug}-s.webp`;
+          $('#up-cur-img').alt = cur.name;
+          const e = $('#up-cur-nm'); if (e) e.textContent = cur.name;
+          const sp = $('#up-cur-spec');
+          if (sp) sp.textContent = `${cur.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${cur.seats} seats, ${cur.clsLabel || cur.cls}`;
+          const fg = $('#up-cur-fig');
+          if (fg) fg.textContent = n > 0 ? `${eur(cur.price * n)} for ${n} day${n > 1 ? 's' : ''}` : `${eur(cur.price)} a day`;
+          const role = $('#up-current .up-role'); if (role) role.textContent = 'Your car';
+        }
         if (hint) hint.textContent = !cur ? 'Choose a car from the fleet first.'
           : offerSettled ? `You are booking the ${cur.name}.`
           : `Nothing in the fleet costs more than the ${cur.name}. Carry on.`;
@@ -323,6 +333,8 @@
         return;
       }
       wrap.hidden = false;
+      wrap.classList.remove('is-settled');
+      const roleEl = $('#up-current .up-role'); if (roleEl) roleEl.textContent = 'Your choice';
       const perDay = up.price - cur.price;
       const total = n > 0 ? perDay * n : 0;
       const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
@@ -349,7 +361,12 @@
     if (upTake) upTake.addEventListener('click', () => {
       const slug = $('#upgrade').dataset.up;
       // one offer, and this was it
-      if (slug) { b.car = slug; offerSettled = true; writeBook(b); paintPicks(); paint(); }
+      if (slug) {
+        b.car = slug; offerSettled = true; writeBook(b); paintPicks();
+        // a decision was made, so do not leave them looking at a settled panel
+        if (valid()) { step += 1; }
+        paint(); toStepTop();
+      }
     });
     if (upKeep) upKeep.addEventListener('click', () => { if (valid()) { step += 1; paint(); toStepTop(); } });
 

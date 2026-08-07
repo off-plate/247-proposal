@@ -84,13 +84,22 @@ const afterTake = await page.textContent('#up-cur-nm');
 afterTake === 'Jaguar XF 2015' ? ok('taking the upgrade swaps the car') : fail(`after take: ${afterTake}`);
 // one offer, not a ladder: accepting it must not produce a fresh offer against the
 // car just accepted, and coming back to the step must not either
-const stillShown = await page.$eval('#upgrade', e => !e.hidden);
-!stillShown ? ok('accepting the offer ends it, no second rung') : fail('a second upgrade was offered after the first');
+// accepting is a decision, so the flow moves on rather than parking on a settled panel
+const landed = await page.$$eval('.step', els => els.findIndex(e => !e.hidden));
+landed === 2 ? ok('accepting the offer advances to the contact step') : fail(`landed on step ${landed}`);
+// and coming back shows the car, with no second offer against it
 await page.click('#back');
+const settled = await page.evaluate(() => {
+  const w = document.getElementById('upgrade');
+  const offer = document.querySelector('.up-card.is-offer');
+  return { visible: !w.hidden, settled: w.classList.contains('is-settled'),
+           offerShown: getComputedStyle(offer).display !== 'none',
+           name: document.getElementById('up-cur-nm').textContent };
+});
+settled.visible && settled.settled && !settled.offerShown && settled.name === 'Jaguar XF 2015'
+  ? ok('returning shows the chosen car and no second rung')
+  : fail(`settled state: ${JSON.stringify(settled)}`);
 await page.click('#next');
-const onReturn = await page.$eval('#upgrade', e => !e.hidden);
-!onReturn ? ok('returning to the step does not re-offer') : fail('the offer came back on return');
-await page.click('#up-keep');
 
 (await disabled()) ? ok('contact step gated') : fail('contact step not gated');
 await page.fill('#drv-name', 'Michael Florian');
