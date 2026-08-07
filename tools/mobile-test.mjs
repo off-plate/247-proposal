@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+/* MOBILE. Measured at 360 and 390 on every page type.
+   Three things, each of which has actually broken here before:
+     - the page never scrolls sideways
+     - no interactive control is under 38px tall, counting its label as its hit area
+     - no visible text falls under 12.5px
+   The 404 is served from the project path because it carries site-absolute paths;
+   at the plain docs path its stylesheet 404s and the page renders unstyled. */
+import { createRequire } from 'node:module';
+import { resolve } from 'node:path';
+import { homedir } from 'node:os';
+const r = createRequire(import.meta.url);
+const { chromium } = r(resolve(homedir(), 'Claude Helpers/Mission Control/node_modules/playwright/index.js'));
+const B = (process.argv[2] || 'http://localhost:8472/docs').replace(/\/$/, '');
+const ROOT404 = process.argv[3] || 'http://localhost:8472/247-proposal';
+const fail = m => { console.log('FAIL: ' + m); process.exitCode = 1; };
+const ok = m => console.log('ok: ' + m);
+const b = await chromium.launch();
+
+const probe = () => ({
+  over: Math.max(document.documentElement.scrollWidth - document.documentElement.clientWidth, 0),
+  tiny: [...new Set([...document.querySelectorAll('a,button,summary')].filter(e => {
+    const t = e.closest('label') || e, r = t.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && r.height < 38;
+  }).map(e => e.tagName + '.' + String(e.className).split(' ')[0]))].slice(0, 4),
+  small: [...new Set([...document.querySelectorAll('p,li,span,td,em,a,strong')].filter(e =>
+    e.getBoundingClientRect().height > 0 &&
+    parseFloat(getComputedStyle(e).fontSize) < 12.5 &&
+    e.textContent.trim().length > 2
+  ).map(e => e.tagName + '.' + String(e.className).split(' ')[0]))].slice(0, 4),
+  styled: getComputedStyle(document.body).fontFamily.includes('Switzer'),
+});
+
+for (const w of [390, 360]) {
+  const ctx = await b.newContext({ viewport: { width: w, height: 844 }, isMobile: true, hasTouch: true });
+  const p = await ctx.newPage();
+  for (const pg of ['', 'fleet/', 'roads/', 'faq/', 'how-it-works/', 'about/', 'book/', 'cars/jaguar-xf/']) {
+    await p.goto(`${B}/${pg}`, { waitUntil: 'networkidle' });
+    const r = await p.evaluate(probe);
+    const bad = [];
+    if (r.over) bad.push(`${r.over}px sideways scroll`);
+    if (r.tiny.length) bad.push(`tap targets under 38px: ${r.tiny.join(', ')}`);
+    if (r.small.length) bad.push(`text under 12.5px: ${r.small.join(', ')}`);
+    bad.length ? fail(`${w} /${pg || ''}: ${bad.join(' | ')}`) : ok(`${w} /${pg || 'index'}: clean`);
+  }
+  await p.goto(`${ROOT404}/404.html`, { waitUntil: 'networkidle' });
+  const r404 = await p.evaluate(probe);
+  r404.styled && !r404.over && !r404.tiny.length
+    ? ok(`${w} /404: styled, clean`)
+    : fail(`${w} /404: styled ${r404.styled}, over ${r404.over}, tiny ${r404.tiny.join(', ')}`);
+  await ctx.close();
+}
+await b.close();
+console.log(process.exitCode ? 'MOBILE: FAILURES' : 'MOBILE CLEAN');

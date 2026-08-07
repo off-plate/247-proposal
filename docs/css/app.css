@@ -2951,3 +2951,101 @@ body[data-page="book"] .up-card img { aspect-ratio: 16/9; }
   body[data-page="book"] .sumboard { overflow: visible; }
   body[data-page="book"] .drv { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   LANGUAGE SWITCHER. The site is English only, so Italian and Albanian are
+   listed and say plainly that they are not translated yet. A switcher that
+   silently does nothing is worse than one that tells you where it stands.
+   ========================================================================== */
+.lang { position: relative; }
+.lang-btn {
+  display: inline-flex; align-items: center; gap: 7px; background: none;
+  border: 1px solid var(--line-2); border-radius: var(--r-nav);
+  padding: 7px 12px 7px 9px; font-size: 14px; font-weight: 600; color: inherit;
+}
+.lang-btn:hover { border-color: currentColor; }
+.lang-flag {
+  width: 18px; height: 18px; border-radius: var(--r-nav); flex: none;
+  display: inline-block; background-size: cover; background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+}
+/* drawn, not fetched: three flags as gradients, no request and no icon library */
+.lang-en { background-image: linear-gradient(135deg,#012169 0 42%,#fff 42% 58%,#C8102E 58% 100%); }
+.lang-it { background-image: linear-gradient(90deg,#008C45 0 33.3%,#F4F5F0 33.3% 66.6%,#CD212A 66.6% 100%); }
+.lang-sq { background-image: radial-gradient(circle at 50% 52%, #000 0 26%, #E41E20 26% 100%); }
+.lang-caret {
+  width: 6px; height: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0;
+  rotate: 45deg; translate: 0 -2px; opacity: .6;
+}
+.lang-menu {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 70; margin: 0;
+  list-style: none; padding: 6px; min-width: 220px;
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--e2);
+  display: grid; gap: 2px;
+}
+.lang-menu[hidden] { display: none; }
+.lang-menu li {
+  display: flex; align-items: center; gap: 10px; padding: 9px 11px;
+  border-radius: var(--r-sm); font-size: 14.5px; white-space: nowrap;
+}
+.lang-menu li.is-on { background: var(--card-2); font-weight: 600; }
+.lang-menu li[aria-disabled="true"] { color: var(--dim); }
+.lang-menu em { font-style: normal; font-size: 12px; color: var(--dim); margin-left: auto; }
+body[data-page="index"] .pillnav:not(.is-pinned) .lang-btn { color: #fff; border-color: rgba(255,255,255,.42); }
+@media (max-width: 900px) { .lang-code { display: none; } .lang-btn { padding: 7px 9px; } }
+@media (max-width: 780px) { .lang { display: none; } }
+
+/* the hero CTAs sit under the sentence, in the right column */
+.phero-side { display: grid; gap: clamp(16px, 1.8vw, 26px); align-content: start; }
+.phero-act { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; justify-content: flex-start; }
+@media (max-width: 900px) { .phero-side { gap: 16px; } }
+
+/* ==========================================================================
+   MOBILE. Measured at 360 and 390, not assumed.
+   ========================================================================== */
+@media (max-width: 900px) {
+  /* the header's padding was computed from 100vw, which is wider than the page
+     when a scrollbar is reserved, so the bar sat 13px past the right edge */
+  .pillnav, body[data-page="index"] .pillnav:not(.is-pinned) { padding-inline: 16px; }
+  .pillnav.is-pinned { padding-inline: 6px 6px; padding-left: 16px; }
+
+  /* the burger collapsed to 6px, so the menu was a 6px tall tap target */
+  .burger { display: grid !important; width: 42px; height: 42px; place-content: center; gap: 5px; }
+  .burger span { width: 20px; height: 2px; background: var(--ink); display: block; }
+  body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff; }
+
+  /* the booking summary was pushed past the viewport by its own car row */
+  .sumboard, .bookgrid, .bookwrap { max-width: 100%; min-width: 0; }
+  .sum-car { grid-template-columns: 84px minmax(0, 1fr); gap: 12px; }
+  .sum-t { width: 100%; }
+
+  /* spec labels dropped under 12px on the car pages */
+  .spec-t td:nth-child(odd) { font-size: 13px; }
+
+  /* an icon-only button hides its label properly instead of setting it to 0px */
+  .reservebar .btn-wa { font-size: 14px; }
+  .reservebar .btn-wa span {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+
+  /* every control gets a real hit area */
+  .nav-call, .nav-wa, .reserve-cta, .crumb a, .foot-col a, .lang-btn { min-height: 42px; display: inline-flex; align-items: center; }
+  .reserve-cta, .nav-call, .nav-wa { justify-content: center; }
+  .foot-col a { min-height: 40px; }
+}
+@media (max-width: 480px) {
+  .sum-car { grid-template-columns: 72px minmax(0, 1fr); }
+  .up-card img { aspect-ratio: 16/9; }
+}
+/* the two-column booking grid was re-declared after its own mobile override, so the
+   340px minimum on the summary pushed the page 12px wider than the viewport */
+@media (max-width: 980px) {
+  body[data-page="book"] .bookgrid, .bookgrid { grid-template-columns: 1fr !important; }
+  body[data-page="book"] .sumboard, .sumboard { position: static; order: 2; max-width: 100%; }
+}
+/* links that were shorter than a thumb */
+@media (max-width: 900px) {
+  .aboutcta-mail, .foot-mail, .list-note a, .rows-clear { min-height: 40px; display: inline-flex; align-items: center; }
+}

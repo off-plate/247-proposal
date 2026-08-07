@@ -67,6 +67,17 @@ const nav = (active = '') => `
       <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
       <span class="nav-num">${site.phone}</span>
     </a>
+    <div class="lang" id="lang">
+      <button class="lang-btn" id="lang-btn" type="button" aria-expanded="false" aria-haspopup="listbox" aria-label="Language, English selected">
+        <span class="lang-flag lang-en" aria-hidden="true"></span><span class="lang-code">EN</span>
+        <span class="lang-caret" aria-hidden="true"></span>
+      </button>
+      <ul class="lang-menu" id="lang-menu" role="listbox" hidden>
+        <li role="option" aria-selected="true" class="is-on"><span class="lang-flag lang-en" aria-hidden="true"></span>English</li>
+        <li role="option" aria-selected="false" aria-disabled="true"><span class="lang-flag lang-it" aria-hidden="true"></span>Italiano <em>not translated yet</em></li>
+        <li role="option" aria-selected="false" aria-disabled="true"><span class="lang-flag lang-sq" aria-hidden="true"></span>Shqip <em>not translated yet</em></li>
+      </ul>
+    </div>
     ${waLink(WA_GENERIC, 'nav-wa', 'WhatsApp')}
     <a class="reserve-cta" href="fleet.html">Book a car</a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
@@ -111,8 +122,8 @@ const footer = () => `
       <nav class="foot-col" aria-label="Where to find us">
         <h2>Where to find us</h2>
         <ul>
-          <li><span class="foot-place"><span class="openlight">Open now</span>Tirana International Airport<em>N&euml;n&euml; Tereza, arrivals hall</em></span></li>
-          <li><span class="foot-place"><span class="openlight">Open now</span>Rruga Njazi Meka, Tiran&euml;<em>City office</em></span></li>
+          <li><span class="foot-place">Tirana International Airport<em>N&euml;n&euml; Tereza, arrivals hall</em></span></li>
+          <li><span class="foot-place">Rruga Njazi Meka, Tiran&euml;<em>City office</em></span></li>
         </ul>
       </nav>
 
@@ -137,7 +148,7 @@ const footer = () => `
 
 // One hero for every sub page. Type first, one column, one primary action.
 // No rule under the title, no two-column split, no eyebrow.
-const pageHero = (h1, lede, crumb) => `
+const pageHero = (h1, lede, crumb, actions = '') => `
 <section class="phero">
   <nav class="crumb" aria-label="Breadcrumb">
     <ol>
@@ -147,7 +158,10 @@ const pageHero = (h1, lede, crumb) => `
   </nav>
   <div class="phero-grid">
     <h1>${h1}</h1>
-    <p class="phero-lede">${lede}</p>
+    <div class="phero-side">
+      <p class="phero-lede">${lede}</p>
+      ${actions ? `<div class="phero-act">${actions}</div>` : ''}
+    </div>
   </div>
 </section>`;
 
@@ -226,7 +240,7 @@ ${nav()}
       </label>
     </div>
     <div class="hz-bar-foot">
-      <span class="hz-open"><span class="openlight">Open now</span> Both offices are open 24 hours, every day</span>
+      
       <span class="hz-chips">
         <span class="hz-chips-k">Gearbox</span>
         <label class="hz-chip"><input type="radio" name="gear" value="any" checked><span>Any</span></label>
@@ -426,7 +440,7 @@ ${nav()}
       <h1 class="step-h">Where and when?</h1>
       <p class="step-hint" id="loc-hint">Choose where you would like to collect the car.</p>
       <div class="locgrid" id="locgrid">
-        ${site.locations.map((l, i) => `<button class="loc" data-loc="${l.id}" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>${l.label}</strong><span class="sign">${l.sub}</span><span class="openlight">Open now</span></button>`).join('')}
+        ${site.locations.map((l, i) => `<button class="loc" data-loc="${l.id}" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>${l.label}</strong><span class="sign">${l.sub}</span></button>`).join('')}
       </div>
       <label class="dfield flight" id="flight-wrap" hidden><span class="sign">Flight number, so the car waits if you land late</span><input type="text" id="flight" placeholder="W6 3021" autocomplete="off"></label>
       <label class="tog oneway"><input type="checkbox" id="oneway"> Return to the other location <em id="oneway-note" hidden>no extra charge, they are ten minutes apart</em></label>
@@ -532,7 +546,7 @@ const roadsPage = () => {
   return `${head('Where to drive in Albania', 'Three routes worth the rental and eight places people go, each with the road time from Tirana and a car that can do it.', 'roads.html')}
 ${nav('roads')}
 <main class="roadswrap">
-${pageHero('Where to drive', 'Three longer routes and eight places worth the drive. Road times are from Tirana, one way, unless the card says otherwise.', 'Roads')}
+${pageHero('Where to drive', 'Three longer routes and eight places worth the drive. Road times are from Tirana, one way, unless the card says otherwise.', 'Roads', `<a class="btn-ink" href="fleet.html">Find a car <span class="x-arrow" aria-hidden="true">&rarr;</span></a>` + waLink('Hello 24/7 Car Rental, I would like to ask about a route in Albania.', 'btn-wa', 'Ask us on WhatsApp'))}
 
 <section class="rd-list" aria-label="Routes and places">
   ${site.roads.map((r, i) => place(r, i, 'road-' + r.id,
@@ -551,7 +565,7 @@ const companyPage = () => `${head('About us. 24/7 Car Rental, Tirana', 'Welcome 
 ${nav('company')}
 <main class="companywrap">
 
-${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania.', 'About us')}
+${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, your premier choice for convenient and reliable car rental services in Tirana, Albania.', 'About us', `<a class="btn-ink" href="fleet.html">Find a car <span class="x-arrow" aria-hidden="true">&rarr;</span></a>` + `<a class="btn-paper" href="tel:${TEL}">Call ${site.phone}</a>`)}
 
 <figure class="about-shot">
   <img src="img/road-riviera.webp" alt="The coast road over the Llogara pass, Albania" width="2400" height="1051" loading="lazy">
@@ -597,7 +611,7 @@ ${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, 
     <a class="aboutcta-mail" href="mailto:${site.email}">${site.email}</a>
   </div>
   <div class="aboutcta-desks">
-    ${site.locations.map(l => `<div class="foot-desk"><span class="openlight">Open now</span><strong>${l.label}</strong><em>${l.sub}</em></div>`).join('')}
+    ${site.locations.map(l => `<div class="foot-desk"><strong>${l.label}</strong><em>${l.sub}</em></div>`).join('')}
   </div>
 </section>
 
@@ -616,7 +630,7 @@ const faqSchema = () => JSON.stringify({
 const faqPage = () => `${head('Questions about renting a car in Tirana', 'Licences, borders, deposits, night pickups, mountain roads and what the daily price covers. ' + site.faq.length + ' straight answers from a rental company in Tirana that is open at every hour.', 'faq.html', 'img/cars/jaguar-xf.webp', faqSchema())}
 ${nav('faq')}
 <main class="faqwrap">
-  ${pageHero('Your questions, answered', 'If your question is not here, send it to us and we will answer it.', 'FAQ')}
+  ${pageHero('Your questions, answered', 'If your question is not here, send it to us and we will answer it.', 'FAQ', `<a class="btn-ink" href="fleet.html">Find a car <span class="x-arrow" aria-hidden="true">&rarr;</span></a>` + waLink('Hello 24/7 Car Rental, I have a question before I book.', 'btn-wa', 'Ask us on WhatsApp'))}
 
   ${site.faqGroups.map((g, gi) => `
   <section class="faq-group" id="${g.id}">
@@ -651,7 +665,7 @@ ${footer()}`;
 const howPage = () => `${head('How renting from us works', 'No online checkout. Send the dates and the car by WhatsApp or phone, get the total in writing, collect at Tirana airport or the city office at any hour.', 'how.html')}
 ${nav('how')}
 <main class="howwrap">
-  ${pageHero('How to book with us', 'You send us your dates, we reply with the total in writing, and the car is ready when you land.', 'How it works')}
+  ${pageHero('How to book with us', 'You send us your dates, we reply with the total in writing, and the car is ready when you land.', 'How it works', `<a class="btn-ink" href="fleet.html">Find a car <span class="x-arrow" aria-hidden="true">&rarr;</span></a>` + waLink(WA_GENERIC, 'btn-wa', 'Ask us on WhatsApp'))}
 
   <ol class="steps">
     ${site.steps.map(s => `<li class="step-row">

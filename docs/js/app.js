@@ -67,8 +67,6 @@
         const el = $('.row-price', r);
         el.innerHTML = `${eur(total)}<em> / ${nDays} day${nDays > 1 ? 's' : ''}</em>`;
       });
-      const note = $('#list-note');
-      if (note) note.innerHTML = `Totals are the published daily rate multiplied by your ${nDays} days, starting ${new Date(bk.from).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}. Rates are per day, as published. <a href="${window.BASE || ''}book/">Change dates</a>.`;
     }
     const LANES = {
       city: ['golf-5', 'hyundai-accent', 'audi-a4'],
@@ -112,6 +110,20 @@
     });
 
     apply();
+  }
+
+  /* ---------- language switcher ---------- */
+  const langBtn = $('#lang-btn'), langMenu = $('#lang-menu');
+  if (langBtn && langMenu) {
+    const close = () => { langMenu.hidden = true; langBtn.setAttribute('aria-expanded', 'false'); };
+    langBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = langMenu.hidden;
+      langMenu.hidden = !open;
+      langBtn.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', e => { if (!e.target.closest('#lang')) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   }
 
   /* ---------- car page gallery ---------- */

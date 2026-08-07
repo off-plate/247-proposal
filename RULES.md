@@ -78,6 +78,8 @@ Run all of them before anything is called done. None is optional.
 ```bash
 node tools/radius-test.mjs http://localhost:8472/docs   # the radius rule above
 node tools/copy-test.mjs                                # the copy rules above
+node tools/mobile-test.mjs http://localhost:8472/docs http://localhost:8472/247-proposal
+                                                        # 360 and 390: no sideways scroll, 38px targets, 12.5px text
 node tools/layout-test.mjs http://localhost:8472/docs   # one left edge, hero parity, card parity, no OS selects, no hover drift
 node tools/links-test.mjs                               # no visitor-facing .html, every internal link resolves
 node tools/audit.mjs      http://localhost:8472/docs    # contrast and overflow, every width
@@ -92,3 +94,13 @@ python3 ../Jarvis/.claude/design/slop-lint.py docs      # the anti-slop canon
 
 A gate that reports a false positive gets fixed, never waived. Every refinement in
 these tools came from one, and each caught a real bug later.
+
+---
+
+## Testing the 404 locally
+
+The 404 carries site-absolute paths, because it is served from whatever path a
+visitor mistyped. At `http://localhost:8472/docs/404.html` its stylesheet 404s and
+the page renders unstyled, which looks like a bug and is not one. Test it at
+`http://localhost:8472/247-proposal/404.html`. A gitignored symlink in the project
+root makes that path work locally.
