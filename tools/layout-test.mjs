@@ -46,6 +46,16 @@ for (const w of [2560, 1600, 390]) {
   });
   foot[0] === foot[1] ? ok(`${w}: footer legal aligns with the columns (${foot[0]})`) : fail(`${w}: footer legal at ${foot[1]}, columns at ${foot[0]}`);
 
+  // the fleet card must be the homepage card, to the pixel, at desktop widths
+  if (w >= 1600) {
+    await p.goto(`${B}/index.html`, { waitUntil: 'networkidle' });
+    const home = await p.$eval('.pcard', e => Math.round(e.getBoundingClientRect().width));
+    await p.goto(`${B}/fleet.html`, { waitUntil: 'networkidle' });
+    const flt = await p.$eval('.row-link', e => Math.round(e.getBoundingClientRect().width));
+    home === flt ? ok(`${w}: fleet card matches the homepage card (${home}px)`)
+                 : fail(`${w}: fleet card ${flt}px against homepage ${home}px`);
+  }
+
   // no hover moves a car card or its photograph
   await p.goto(`${B}/fleet.html`, { waitUntil: 'networkidle' });
   const before = await p.$eval('.row:not([hidden]) img', e => JSON.stringify(e.getBoundingClientRect()));

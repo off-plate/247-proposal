@@ -2617,3 +2617,30 @@ main > [data-bleed] { width: 100% !important; }
 .daysline .mono:empty, #days-chip { border: 0; background: none; padding: 0; color: var(--dim); font-size: 13.5px; }
 /* the fixed action bar was sitting on the spec table on desktop too */
 body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
+
+/* ==========================================================================
+   FLEET CARDS = HOMEPAGE CARDS. Measured, not guessed: the homepage card was
+   532x537 with a 494px photo on cover; the fleet was 428x436 with a 390px
+   photo on contain, so it carried grey rails and lost 104px of width. The
+   list's outer card chrome is what was eating that width.
+   ========================================================================== */
+.list { border: 0; border-radius: 0; background: none; }
+.list-head { border-radius: 0; padding-inline: 0; border-bottom: 1px solid var(--line); }
+.list-note { padding-inline: 0; border-radius: 0; }
+.rows { padding: clamp(22px, 2vw, 34px) 0 0; gap: clamp(14px, 1.3vw, 24px); }
+.row-link {
+  padding: clamp(12px, 1vw, 16px) clamp(14px, 1.1vw, 18px) clamp(16px, 1.2vw, 20px);
+  border-radius: var(--r); background: var(--card);
+}
+.row-link img {
+  width: 100%; aspect-ratio: 3/2; object-fit: cover; padding: 0;
+  border-radius: var(--r-sm); background: var(--card-2); margin-bottom: 10px;
+}
+.row-tag { top: 22px; left: 24px; }
+/* something upstream was setting an explicit width on the card, so it sat 88px
+   narrower than its own grid cell. The card fills its cell. */
+.rows > .row { width: 100%; }
+.rows > .row > .row-link { width: 100% !important; margin: 0 !important; }
+/* the grid cell still carried 13px 44px of padding from the old list view, which is
+   exactly the 88px the card was losing against the identical homepage card */
+.rows > .row { padding: 0 !important; display: block; border: 0; }
