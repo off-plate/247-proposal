@@ -82,6 +82,14 @@ await snap('2-upgrade');
 await page.click('#up-take');
 const afterTake = await page.textContent('#up-cur-nm');
 afterTake === 'Jaguar XF 2015' ? ok('taking the upgrade swaps the car') : fail(`after take: ${afterTake}`);
+// one offer, not a ladder: accepting it must not produce a fresh offer against the
+// car just accepted, and coming back to the step must not either
+const stillShown = await page.$eval('#upgrade', e => !e.hidden);
+!stillShown ? ok('accepting the offer ends it, no second rung') : fail('a second upgrade was offered after the first');
+await page.click('#back');
+await page.click('#next');
+const onReturn = await page.$eval('#upgrade', e => !e.hidden);
+!onReturn ? ok('returning to the step does not re-offer') : fail('the offer came back on return');
 await page.click('#up-keep');
 
 (await disabled()) ? ok('contact step gated') : fail('contact step not gated');

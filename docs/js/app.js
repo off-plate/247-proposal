@@ -302,18 +302,23 @@
       const pool = sameCls.length ? sameCls : dearer;
       return pool.sort((a, z) => (a.price - c.price) - (z.price - c.price))[0];
     };
+    // The offer is made once, against the car the visitor arrived with. Taking it must
+    // not produce a fresh offer against the car they just accepted: that is a ladder,
+    // not a suggestion, and nobody trusts the second rung.
+    let offer = null, offerSettled = false;
     const paintPicks = () => {
       const cur = carOf(), n = days(b), wrap = $('#upgrade');
       if (!wrap) return;
-      const up = upsellFor(cur);
+      if (offer === null && cur) offer = upsellFor(cur) || false;
+      const up = offerSettled ? null : (offer || null);
       const hint = $('#up-hint'), keep = $('#up-keep');
       if (!cur || !up) {
         wrap.hidden = true;
         // keep the current name true even when there is nothing to offer against it
         if (cur) { const e = $('#up-cur-nm'); if (e) e.textContent = cur.name; }
-        if (hint) hint.textContent = cur
-          ? `Nothing in the fleet costs more than the ${cur.name}. Carry on.`
-          : 'Choose a car from the fleet first.';
+        if (hint) hint.textContent = !cur ? 'Choose a car from the fleet first.'
+          : offerSettled ? `You are booking the ${cur.name}.`
+          : `Nothing in the fleet costs more than the ${cur.name}. Carry on.`;
         if (keep) keep.textContent = 'Continue';
         return;
       }
@@ -343,7 +348,8 @@
     const upTake = $('#up-take'), upKeep = $('#up-keep');
     if (upTake) upTake.addEventListener('click', () => {
       const slug = $('#upgrade').dataset.up;
-      if (slug) { b.car = slug; writeBook(b); paintPicks(); paint(); }
+      // one offer, and this was it
+      if (slug) { b.car = slug; offerSettled = true; writeBook(b); paintPicks(); paint(); }
     });
     if (upKeep) upKeep.addEventListener('click', () => { if (valid()) { step += 1; paint(); toStepTop(); } });
 
