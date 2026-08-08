@@ -43,6 +43,33 @@ for (const w of [390, 360]) {
     if (r.small.length) bad.push(`text under 12.5px: ${r.small.join(', ')}`);
     bad.length ? fail(`${w} /${pg || ''}: ${bad.join(' | ')}`) : ok(`${w} /${pg || 'index'}: clean`);
   }
+  // the confirmation screen only exists after the flow is walked, and it broke here
+  // before: a slider, and different dimensions than the steps ahead of it
+  await p.goto(`${B}/book/?car=hyundai-santa-fe-2016`, { waitUntil: 'networkidle' });
+  await p.evaluate(() => localStorage.clear());
+  await p.goto(`${B}/book/?car=hyundai-santa-fe-2016`, { waitUntil: 'networkidle' });
+  await p.click('.loc[data-loc="tia"]');
+  const from = new Date(Date.now() + 9 * 864e5).toISOString().slice(0, 10);
+  const to = new Date(Date.now() + 14 * 864e5).toISOString().slice(0, 10);
+  await p.fill('#d-from', from); await p.$eval('#d-from', e => e.dispatchEvent(new Event('change')));
+  await p.fill('#d-to', to); await p.$eval('#d-to', e => e.dispatchEvent(new Event('change')));
+  await p.click('#next');
+  await p.click('#next');
+  await p.fill('#drv-name', 'Michael Florian');
+  await p.fill('#drv-mail', 'michael@example.com');
+  await p.fill('#drv-tel', '+420777123456');
+  await p.click('#next');
+  await p.waitForSelector('#done-ref');
+  const doneW = await p.$eval('.step.done', e => e.getBoundingClientRect().width);
+  const stepW = await p.$eval('.bookgrid', e => e.getBoundingClientRect().width);
+  const rd = await p.evaluate(probe);
+  const badDone = [];
+  if (rd.over) badDone.push(`${rd.over}px sideways scroll`);
+  if (rd.tiny.length) badDone.push(`tap targets under 38px: ${rd.tiny.join(', ')}`);
+  if (rd.small.length) badDone.push(`text under 12.5px: ${rd.small.join(', ')}`);
+  if (Math.abs(doneW - stepW) > 2) badDone.push(`confirmation is ${doneW}px wide, the steps before it are ${stepW}px`);
+  badDone.length ? fail(`${w} /book/ confirmation: ${badDone.join(' | ')}`) : ok(`${w} /book/ confirmation: full width, clean`);
+
   await p.goto(`${ROOT404}/404.html`, { waitUntil: 'networkidle' });
   const r404 = await p.evaluate(probe);
   r404.styled && !r404.over && !r404.tiny.length

@@ -66,9 +66,11 @@ chip.includes('5') ? ok('5 days computed') : fail(`days: ${chip}`);
 (await disabled()) ? fail('continue still disabled with location and dates set') : ok('step 1 opens once both are set');
 await snap('1-where-and-when'); await next();
 
-// step 2 is the upgrade: two cards, and the choice is reversible in both directions
-const upHint = await page.textContent('#up-hint');
-upHint.includes('Hyundai Santa Fe 2016') ? ok('the chosen car carried into the flow') : fail(`hint: ${upHint}`);
+// step 2 is the upgrade: a title, two cards, and the choice is reversible both ways
+const upTitle = await page.textContent('#up-h');
+upTitle.trim() === 'Would you like to consider upgrading?' ? ok('upgrade step has a title only, no sub-copy') : fail(`title: ${upTitle}`);
+const upCurNm = await page.textContent('#up-cur-nm');
+upCurNm === 'Hyundai Santa Fe 2016' ? ok('the chosen car carried into the flow') : fail(`current car: ${upCurNm}`);
 const upOffer = await page.textContent('#up-off-nm');
 upOffer === 'Jaguar XF 2015' ? ok('the 60 EUR Santa Fe is offered the 65 EUR Jaguar') : fail(`offer: ${upOffer}`);
 const upDiff = await page.textContent('#up-diff');
@@ -125,6 +127,20 @@ carried.loc === 'cty' ? ok('hero collect location carried into booking') : fail(
 carried.oneway === true ? ok('a different return office ticks the one-way box') : fail('one-way not ticked');
 carried.from === '2026-09-10' && carried.to === '2026-09-15' ? ok('hero dates carried into booking') : fail(`dates ${carried.from} to ${carried.to}`);
 carried.tfrom === '23:30' ? ok('a 23:30 pickup survives the handoff') : fail(`tfrom ${carried.tfrom}`);
+
+/* the top of the fleet has nothing to upgrade to, so the whole step is skipped */
+await reset(`${BASE}/book/?car=jaguar-xf`);
+await page.click('.loc[data-loc="tia"]');
+await page.fill('#d-from', from); await page.$eval('#d-from', e => e.dispatchEvent(new Event('change')));
+await page.fill('#d-to', to); await page.$eval('#d-to', e => e.dispatchEvent(new Event('change')));
+await next();
+const stepAfterTop = await page.$eval('.step:not([hidden])', e => e.dataset.step);
+stepAfterTop === '2' ? ok('top-of-fleet car skips straight to the contact step') : fail(`landed on step ${stepAfterTop}`);
+const upgradeHidden = await page.$eval('#upgrade', e => e.hidden);
+upgradeHidden ? ok('upgrade panel stays hidden with nothing to offer') : fail('upgrade panel shown with no offer');
+await page.click('#back');
+const stepAfterBack = await page.$eval('.step:not([hidden])', e => e.dataset.step);
+stepAfterBack === '0' ? ok('back from contact skips the empty upgrade step too') : fail(`back landed on step ${stepAfterBack}`);
 
 await browser.close();
 console.log(process.exitCode ? 'FLOW: FAILURES' : 'FLOW CLEAN');

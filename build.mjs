@@ -375,7 +375,6 @@ ${nav('fleet')}
         </a>
       </li>`).join('\n')}
     </ol>
-    <p class="list-note" id="list-note">All rates are per day, in euro. Send us your dates and we will come back with the total for your stay. <a href="book.html">Start here</a>.</p>
   </section>
 </main>
 ${footer()}`;
@@ -484,8 +483,7 @@ ${nav()}
     </section>
 
     <section class="step" data-step="1" aria-label="A better car" hidden>
-      <h1 class="step-h" id="up-h">Before you send it</h1>
-      <p class="step-hint" id="up-hint"></p>
+      <h1 class="step-h" id="up-h">Would you like to consider upgrading?</h1>
       <div class="upgrade" id="upgrade" hidden>
         <button type="button" class="up-card is-current is-on" id="up-current" aria-pressed="true">
           <span class="up-tick" aria-hidden="true"></span>
@@ -528,7 +526,7 @@ ${nav()}
         </figure>
         <div class="done-detail">
           <p class="done-ref" id="done-ref"></p>
-          <table class="done-t" id="done-t"></table>
+          <div class="done-t" id="done-t"></div>
           <div class="done-send">
             <a class="btn-verde" id="send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
             <a class="btn-paper" id="send-call" href="tel:${TEL}">Or call ${site.phone}</a>

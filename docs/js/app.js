@@ -363,6 +363,8 @@
     const paint = () => {
       $$('.step').forEach(s => { s.hidden = +s.dataset.step !== step; });
       const sb = $('.sumboard'); if (sb) sb.hidden = step === 3;
+      // the review has the whole grid: no summary rail, no second column
+      document.body.classList.toggle('is-review', step === 3);
       $$('.pchip').forEach(c => {
         c.classList.toggle('is-now', +c.dataset.step === step);
         c.classList.toggle('is-done', +c.dataset.step < step);
@@ -450,18 +452,9 @@
       const wrap = $('#upgrade'); if (!wrap) return;
       const cur = carOf(), n = days(b);
       if (!baseCar && cur) { baseCar = cur; offer = upsellFor(cur) || false; }
-      const hint = $('#up-hint');
-      if (!baseCar || !offer) {
-        wrap.hidden = !baseCar;
-        if (baseCar) {
-          $('#up-cur-img').src = `${window.BASE || ''}img/cars/${baseCar.slug}-s.webp`;
-          $('#up-cur-nm').textContent = baseCar.name;
-        }
-        if (hint) hint.textContent = baseCar
-          ? `The ${baseCar.name} is the top of the fleet, so there is nothing to move up to.`
-          : 'Choose a car from the fleet first.';
-        return;
-      }
+      // nothing above this car in the fleet, so the step is skipped entirely
+      // rather than shown with an apology on it
+      if (!baseCar || !offer) { wrap.hidden = true; return; }
       wrap.hidden = false;
       const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
       const spec = c => `${c.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${c.seats} seats, ${c.clsLabel || c.cls}`;
@@ -477,7 +470,6 @@
       set('#up-diff', n > 0
         ? `${eur(perDay)} more a day, ${eur(perDay * n)} more across your ${n} days.`
         : `${eur(perDay)} more a day.`);
-      set('#up-hint', `You picked the ${baseCar.name}. Tap a card to change your mind, either way.`);
       // the tick shows which one is chosen, and it moves
       const onOffer = b.car === offer.slug;
       const curEl = $('#up-current'), offEl = $('#up-offer');
@@ -491,7 +483,11 @@
 
     /* step 3: extras */
     /* nav */
-    $('#back').addEventListener('click', () => { toStepTop(); step = Math.max(0, step - 1); paint(); });
+    $('#back').addEventListener('click', () => { toStepTop();
+      step = Math.max(0, step - 1);
+      if (step === 1 && $('#upgrade')?.hidden) step -= 1;
+      paint();
+    });
     const toStepTop = () => {
       const el = $('.step.is-now') || $('.bookgrid');
       if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
@@ -499,7 +495,10 @@
     $('#next').addEventListener('click', () => { toStepTop();
       if (!valid()) return;
       if (step === 2) return confirmBooking();
-      step += 1; paint();
+      step += 1;
+      // top-of-fleet car has nothing to upgrade to, so there is no screen to show
+      if (step === 1 && $('#upgrade')?.hidden) step += 1;
+      paint();
     });
     ['drv-name', 'drv-mail', 'drv-tel'].forEach(id => $('#' + id).addEventListener('input', paint));
 
@@ -532,7 +531,7 @@
       ];
       const note = ($('#drv-note')?.value || '').trim();
       if (note) rows.push(['NOTE', note.toUpperCase()]);
-      $('#done-t').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+      $('#done-t').innerHTML = rows.map(r => `<div class="done-row"><span class="done-k">${r[0]}</span><span class="done-v">${r[1]}</span></div>`).join('');
       const msg = [
         `Hello 24/7 Car Rental, I would like to book a car. (${ref})`,
         `Car: ${c.name} at ${c.price} EUR/day`,
