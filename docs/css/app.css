@@ -38,9 +38,9 @@
 }
 * { margin: 0; box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overscroll-behavior-y: none; }
 body {
-  background: var(--paper); color: var(--ink);
+  background: var(--paper); color: var(--ink); overscroll-behavior-y: none;
   font-family: 'Switzer', -apple-system, system-ui, sans-serif;
   font-size: 17px; line-height: 1.55; font-weight: 430;
   -webkit-font-smoothing: antialiased;
@@ -731,6 +731,9 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   .pillnav { padding: 6px 8px 6px 12px; gap: 8px; }
   .brand-logo { height: 34px; }
   .pillnav-links { display: none; }
+  /* the links carried the auto margin that pushed the tools to the right; hiding
+     them collapsed the header to the left until a scroll re-triggered layout */
+  .pillnav-tools { margin-left: auto; }
   .reserve-cta { padding: 8px 14px; font-size: 13px; }
   .burger { display: grid; gap: 5px; background: none; border: 0; width: 38px; height: 38px; place-content: center; }
   .burger span { width: 20px; height: 2px; background: var(--ink); transition: all var(--t2) var(--out); }
@@ -1505,13 +1508,16 @@ body[data-page="index"] .pillnav:not(.is-pinned) .nav-call:hover { color: #fff; 
    off the right edge with its arrow clipped. Nothing in it may wrap. */
 @media (max-width: 640px) {
   .reservebar {
-    width: calc(100% - 20px); padding: 8px 8px 8px 16px; gap: 8px;
-    border-radius: var(--r-pill); flex-wrap: nowrap;
+    width: calc(100% - 20px); padding: 8px 8px 8px 16px; gap: 4px 8px;
+    border-radius: var(--r-pill); flex-wrap: wrap;
   }
   .rb-cluster { flex: none; }
   .rb-price { display: flex; align-items: baseline; gap: 3px; white-space: nowrap; font-size: 13px; }
   .rb-price strong { font-size: 17px; }
-  .rb-total { display: none; }
+  /* the row above fits with no wrap already, so wrap only pushes this onto its
+     own line once a range is picked, and it takes no space when it's empty */
+  .rb-total { flex-basis: 100%; order: 3; font-size: 12px; }
+  .rb-total:empty { display: none; }
   .reservebar .btn-wa, .reservebar .rb-call { padding: 10px 12px; font-size: 0; gap: 0; }
   .reservebar .btn-wa span, .reservebar .rb-call { min-width: 0; }
   .reservebar .rb-call { font-size: 13px; padding: 11px 14px; }
@@ -2631,6 +2637,12 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 @media (max-width: 1000px) {
   .rd-shot { order: -1; height: auto; min-height: 0; }
   .rd-shot .rd-img { aspect-ratio: 16/10; min-height: 0; }
+  /* "every card, no exceptions" (above) meant no exceptions to the desktop
+     layout, but it was unconditional, so it also beat this collapse and left
+     every road card two columns wide on a phone: a text column full of copy
+     forcing a photograph column that was maybe 140px wide to match its
+     height, cropping every photo down to a sliver */
+  .rd, .rd:nth-child(even), .rd:nth-child(n+4) { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .rd-shot .roadcar { grid-template-columns: 52px minmax(0, 1fr); row-gap: 6px; }
@@ -2906,8 +2918,62 @@ body[data-page="book"] .up-card img { aspect-ratio: 16/9; }
   body[data-page="book"] { height: auto; overflow: visible; }
   body[data-page="book"] main.bookwrap { height: auto; display: block; }
   body[data-page="book"] .step { overflow: visible; }
-  body[data-page="book"] .sumboard { overflow: visible; }
   body[data-page="book"] .drv { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   BOOKING ON A PHONE. The desktop checkout is one screen with the steps and
+   the summary fixed in place; a phone scrolls the step content instead, so
+   the steps move to a slim fixed row under the header, and the summary
+   collapses to the car and a toggle that opens the full breakdown, sitting
+   right above the Back/Continue bar so nothing is ever more than a thumb
+   away.
+   ========================================================================== */
+@media (max-width: 980px) {
+  .bookwrap { padding-block: calc(48px + 44px) calc(64px + 76px); }
+  .stepnav { display: block; }
+
+  .chiprail {
+    position: fixed; top: 48px; left: 0; right: 0; z-index: 58;
+    display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    background: var(--paper); border-bottom: 1px solid var(--line);
+    padding: 8px var(--pad); margin: 0; gap: 6px;
+  }
+  .pchip { flex: none; }
+  .pchip-lb { display: none; }
+
+  /* body[data-page="book"] .sumboard carries higher specificity than a bare
+     .sumboard and pins it to position:static for the desktop fixed-viewport
+     checkout; matched here so the mobile drawer can actually float */
+  body[data-page="book"] .sumboard, .sumboard {
+    position: fixed; top: auto; left: 0; right: 0; bottom: 76px; z-index: 59;
+    border-radius: 0; border: 0; border-top: 1px solid var(--line-2);
+    max-height: 76px; overflow: hidden; padding: 12px var(--pad);
+    transition: max-height var(--t2) var(--out);
+  }
+  body[data-page="book"] .sumboard.is-open, .sumboard.is-open { max-height: 66vh; overflow-y: auto; }
+  .sum-head { display: none; }
+  .sum-toprow { display: flex; align-items: center; gap: 12px; }
+  .sum-toprow .sum-car {
+    flex: 1 1 auto; min-width: 0; margin: 0; padding: 0; border: 0;
+    grid-template-columns: 48px minmax(0, 1fr); gap: 10px;
+  }
+  .sum-toggle {
+    flex: none; display: inline-flex; align-items: center; gap: 6px;
+    background: none; border: 1px solid var(--night-line); border-radius: var(--r-pill);
+    color: #fff; font-size: 13px; font-weight: 600; padding: 8px 12px;
+  }
+  .sum-toggle svg { transition: rotate var(--t1) var(--out); }
+  .sumboard.is-open .sum-toggle svg { rotate: 180deg; }
+  .sum-t { margin-top: 14px; }
+
+  .stepnav-btns {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    background: var(--paper); border-top: 1px solid var(--line);
+    padding: 10px var(--pad); margin: 0; gap: 10px;
+  }
+  .stepnav-btns #back { flex: none; }
+  .stepnav-btns #next { flex: 1 1 auto; justify-content: center; }
 }
 
 /* ==========================================================================
@@ -3001,7 +3067,6 @@ body[data-page="index"] .pillnav:not(.is-pinned) .lang-btn { color: #fff; border
    340px minimum on the summary pushed the page 12px wider than the viewport */
 @media (max-width: 980px) {
   body[data-page="book"] .bookgrid, .bookgrid { grid-template-columns: 1fr !important; }
-  body[data-page="book"] .sumboard, .sumboard { position: static; order: 2; max-width: 100%; }
 }
 /* links that were shorter than a thumb */
 @media (max-width: 900px) {

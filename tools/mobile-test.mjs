@@ -70,6 +70,37 @@ for (const w of [390, 360]) {
   if (Math.abs(doneW - stepW) > 2) badDone.push(`confirmation is ${doneW}px wide, the steps before it are ${stepW}px`);
   badDone.length ? fail(`${w} /book/ confirmation: ${badDone.join(' | ')}`) : ok(`${w} /book/ confirmation: full width, clean`);
 
+  // the steps sit in a fixed row under the header, the summary collapses to
+  // car and price with a toggle, and Continue is always reachable, not at
+  // the bottom of a scroll through the whole summary
+  await p.goto(`${B}/book/?car=jaguar-xf`, { waitUntil: 'networkidle' });
+  const stepGeo = await p.evaluate(() => {
+    const chip = document.querySelector('.chiprail').getBoundingClientRect();
+    const sum = document.querySelector('#sumboard').getBoundingClientRect();
+    const btns = document.querySelector('.stepnav-btns').getBoundingClientRect();
+    const cs = getComputedStyle(document.querySelector('.chiprail'));
+    return {
+      chipFixed: cs.position === 'fixed', chipTop: chip.top,
+      sumBottom: sum.bottom, btnsTop: btns.top, btnsBottom: btns.bottom,
+      viewportH: innerHeight, sumHeight: sum.height,
+    };
+  });
+  const badMobileBook = [];
+  if (!stepGeo.chipFixed) badMobileBook.push('steps are not pinned under the header');
+  if (stepGeo.chipTop > 60) badMobileBook.push(`steps sit ${stepGeo.chipTop}px down, not under the header`);
+  if (stepGeo.btnsBottom > stepGeo.viewportH) badMobileBook.push('Continue is below the fold');
+  if (stepGeo.sumBottom > stepGeo.btnsTop + 2) badMobileBook.push('summary drawer overlaps the Back/Continue bar');
+  if (stepGeo.sumHeight > 90) badMobileBook.push(`summary starts ${stepGeo.sumHeight}px tall, not collapsed`);
+  await p.click('#sum-toggle');
+  await p.waitForTimeout(350);
+  const openHeight = await p.$eval('#sumboard', e => e.getBoundingClientRect().height);
+  if (openHeight <= stepGeo.sumHeight + 20) badMobileBook.push(`toggle did not open the summary (${openHeight}px)`);
+  const overflowAfterOpen = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  if (overflowAfterOpen) badMobileBook.push(`${overflowAfterOpen}px sideways scroll once open`);
+  badMobileBook.length
+    ? fail(`${w} /book/ mobile layout: ${badMobileBook.join(' | ')}`)
+    : ok(`${w} /book/ mobile layout: steps on top, summary collapses, Continue always reachable`);
+
   await p.goto(`${ROOT404}/404.html`, { waitUntil: 'networkidle' });
   const r404 = await p.evaluate(probe);
   r404.styled && !r404.over && !r404.tiny.length

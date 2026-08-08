@@ -246,11 +246,30 @@
   const gal = $('#cargal');
   if (gal) {
     const main = $('#cargal-main');
+    const thumbs = $$('.cargal-t', gal);
+    const show = t => {
+      main.src = (window.BASE || '') + t.dataset.img;
+      thumbs.forEach(x => x.classList.toggle('is-on', x === t));
+    };
     gal.addEventListener('click', e => {
       const t = e.target.closest('.cargal-t'); if (!t) return;
-      main.src = (window.BASE || '') + t.dataset.img;
-      $$('.cargal-t', gal).forEach(x => x.classList.toggle('is-on', x === t));
+      show(t);
     });
+    // a phone has no thumbnail row worth tapping one-by-one; a finger swipe
+    // across the photo itself moves to the next or previous one
+    if (thumbs.length > 1) {
+      let x0 = null;
+      main.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+      main.addEventListener('touchend', e => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        x0 = null;
+        if (Math.abs(dx) < 32) return;
+        const i = thumbs.findIndex(t => t.classList.contains('is-on'));
+        const next = dx < 0 ? Math.min(i + 1, thumbs.length - 1) : Math.max(i - 1, 0);
+        if (next !== i) show(thumbs[next]);
+      }, { passive: true });
+    }
   }
 
   /* ---------- car page reserve bar: total for stored dates ---------- */
@@ -550,5 +569,17 @@
 
     paintLocs();
     if (b.from) dateChange(); else { paintPicks(); paint(); }
+
+    // mobile: the summary collapses to the car and the toggle opens the full
+    // breakdown; the steps live in their own fixed row under the header
+    const sumToggle = $('#sum-toggle'), sumboard = $('#sumboard');
+    if (sumToggle && sumboard) {
+      sumToggle.addEventListener('click', () => {
+        const open = !sumboard.classList.contains('is-open');
+        sumboard.classList.toggle('is-open', open);
+        sumToggle.setAttribute('aria-expanded', String(open));
+        sumToggle.querySelector('span').textContent = open ? 'Hide' : 'Details';
+      });
+    }
   }
 })();

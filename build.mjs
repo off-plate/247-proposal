@@ -534,12 +534,18 @@ ${nav()}
       </div>
     </section>
 
-    <aside class="gantry sumboard" aria-label="Your reservation so far">
+    <aside class="gantry sumboard" aria-label="Your reservation so far" id="sumboard">
       <p class="sum-head">Your request</p>
-      <figure class="sum-car" id="sum-car" hidden>
-        <img id="sum-car-img" src="" alt="">
-        <figcaption><strong id="sum-car-nm"></strong><span id="sum-car-spec"></span></figcaption>
-      </figure>
+      <div class="sum-toprow">
+        <figure class="sum-car" id="sum-car" hidden>
+          <img id="sum-car-img" src="" alt="">
+          <figcaption><strong id="sum-car-nm"></strong><span id="sum-car-spec"></span></figcaption>
+        </figure>
+        <button type="button" class="sum-toggle" id="sum-toggle" aria-expanded="false" aria-controls="sum-t">
+          <span>Details</span>
+          <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5 7 9.5 11 5.5"/></svg>
+        </button>
+      </div>
       <table class="sum-t mono" id="sum-t">
         <tr data-k="loc"><td>Route</td><td>choose</td></tr>
         <tr data-k="dates"><td>Dates</td><td>not set</td></tr>
@@ -555,7 +561,7 @@ ${nav()}
       <button class="btn-verde" id="next" disabled>Continue <span aria-hidden="true">→</span></button>
     </div>
     <ol class="chiprail" id="chiprail" aria-label="Progress">
-      ${['Where and when', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip" aria-hidden="true">${i + 1}</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>${s}</li>`).join('')}
+      ${['Where and when', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip" aria-hidden="true">${i + 1}</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span><span class="pchip-lb">${s}</span></li>`).join('')}
     </ol>
   </div>
 </main>
