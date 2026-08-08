@@ -1074,7 +1074,7 @@ body[data-page="fleet"] .foot, body[data-page="index"] .foot { margin-top: 0; }
   text-transform: none; font-stretch: normal; font-weight: 700;
   letter-spacing: -.022em; line-height: 1.05;
 }
-.sign, .foot-col h2, .openlight, .pcard-tag, .hz-f-k {
+.sign, .foot-col h2, .openlight, .hz-f-k {
   text-transform: none; font-stretch: normal; font-weight: 500;
   letter-spacing: 0; font-size: 13px;
 }
@@ -1204,12 +1204,12 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
 .hz-chip input:focus-visible + span { outline: 2.5px solid var(--verde); outline-offset: 2px; }
 .hz-bar-go { display: flex; align-items: center; gap: 10px; }
 .hz-search {
-  background: var(--ink); color: #fff; border: 0; border-radius: var(--r-pill);
+  background: var(--verde); color: #fff; border: 0; border-radius: var(--r-pill);
   padding: 14px 30px; font-weight: 700; font-size: 15.5px;
   display: inline-flex; align-items: center; gap: 9px;
   transition: background var(--t1) var(--out);
 }
-.hz-search:hover { background: var(--verde); }
+.hz-search:hover { background: var(--ink); }
 .hz-picks { padding-top: clamp(84px, 8vw, 128px); }
 
 /* --- 2. car cards --- */
@@ -1227,11 +1227,6 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
 }
 .pcard-bed img { width: 100%; height: 100%; object-fit: contain; padding: 8% 6%; transition: scale var(--t2) var(--out); }
 .pcard:hover .pcard-bed img { scale: 1.035; }
-.pcard-tag {
-  position: absolute; top: 10px; left: 10px; z-index: 2;
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-pill);
-  padding: 4px 12px; font-size: 12.5px; color: var(--dim);
-}
 .pcard-nm { font-weight: 700; font-size: 17.5px; letter-spacing: -.018em; }
 .pcard-gear, .pcard-specs { display: flex; align-items: center; gap: 8px; color: var(--dim); font-size: 14px; }
 .pcard-specs { gap: 16px; margin-top: 1px; }
@@ -1239,7 +1234,7 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
 .pcard-gear svg, .pcard-specs svg { color: var(--dim); flex: none; }
 .pcard-yr { font-variant-numeric: tabular-nums; }
 .pcard-price { display: flex; align-items: baseline; gap: 6px; margin-top: 9px; padding-top: 12px; border-top: 1px solid var(--line); }
-.pcard-price strong { font-weight: 700; font-size: 25px; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.pcard-price strong { color: var(--verde-t); font-weight: 700; font-size: 25px; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 .pcard-price em { font-style: normal; color: var(--dim); font-size: 14px; }
 
 /* --- 3. destination pills --- */
@@ -1296,8 +1291,10 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
   grid-column: 1; position: relative; border-radius: var(--r); overflow: clip;
   min-height: clamp(180px, 15vw, 240px); display: grid; align-content: end;
   padding: clamp(20px, 2vw, 30px); isolation: isolate; background: var(--night);
+  text-decoration: none;
 }
-.mo-stat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.mo-stat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: scale var(--t2) var(--out); }
+.mo-stat:hover img { scale: 1.035; }
 .mo-stat::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(12,10,9,.15) 0%, rgba(12,10,9,.78) 100%); }
 .mo-stat-body { display: grid; gap: 2px; color: #fff; }
 .mo-stat-body em { font-style: normal; font-size: 14px; color: rgba(255,255,255,.85); }
@@ -1306,8 +1303,10 @@ body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff
   grid-column: 2; grid-row: 1 / span 2; position: relative; border-radius: var(--r);
   overflow: clip; isolation: isolate; display: grid; place-content: center;
   padding: clamp(28px, 4vw, 72px); min-height: clamp(340px, 30vw, 520px); background: var(--night);
+  text-decoration: none;
 }
-.mo-tall img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.mo-tall img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: scale var(--t2) var(--out); }
+.mo-tall:hover img { scale: 1.035; }
 .mo-tall::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgba(12,10,9,.44); }
 .mo-tall p {
   color: #fff; text-align: center; font-weight: 700; letter-spacing: -.028em;
@@ -2355,20 +2354,19 @@ body[data-page="index"] .pillnav:not(.is-pinned) { padding-inline: calc(var(--gu
 }
 .about-shot img { width: 100%; aspect-ratio: 21/8; object-fit: cover; display: block; }
 .abouttext {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 clamp(30px, 4vw, 80px);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(24px, 3vw, 48px);
 }
 .about-b { border: 0; border-radius: 0; padding: 0 0 clamp(22px, 2.4vw, 38px); display: grid; align-content: start; gap: 10px; }
 .about-b + .about-b { border-top: 0; }
 .about-b h2 { font-weight: 700; font-size: clamp(19px, 1.5vw, 24px); letter-spacing: -.024em; }
 .about-b p { color: var(--dim); font-size: 16px; max-width: 58ch; }
-.about-b:first-child { grid-row: span 2; }
 .about-thanks { color: var(--ink) !important; font-weight: 500; }
 .promises .prom {
   border: 0; border-top: 1px solid var(--line); border-radius: 0;
   padding: clamp(20px, 2vw, 30px) 0 0; background: none;
 }
 .prom-list { gap: clamp(20px, 2.4vw, 40px); }
-@media (max-width: 900px) { .abouttext { grid-template-columns: 1fr; } .about-b:first-child { grid-row: auto; } }
+@media (max-width: 900px) { .abouttext { grid-template-columns: 1fr; } }
 
 /* 4 + 20: the booking step holds a real screen and the picker is readable on a phone */
 .step-sub { font-weight: 700; font-size: clamp(19px, 1.6vw, 26px); letter-spacing: -.024em; margin: clamp(26px, 3vw, 44px) 0 16px; padding-top: clamp(22px, 2.4vw, 34px); border-top: 1px solid var(--line); }

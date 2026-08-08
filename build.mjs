@@ -197,7 +197,6 @@ const PICKS = ['jaguar-xf', 'hyundai-santa-fe-2016', 'mercedes-benz-c220', 'audi
 
 const carCard = c => `<a class="pcard" href="car-${c.slug}.html">
   <span class="pcard-bed">
-    <span class="pcard-tag">${c.clsLabel}</span>
     <img src="img/cars/${c.slug}-s.webp" alt="${c.name}" loading="lazy" width="640" height="337">
   </span>
   <span class="pcard-nm">${c.name}</span>
@@ -259,7 +258,7 @@ ${nav()}
 
 <section class="hz-picks" aria-label="Cars">
   <div class="hz-head">
-    <h2>A few of the cars in our fleet</h2>
+    <h2>Our top picks</h2>
     <a class="hz-pill" href="fleet.html">All ${fleet.length} cars <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
   <div class="pgrid">
@@ -315,15 +314,15 @@ ${nav()}
     <a class="mo-go" href="how.html">How it works <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
   </div>
 
-  <div class="mo-stat">
+  <a class="mo-stat" href="company.html">
     <img src="img/road-north.webp" alt="The valley road into Theth, northern Albania" loading="lazy" width="2400" height="1600">
     <span class="mo-stat-body"><strong>Both offices, open 24 hours</strong></span>
-  </div>
+  </a>
 
-  <div class="mo-tall">
+  <a class="mo-tall" href="roads.html">
     <img src="img/dest-ksamil.webp" alt="Ksamil, on the far south coast of Albania" loading="lazy" width="1600" height="1000">
     <p>The best parts of Albania are easiest to reach by car.</p>
-  </div>
+  </a>
 </section>
 
 </main>
