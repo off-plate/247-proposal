@@ -52,30 +52,66 @@ for (const [w, want] of [[2560, 4], [1600, 4], [1300, 3], [1000, 2], [390, 1]]) 
 
   await p.goto(`${B}/cars/jaguar-xf/`, { waitUntil: 'networkidle' });
   const cal = await p.evaluate(() => ({
-    months: document.querySelectorAll('.cal-month').length,
+    month: document.querySelector('#cal-m')?.textContent,
     free: document.querySelectorAll('.cal-d.is-free').length,
     busy: document.querySelectorAll('.cal-d.is-busy').length,
     note: !!document.querySelector('.cal-note'),
+    prevDisabled: document.querySelector('#cal-prev')?.disabled,
   }));
-  cal.months === 3 && cal.free > 0 && cal.busy > 0 && cal.note
-    ? ok(`calendar: 3 months, ${cal.free} free and ${cal.busy} booked days, labelled as demo data`)
+  cal.month && cal.free > 0 && cal.note && cal.prevDisabled
+    ? ok(`calendar opens on ${cal.month} with ${cal.free} free days, cannot go back past this month`)
     : fail(`calendar: ${JSON.stringify(cal)}`);
+
+  // the months are navigable and the availability changes with them
+  const first = await p.$eval('#cal-m', e => e.textContent);
+  await p.click('#cal-next'); await p.waitForTimeout(150);
+  const second = await p.$eval('#cal-m', e => e.textContent);
+  second !== first ? ok(`month navigation: ${first} to ${second}`) : fail('month did not change');
+  await p.click('#cal-prev'); await p.waitForTimeout(150);
 
   // the calendar is the booking control, so picking a range has to produce the same
   // number of days and the same total the booking page then shows
-  const free = await p.$$eval('button.cal-d.is-free', e => e.slice(0, 6).map(x => x.dataset.d));
-  await p.click(`button.cal-d[data-d="${free[0]}"]`);
-  await p.click(`button.cal-d[data-d="${free[3]}"]`);
+  // a run of consecutive free days: picking across a booked night correctly refuses,
+  // so the test has to choose a range the car is actually free for
+  const run = await p.$$eval('button.cal-d.is-free', els => {
+    const days = els.map(x => x.dataset.d).sort();
+    for (let i = 0; i < days.length - 2; i++) {
+      const a = new Date(days[i]), c = new Date(days[i + 2]);
+      if (Math.round((c - a) / 864e5) === 2) return [days[i], days[i + 2]];
+    }
+    return null;
+  });
+  if (!run) fail('no run of three consecutive free days to test with');
+  await p.click(`button.cal-d[data-d="${run[0]}"]`);
+  await p.click(`button.cal-d[data-d="${run[1]}"]`);
   await p.waitForTimeout(150);
   const picked = await p.evaluate(() => ({
-    line: document.querySelector('#cal-pick').textContent,
-    href: document.querySelector('#cal-book').getAttribute('href'),
+    line: document.querySelector('#rb-total').textContent,
+    href: document.querySelector('.reservebar .btn-verde').getAttribute('href'),
     range: document.querySelectorAll('.cal-d.is-in').length,
-    enabled: !document.querySelector('#cal-book').hasAttribute('aria-disabled'),
+    enabled: !!document.querySelector('#rb-total').textContent.trim(),
   }));
   picked.enabled && /\d+ days?/.test(picked.line) && picked.href.includes('book/?car=jaguar-xf&from=')
-    ? ok(`calendar picks a range: "${picked.line}"`)
+    ? ok(`calendar picks a range and the sticky bar carries it: "${picked.line}"`)
     : fail(`calendar pick: ${JSON.stringify(picked)}`);
+  // a range that would cross a booked night starts a new range instead of spanning it
+  const across = await p.evaluate(() => {
+    const free = [...document.querySelectorAll('button.cal-d.is-free')].map(x => x.dataset.d).sort();
+    const busy = [...document.querySelectorAll('.cal-d.is-busy')].map(x => x.textContent.trim());
+    if (!busy.length) return null;
+    const before = free.filter(d => +d.slice(-2) < +busy[0]).pop();
+    const after = free.filter(d => +d.slice(-2) > +busy[busy.length - 1]).shift();
+    return before && after ? [before, after] : null;
+  });
+  if (across) {
+    await p.click(`button.cal-d[data-d="${across[0]}"]`);
+    await p.click(`button.cal-d[data-d="${across[1]}"]`);
+    await p.waitForTimeout(150);
+    const spanned = await p.$$eval('.cal-d.is-in', e => e.length);
+    spanned === 0 ? ok('a range across a booked night is refused, not spanned') : fail(`${spanned} days spanned a booked night`);
+    await p.click('#cal-reset');
+  }
+
   // booked days are not selectable at all
   const busyClickable = await p.$$eval('.cal-d.is-busy', e => e.filter(x => x.tagName === 'BUTTON').length);
   busyClickable === 0 ? ok('booked days cannot be selected') : fail(`${busyClickable} booked days are clickable`);

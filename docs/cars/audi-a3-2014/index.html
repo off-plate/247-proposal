@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" href="../../img/icon.png">
 <link rel="preload" href="../../fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>window.BASE="../../"</script>
-<link rel="stylesheet" href="../../css/app.css?v=4c862b50">
+<link rel="stylesheet" href="../../css/app.css?v=49b35dee">
 
 </head>
 <body data-page="car-audi-a3-2014">
@@ -68,6 +68,18 @@
     <div class="cargal-strip" role="group" aria-label="More photographs of this car">
       <button class="cargal-t is-on" type="button" data-img="img/cars/audi-a3-2014.webp" aria-label="Photo 1"><img src="../../img/cars/audi-a3-2014.webp" alt="" loading="lazy"></button><button class="cargal-t" type="button" data-img="img/cars/audi-a3-2014-1.webp" aria-label="Photo 2"><img src="../../img/cars/audi-a3-2014-1.webp" alt="" loading="lazy"></button><button class="cargal-t" type="button" data-img="img/cars/audi-a3-2014-2.webp" aria-label="Photo 3"><img src="../../img/cars/audi-a3-2014-2.webp" alt="" loading="lazy"></button><button class="cargal-t" type="button" data-img="img/cars/audi-a3-2014-3.webp" aria-label="Photo 4"><img src="../../img/cars/audi-a3-2014-3.webp" alt="" loading="lazy"></button><button class="cargal-t" type="button" data-img="img/cars/audi-a3-2014-4.webp" aria-label="Photo 5"><img src="../../img/cars/audi-a3-2014-4.webp" alt="" loading="lazy"></button><button class="cargal-t" type="button" data-img="img/cars/audi-a3-2014-5.webp" aria-label="Photo 6"><img src="../../img/cars/audi-a3-2014-5.webp" alt="" loading="lazy"></button>
     </div>
+    <aside class="carcal" aria-label="Availability">
+      <div class="cal-nav">
+        <button class="calnav" type="button" id="cal-prev" aria-label="Previous month"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></button>
+        <p class="cal-m" id="cal-m"></p>
+        <button class="calnav" type="button" id="cal-next" aria-label="Next month"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></button>
+      </div>
+      <div class="cal" id="cal" data-slug="audi-a3-2014" data-price="40"></div>
+      <p class="cal-legend"><span class="cal-key cal-key-free"></span>Free<span class="cal-key cal-key-busy"></span>Booked</p>
+      <p class="cal-pick" id="cal-pick">Pick your first day, then your last.</p>
+      <button class="cal-reset" type="button" id="cal-reset" hidden>Clear dates</button>
+      <p class="cal-note">Demo availability. The office confirms what is really free.</p>
+    </aside>
   </div>
   <p class="hero-tag">Small outside, full option inside.</p>
 </section>
@@ -78,22 +90,6 @@
     <tr><td>Engine</td><td>2.0 L diesel</td><td>Gearbox</td><td>automatic</td></tr>
     <tr><td>Seats</td><td>5</td><td>Rate</td><td>40 € per day</td></tr>
   </table>
-</section>
-
-<section class="calwrap" aria-label="Availability">
-  <div class="cal-head">
-    <h2>When this car is free</h2>
-    <p class="cal-legend"><span class="cal-key cal-key-free"></span>Available<span class="cal-key cal-key-busy"></span>Booked</p>
-  </div>
-  <div class="cal" id="cal" data-slug="audi-a3-2014" data-price="40"></div>
-  <div class="cal-bar" id="cal-bar">
-    <p class="cal-pick" id="cal-pick">Pick your first day, then your last.</p>
-    <div class="cal-go">
-      <button class="cal-reset" type="button" id="cal-reset" hidden>Clear</button>
-      <a class="btn-verde" id="cal-book" href="../../book/?car=audi-a3-2014" aria-disabled="true">Book these dates <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
-    </div>
-  </div>
-  <p class="cal-note">Demo availability. 24/7 Car Rental publish no booking calendar, so these dates are generated to show the feature working. The office confirms what is actually free when you send your request.</p>
 </section>
 
 <div class="incwrap"><section class="gantry included" aria-label="Included">
@@ -165,5 +161,5 @@
   </div>
 </footer>
 <script src="../../js/fleet-data.js" defer></script>
-<script src="../../js/app.js?v=43fe2ddd" defer></script>
+<script src="../../js/app.js?v=208eff34" defer></script>
 </body></html>

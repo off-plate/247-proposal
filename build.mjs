@@ -404,6 +404,18 @@ ${nav('fleet')}
     ${(gallery[c.slug] || []).length > 1 ? `<div class="cargal-strip" role="group" aria-label="More photographs of this car">
       ${(gallery[c.slug] || []).map((g, i) => `<button class="cargal-t${i === 0 ? ' is-on' : ''}" type="button" data-img="img/cars/${g}.webp" aria-label="Photo ${i + 1}"><img src="img/cars/${g}.webp" alt="" loading="lazy"></button>`).join('')}
     </div>` : ''}
+    <aside class="carcal" aria-label="Availability">
+      <div class="cal-nav">
+        <button class="calnav" type="button" id="cal-prev" aria-label="Previous month"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></button>
+        <p class="cal-m" id="cal-m"></p>
+        <button class="calnav" type="button" id="cal-next" aria-label="Next month"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></button>
+      </div>
+      <div class="cal" id="cal" data-slug="${c.slug}" data-price="${c.price}"></div>
+      <p class="cal-legend"><span class="cal-key cal-key-free"></span>Free<span class="cal-key cal-key-busy"></span>Booked</p>
+      <p class="cal-pick" id="cal-pick">Pick your first day, then your last.</p>
+      <button class="cal-reset" type="button" id="cal-reset" hidden>Clear dates</button>
+      <p class="cal-note">Demo availability. The office confirms what is really free.</p>
+    </aside>
   </div>
   <p class="hero-tag">${c.note}</p>
 </section>
@@ -414,22 +426,6 @@ ${nav('fleet')}
     <tr><td>Engine</td><td>${c.engine.toFixed(1)} L ${c.fuel}</td><td>Gearbox</td><td>${c.gear}</td></tr>
     <tr><td>Seats</td><td>${c.seats}</td><td>Rate</td><td>${eur(c.price)} per day</td></tr>
   </table>
-</section>
-
-<section class="calwrap" aria-label="Availability">
-  <div class="cal-head">
-    <h2>When this car is free</h2>
-    <p class="cal-legend"><span class="cal-key cal-key-free"></span>Available<span class="cal-key cal-key-busy"></span>Booked</p>
-  </div>
-  <div class="cal" id="cal" data-slug="${c.slug}" data-price="${c.price}"></div>
-  <div class="cal-bar" id="cal-bar">
-    <p class="cal-pick" id="cal-pick">Pick your first day, then your last.</p>
-    <div class="cal-go">
-      <button class="cal-reset" type="button" id="cal-reset" hidden>Clear</button>
-      <a class="btn-verde" id="cal-book" href="book.html?car=${c.slug}" aria-disabled="true">Book these dates <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
-    </div>
-  </div>
-  <p class="cal-note">Demo availability. 24/7 Car Rental publish no booking calendar, so these dates are generated to show the feature working. The office confirms what is actually free when you send your request.</p>
 </section>
 
 <div class="incwrap"><section class="gantry included" aria-label="Included">

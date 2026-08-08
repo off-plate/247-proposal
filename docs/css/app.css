@@ -3174,3 +3174,62 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
    the gap a little further once the bar has compacted */
 .pillnav-links { margin-inline: clamp(18px, 2.2vw, 44px) auto; padding-left: 0; }
 .is-pinned .pillnav-links { margin-inline: clamp(4px, 0.6vw, 12px) auto; }
+
+/* ==========================================================================
+   CAR PAGE HERO: photo 50, gallery 20, calendar 30. The photograph was
+   letterboxed across the full width, so a portrait shot sat in a wide grey box.
+   ========================================================================== */
+.cargal.has-strip {
+  grid-template-columns: minmax(0, 50fr) minmax(0, 19fr) minmax(0, 31fr);
+  gap: clamp(12px, 1.2vw, 20px); align-items: stretch;
+}
+.cargal.has-strip .hero-img {
+  aspect-ratio: auto; height: 100%; max-height: clamp(360px, 46vw, 620px);
+  object-fit: contain; background: var(--card-2);
+}
+.cargal.has-strip .cargal-strip {
+  max-height: clamp(360px, 46vw, 620px); overflow-y: auto; gap: clamp(8px, .8vw, 12px);
+  scrollbar-width: thin;
+}
+.carcal {
+  border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(14px, 1.3vw, 20px); display: grid; align-content: start;
+  gap: 10px; max-height: clamp(360px, 46vw, 620px); overflow-y: auto;
+}
+.cal-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.calnav {
+  width: 32px; height: 32px; display: grid; place-content: center;
+  background: none; border: 1px solid var(--line-2); border-radius: var(--r-sm); color: var(--ink);
+}
+.calnav:hover:not(:disabled) { background: var(--ink); color: #fff; border-color: var(--ink); }
+.calnav:disabled { color: var(--line-2); cursor: not-allowed; }
+.carcal .cal-m { font-weight: 700; font-size: 15px; letter-spacing: -.015em; margin: 0; }
+.carcal .cal { display: block; }
+.carcal .cal-legend { font-size: 12.5px; gap: 6px; }
+.carcal .cal-key-busy { margin-left: 10px; }
+.carcal .cal-pick { font-weight: 600; font-size: 14px; margin: 2px 0 0; }
+.carcal .cal-reset {
+  justify-self: start; background: none; border: 0; padding: 0;
+  color: var(--dim); font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px;
+}
+.carcal .cal-note { font-size: 12px; color: var(--dim); margin: 4px 0 0; }
+.carcal .cal-d { font-size: 12px; }
+
+/* the sticky bar shows what the calendar picked */
+.rb-total { color: var(--ink); font-size: 13px; font-weight: 600; }
+
+@media (max-width: 1100px) {
+  .cargal.has-strip { grid-template-columns: minmax(0, 1fr) clamp(96px, 12vw, 150px); }
+  .carcal { grid-column: 1 / -1; max-height: none; }
+}
+@media (max-width: 780px) {
+  .cargal.has-strip { grid-template-columns: 1fr; }
+  .cargal.has-strip .hero-img { max-height: none; aspect-ratio: 4/3; }
+  .cargal.has-strip .cargal-strip { grid-template-columns: repeat(4, 1fr); max-height: none; overflow: visible; }
+}
+/* the month arrows and the demo note were below the mobile floor */
+@media (max-width: 900px) {
+  .calnav { width: 42px; height: 42px; }
+  .carcal .cal-note { font-size: 13px; }
+  .carcal .cal-d { font-size: 13px; }
+}
