@@ -81,6 +81,24 @@ for (const w of [2560, 1600, 390]) {
   heroTop === 0 ? ok(`${w}: the hero photograph starts at the top of the page`)
                 : fail(`${w}: ${heroTop}px of page background above the hero`);
 
+  // one distance between the last thing on the page and the footer, everywhere
+  {
+    const gaps = [];
+    for (const pg of ['', 'fleet/', 'roads/', 'faq/', 'how-it-works/', 'about/']) {
+      await p.goto(`${B}/${pg}`, { waitUntil: 'networkidle' });
+      gaps.push(await p.evaluate(() => {
+        const f = document.querySelector('.foot');
+        const vis = [...document.querySelectorAll('main *')].filter(e => {
+          const r = e.getBoundingClientRect(); return r.height > 4 && r.width > 4;
+        });
+        return Math.round(f.getBoundingClientRect().top - Math.max(...vis.map(e => e.getBoundingClientRect().bottom)));
+      }));
+    }
+    new Set(gaps).size === 1
+      ? ok(`${w}: every page ends ${gaps[0]}px above the footer`)
+      : fail(`${w}: footer gaps differ: ${gaps.join(', ')}`);
+  }
+
   // the nav links sit with the logo, not centred, and close up further when pinned
   if (w >= 1200) {
     await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
@@ -97,10 +115,14 @@ for (const w of [2560, 1600, 390]) {
       : fail(`${w}: nav gap ${rest}px at rest, ${pinned}px pinned`);
   }
 
-  // every select is drawn by us, never by the OS on top of our own chevron
+  // selects and date/time inputs are the browser's own, by choice, so nothing may
+  // draw a second chevron on top of one
   await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });
-  const native = await p.$$eval('select', els => els.filter(e => getComputedStyle(e).appearance !== 'none').length);
-  native === 0 ? ok(`${w}: no select shows an OS chevron over ours`) : fail(`${w}: ${native} selects still native`);
+  const doubled = await p.evaluate(() => [...document.querySelectorAll('select')].filter(sel => {
+    const l = sel.closest('label');
+    return l && getComputedStyle(l, '::after').content !== 'none';
+  }).length);
+  doubled === 0 ? ok(`${w}: no select carries a drawn chevron over its own`) : fail(`${w}: ${doubled} doubled chevrons`);
 
   // no hover moves a car card or its photograph
   await p.goto(`${B}/fleet/`, { waitUntil: 'networkidle' });

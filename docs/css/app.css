@@ -1135,7 +1135,7 @@ body[data-page="index"] .pillnav:not(.is-pinned) .reserve-cta:hover { background
 body[data-page="index"] .pillnav:not(.is-pinned) .burger span { background: #fff; }
 
 /* --- shared section furniture --- */
-.home { padding-bottom: clamp(30px, 4vw, 60px); }
+/* the homepage had its own bottom padding, which beat the shared one on specificity */
 .hz-picks, .hz-range, .hz-mosaic {
   max-width: var(--shell); margin: 0 auto; padding: clamp(46px, 5vw, 92px) var(--pad) 0;
 }
@@ -1977,7 +1977,7 @@ body { background: var(--tint); }
 .list-ask { margin: 0; }
 
 /* 7: the fleet stopped an inch above the footer */
-.fleetwrap { margin-bottom: clamp(40px, 5vw, 90px); }
+/* the fleet took its own bottom margin on top of the shared one */
 .list-note { background: var(--card); border-radius: 0 0 var(--r-lg) var(--r-lg); }
 
 /* 8 + 9: a footer with four equal columns and nothing in it that is not needed */
@@ -2345,18 +2345,10 @@ body[data-page="index"] .pillnav:not(.is-pinned) { padding-inline: calc(var(--gu
 
 /* 23 + 24: one control family. Drawn selects, drawn toggles, no OS parts on show. */
 .hz-sel, .hz-f-in { position: relative; }
-.hz-f select, .list-tools select {
-  appearance: none; -webkit-appearance: none;
-  background: none; border: 0; padding-right: 22px; cursor: pointer;
-}
-.hz-sel::after, .sort::after {
-  content: ''; position: absolute; right: clamp(14px, 1.3vw, 20px); bottom: clamp(18px, 1.6vw, 24px);
-  width: 8px; height: 8px; border: solid var(--dim); border-width: 0 1.6px 1.6px 0;
-  rotate: 45deg; pointer-events: none;
-}
+.hz-f select, .list-tools select { background: none; border: 0; cursor: pointer; }
+
 .sort { position: relative; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--dim);
   border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 8px 30px 8px 16px; }
-.sort::after { right: 14px; bottom: 15px; }
 .sort select { font: inherit; color: var(--ink); font-weight: 500; }
 .list-tools .tog {
   display: inline-flex; align-items: center; gap: 0; cursor: pointer; position: relative;
@@ -2813,9 +2805,7 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 
 /* the sort control was drawing a chevron on its label while the select kept its
    own, so it read as a dropdown inside a dropdown */
-.sort select, .list-filters select, .hz-f select, .db-field select, .dfield select {
-  appearance: none; -webkit-appearance: none; background-image: none;
-}
+/* the selects are the browser's own, so they behave the way the visitor expects */
 .sort select { padding-right: 4px; }
 
 /* the roads title is one line where the other three take two, so the block
@@ -3094,7 +3084,6 @@ body[data-page="index"] .pillnav:not(.is-pinned) .lang-btn { color: #fff; border
   padding: clamp(10px, 1vw, 14px) clamp(13px, 1.2vw, 18px); flex-wrap: wrap;
 }
 .sort { all: unset; }
-.listbar .hz-sel::after { bottom: auto; top: 50%; translate: 0 -50%; right: clamp(13px, 1.2vw, 18px); }
 .datefilter-clear {
   background: none; border: 0; padding: 8px 4px; font-size: 14px; font-weight: 600;
   color: var(--verde-t); text-decoration: underline; text-underline-offset: 3px; min-height: 38px;
@@ -3230,3 +3219,95 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
   .calnav { width: 42px; height: 42px; }
   .carcal .cal-d { font-size: 13px; }
 }
+
+/* ==========================================================================
+   ACCENT, EVERYWHERE. Asked for three times and each time I only did the page
+   in front of me. The rule: the brand red marks the current thing, the live
+   thing and anything a pointer is on. It is never decoration and never a whole
+   paragraph. Ink stays the button colour, green stays WhatsApp.
+   ========================================================================== */
+:root { --accent-soft: #FBECEC; }
+
+/* current position, on every page */
+.pillnav-links a[aria-current] { color: var(--verde-t); }
+.pillnav-links a[aria-current]::after { background: var(--verde-t); }
+.crumb a { color: var(--verde-t); }
+
+/* headings carry the rule, and it is the accent */
+.sec-h::after, .roads-head h1::after, .list-title::after, .faq-h1::after,
+.how-h1::after, .man-h::after, .hz-head h2::after, .step-h::after, .hero-nm::after,
+.rd-h::after, .phero h1::after { background: var(--verde); }
+
+/* the live state of anything selectable */
+.chip.is-on, .pchip.is-done { background: var(--verde); border-color: var(--verde); color: #fff; }
+.qa-item[open] .qa-q, .qa-item summary:hover .qa-q { color: var(--verde-t); }
+.faq-jump a:hover, .hz-pill:hover, .revnav:hover:not(:disabled) { background: var(--verde); border-color: var(--verde); color: #fff; }
+.foot-col a:hover, .foot-call:hover, .rows-clear, .datefilter-clear { color: var(--ink-accent); }
+.foot-more { color: var(--ink-accent) !important; }
+
+/* roads: the page had no accent at all */
+.rd-facts dt { color: var(--dim); }
+.rd-facts dd { color: var(--ink); }
+.rd:hover { border-color: var(--verde); }
+.rd-shot .roadcar:hover { border-color: var(--verde); }
+.rd-shot .roadcar .mono { color: var(--verde-t); }
+.roads-head h1::after { background: var(--verde); }
+
+/* cards answer the pointer with the accent rather than with ink */
+.row-link:hover, .pcard:hover, .rcard:hover, .sim-card:hover, .up-card.is-offer,
+.tip-card:hover, .about-b:hover { border-color: var(--verde); }
+.cal-d.is-from, .cal-d.is-to { background: var(--verde); }
+.cal-d.is-in { background: var(--accent-soft); color: var(--verde-2); }
+button.cal-d:hover { outline-color: var(--verde); }
+.loc.is-on { border-color: var(--verde); }
+.loc.is-on .loc-tick { border-color: var(--verde); background: var(--verde); }
+.pick.is-on { border-color: var(--verde); }
+.list-tools .tog input:checked + span, .hz-chip input:checked + span { background: var(--verde); border-color: var(--verde); }
+
+/* ==========================================================================
+   THE CAR PAGE, REBUILT BELOW THE FOLD, AND ONE SPACING SCALE FOR EVERY PAGE.
+   ========================================================================== */
+.specs, .similar, .tip {
+  width: min(100% - 2 * var(--gut), var(--shell)) !important; margin-inline: auto !important;
+  padding-block: clamp(34px, 3.6vw, 66px) 0;
+}
+.specs .sec-h, .similar .sec-h, .tip .sec-h { margin-bottom: clamp(18px, 1.8vw, 28px); }
+.specgrid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: clip;
+  margin: 0;
+}
+.specgrid > div { background: var(--card); padding: clamp(14px, 1.4vw, 20px) clamp(15px, 1.4vw, 22px); display: grid; gap: 5px; }
+.specgrid dt { color: var(--dim); font-size: 13px; }
+.specgrid dd { margin: 0; font-weight: 600; font-size: clamp(15px, 1.15vw, 17px); }
+
+.tip-card {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  border: 1px solid var(--line); border-radius: var(--r-lg); overflow: clip;
+  background: var(--card); align-items: stretch;
+}
+.tip-card > img { width: 100%; height: 100%; min-height: clamp(240px, 22vw, 380px); object-fit: cover; order: 2; }
+.tip-body { padding: clamp(24px, 2.4vw, 42px); display: grid; align-content: center; gap: 14px; }
+.tip-body h3 { font-weight: 700; font-size: clamp(21px, 1.9vw, 30px); letter-spacing: -.026em; }
+.tip-body p { color: var(--dim); max-width: 52ch; }
+.tip-facts { display: grid; grid-template-columns: auto 1fr; margin: 0; }
+.tip-facts dt { padding: 10px 0; border-top: 1px solid var(--line); color: var(--dim); font-size: 13.5px; }
+.tip-facts dd { padding: 10px 0; border-top: 1px solid var(--line); margin: 0; text-align: right; font-size: 14.5px; }
+.tip-body .btn-ink { justify-self: start; margin-top: 4px; }
+
+/* one distance between the last section and the footer, on every page. Measured
+   before this rule: 0px on four pages, 60 on one, 80 on another and 144 on the car
+   pages. Set on main so no section can opt out of it. */
+main > :last-child { padding-bottom: 0 !important; margin-bottom: 0 !important; }
+main { padding-bottom: clamp(52px, 5vw, 96px); }
+.foot { margin-top: 0; }
+/* the car pages keep room for the sticky bar on top of that */
+body[data-page^="car-"] main { padding-bottom: clamp(140px, 11vw, 190px); }
+
+/* the About heading sat on its own left edge */
+.promises > * { width: 100% !important; margin-inline: 0 !important; }
+.promises { width: min(100% - 2 * var(--gut), var(--shell)) !important; margin-inline: auto !important; }
+
+@media (max-width: 1100px) { .specgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px)  { .tip-card { grid-template-columns: 1fr; } .tip-card > img { order: -1; min-height: 0; aspect-ratio: 16/10; } }
+@media (max-width: 620px)  { .specgrid { grid-template-columns: 1fr; } }

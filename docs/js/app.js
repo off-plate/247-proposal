@@ -72,13 +72,8 @@
   /* ---------- fleet page ---------- */
   const rows = $('#rows');
   if (rows) {
-    const bk = readBook(), nDays = days(bk);
-    if (nDays > 0 && window.SITE) {
-      $$('.row', rows).forEach(r => {
-        const total = tripTotal(+r.dataset.price, nDays);
-        const el = $('.row-price', r);
-        el.innerHTML = `${eur(total)}<em> / ${nDays} day${nDays > 1 ? 's' : ''}</em>`;
-      });
+    // the list is a price list: a rate per day, whatever dates are set
+    {
     }
     const LANES = {
       city: ['golf-5', 'hyundai-accent', 'audi-a4'],
@@ -131,7 +126,10 @@
     const q = new URLSearchParams(location.search);
     if (q.get('from') && $('#f-from')) $('#f-from').value = q.get('from');
     if (q.get('to') && $('#f-to')) $('#f-to').value = q.get('to');
-    if (q.get('gear') === 'automatic' && $('#f-auto')) $('#f-auto').checked = true;
+    const gearQ = q.get('gear');
+    if (gearQ === 'automatic' && $('#f-auto')) $('#f-auto').checked = true;
+    if (gearQ === 'manual') { cls = 'city'; }   // the only manual in the fleet is the Golf 5
+    if (gearQ === 'manual' && $('#f-auto')) $('#f-auto').checked = false;
     const dc = $('#f-dates-clear');
     if (dc) dc.addEventListener('click', () => { $('#f-from').value = ''; $('#f-to').value = ''; apply(); });
     const clear = $('#rows-clear');
@@ -297,6 +295,8 @@
 
     const carOf = () => FLEET.find(c => c.slug === b.car);
     const locOf = id => SITE.locations.find(l => l.id === id);
+    // "other" is a place the visitor typed, so it has no entry to look up
+    const locName = (id, typed) => id === 'other' ? (typed || 'Other location') : (locOf(id)?.label || '');
 
     const price = () => {
       const c = carOf(), n = days(b);
@@ -308,7 +308,7 @@
     const board = () => {
       const t = $('#sum-t');
       const set = (k, v) => { $(`tr[data-k="${k}"] td:last-child`, t).textContent = v; };
-      set('loc', b.loc ? (locOf(b.loc)?.label || '–') + (b.loc2 && b.loc2 !== b.loc ? ' → ' + locOf(b.loc2).label : '') : 'choose');
+      set('loc', b.loc ? locName(b.loc, b.otherLoc) + (b.loc2 && b.loc2 !== b.loc ? ' → ' + locName(b.loc2, b.otherLoc2) : '') : 'choose');
       set('dates', b.from && b.to ? `${fmt(b.from)} ${b.tf || ''} → ${fmt(b.to)} ${b.tt || ''}`.replace(/\s+/g, ' ').trim() : 'not set');
       set('car', carOf()?.name || 'not set');
       const nd = days(b);
@@ -335,7 +335,9 @@
     const valid = () => {
       switch (step) {
         // where and when are one screen now, so step 0 needs both
-        case 0: return !!b.loc && (!$('#oneway').checked || !!b.loc2) && days(b) > 0;
+        case 0: return !!b.loc && (!$('#oneway').checked || !!b.loc2) && days(b) > 0
+          && (b.loc !== 'other' || (b.otherLoc || '').length > 2)
+          && (!($('#oneway').checked && b.loc2 === 'other') || (b.otherLoc2 || '').length > 2);
         case 1: return !!carOf();   // always true when arriving from a car page
         case 2: return $('#drv-name').value.trim().length > 2 && $('#drv-mail').validity.valid && !!$('#drv-mail').value && $('#drv-tel').value.trim().length > 5;
         default: return false;
@@ -379,8 +381,19 @@
       $$('#locgrid .loc').forEach(l => l.classList.toggle('is-on', l.dataset.loc === b.loc));
       $$('#locgrid2 .loc').forEach(l => l.classList.toggle('is-on', l.dataset.loc === b.loc2));
     };
+    // their own site offers "Other location"; picking it anywhere means the booking
+    // page has to ask where, because nobody can guess it
+    const otherWrap = $('#other-wrap'), otherIn = $('#other-loc');
+    const otherWrap2 = $('#other-wrap2'), otherIn2 = $('#other-loc2');
+    const paintOther = () => {
+      if (otherWrap) otherWrap.hidden = b.loc !== 'other';
+      if (otherWrap2) otherWrap2.hidden = !($('#oneway')?.checked && b.loc2 === 'other');
+    };
+    if (otherIn) { otherIn.value = b.otherLoc || ''; otherIn.addEventListener('input', () => { b.otherLoc = otherIn.value.trim(); writeBook(b); paint(); }); }
+    if (otherIn2) { otherIn2.value = b.otherLoc2 || ''; otherIn2.addEventListener('input', () => { b.otherLoc2 = otherIn2.value.trim(); writeBook(b); paint(); }); }
+
     const flightWrap = $('#flight-wrap'), flightIn = $('#flight');
-    const paintFlight = () => { if (flightWrap) flightWrap.hidden = !(b.loc && locOf(b.loc)?.airport); };
+    const paintFlight = () => { if (flightWrap) flightWrap.hidden = !(b.loc && locOf(b.loc)?.airport); paintOther(); };
     if (flightIn) { flightIn.value = b.flight || ''; flightIn.addEventListener('input', () => { b.flight = flightIn.value.trim(); writeBook(b); }); }
     $('#locgrid').addEventListener('click', e => {
       const l = e.target.closest('.loc'); if (!l) return;
@@ -522,8 +535,8 @@
       step = 3; paint();
       $('#next').hidden = true;
       $('#done-ref').textContent = ref;
-      const pickup = locOf(b.loc)?.label || '';
-      const dropoff = b.loc2 && b.loc2 !== b.loc ? locOf(b.loc2).label : pickup;
+      const pickup = locName(b.loc, b.otherLoc);
+      const dropoff = b.loc2 && b.loc2 !== b.loc ? locName(b.loc2, b.otherLoc2) : pickup;
       const rows = [
         ['COLLECT', pickup],
         ['RETURN', dropoff],

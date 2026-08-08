@@ -224,21 +224,21 @@ ${nav()}
 
   <form class="hz-bar" action="fleet.html" method="get">
     <div class="hz-bar-fields">
-      <label class="hz-f hz-sel">
+      <label class="hz-f">
         <span class="hz-f-k">Collect at</span>
-        <select name="loc">${site.locations.map(l => `<option value="${l.id}">${l.label}</option>`).join('')}</select>
+        <select name="loc">${site.locations.map(l => `<option value="${l.id}">${l.label}</option>`).join('')}<option value="other">Other location</option></select>
       </label>
-      <label class="hz-f hz-sel">
+      <label class="hz-f">
         <span class="hz-f-k">Return to</span>
-        <select name="ret">${site.locations.map((l, i) => `<option value="${l.id}"${i === 0 ? ' selected' : ''}>${l.label}</option>`).join('')}</select>
+        <select name="ret">${site.locations.map((l, i) => `<option value="${l.id}"${i === 0 ? ' selected' : ''}>${l.label}</option>`).join('')}<option value="other">Other location</option></select>
       </label>
       <label class="hz-f">
         <span class="hz-f-k">Pick-up</span>
-        <span class="hz-f-in"><input type="date" name="from" aria-label="Pick-up date"><select name="tfrom" aria-label="Pick-up time">${TIMES.map(t => `<option${t === '10:00' ? ' selected' : ''}>${t}</option>`).join('')}</select></span>
+        <span class="hz-f-in"><input type="date" name="from" aria-label="Pick-up date"><input type="time" name="tfrom" value="10:00" aria-label="Pick-up time" step="1800"></span>
       </label>
       <label class="hz-f">
         <span class="hz-f-k">Return</span>
-        <span class="hz-f-in"><input type="date" name="to" aria-label="Return date"><select name="tto" aria-label="Return time">${TIMES.map(t => `<option${t === '10:00' ? ' selected' : ''}>${t}</option>`).join('')}</select></span>
+        <span class="hz-f-in"><input type="date" name="to" aria-label="Return date"><input type="time" name="tto" value="10:00" aria-label="Return time" step="1800"></span>
       </label>
     </div>
     <div class="hz-bar-foot">
@@ -344,7 +344,7 @@ ${nav('fleet')}
       <div class="listbar">
         <label class="hz-f"><span class="hz-f-k">From</span><input type="date" id="f-from"></label>
         <label class="hz-f"><span class="hz-f-k">To</span><input type="date" id="f-to"></label>
-        <label class="hz-f hz-sel"><span class="hz-f-k">Sort by</span>
+        <label class="hz-f"><span class="hz-f-k">Sort by</span>
           <select id="sort">
             <option value="price-desc">price, high to low</option>
             <option value="price-asc">price, low to high</option>
@@ -417,32 +417,40 @@ ${nav('fleet')}
   </div>
 </section>
 
-<section class="specsheet" aria-label="Specification">
-  <table class="spec-t mono">
-    <tr><td>Year</td><td>${c.year}</td><td>Class</td><td>${c.clsLabel}</td></tr>
-    <tr><td>Engine</td><td>${c.engine.toFixed(1)} L ${c.fuel}</td><td>Gearbox</td><td>${c.gear}</td></tr>
-    <tr><td>Seats</td><td>${c.seats}</td><td>Rate</td><td>${eur(c.price)} per day</td></tr>
-  </table>
+<section class="specs" aria-label="Specification">
+  <h2 class="sec-h">Specification</h2>
+  <dl class="specgrid">
+    <div><dt>Year</dt><dd>${c.year}</dd></div>
+    <div><dt>Class</dt><dd>${c.clsLabel}</dd></div>
+    <div><dt>Engine</dt><dd>${c.engine.toFixed(1)} L ${c.fuel}</dd></div>
+    <div><dt>Gearbox</dt><dd>${c.gear}</dd></div>
+    <div><dt>Seats</dt><dd>${c.seats}</dd></div>
+    <div><dt>Rate</dt><dd>${eur(c.price)} per day</dd></div>
+    <div><dt>Collection</dt><dd>Airport or city office, any hour</dd></div>
+    <div><dt>Delivery</dt><dd>Inside Tirana on request</dd></div>
+  </dl>
 </section>
 
-<div class="incwrap"><section class="gantry included" aria-label="Included">
-  <p class="gantry-top">${gantryChip('24/7')}<span class="sign">Every rental includes</span></p>
-  <ul class="inc-list">
-    <li>The exact car photographed above, booked by name</li>
-    
-    <li>Collection at Tirana airport or the city office, at any hour</li>
-    <li>Delivery inside Tirana on request, cost confirmed before you book</li>
-    <li>${c.gear === 'automatic' ? 'An automatic gearbox, which helps on the mountain roads' : 'Manual gearbox, the only one in the fleet'}</li>
-  </ul>
-</section></div>
-
 ${similar.length ? `<section class="similar"><h2 class="sec-h">Other cars at a similar price</h2><div class="sim-rail">${similar.map(s => `<a class="sim-card" href="car-${s.slug}.html"><img src="img/cars/${s.slug}-s.webp" alt="" loading="lazy"><strong>${s.name}</strong><span class="mono">${eur(s.price)}/day</span></a>`).join('')}</div></section>` : ''}
+
+${(() => { const t = site.roads[c.price >= 50 ? 1 : c.price >= 40 ? 2 : 0]; return `
+<section class="tip" aria-label="Travel tip of the week">
+  <h2 class="sec-h">Travel tip of the week</h2>
+  <article class="tip-card">
+    <img src="img/road-${t.id}.webp" alt="${t.name}, Albania" loading="lazy" width="1600" height="1000">
+    <div class="tip-body">
+      <h3>${t.name}</h3>
+      <p>${t.story}</p>
+      <dl class="tip-facts"><dt>Route</dt><dd>${t.route}</dd><dt>Length</dt><dd>${t.km} km</dd><dt>Time</dt><dd>${t.hours}</dd><dt>Best</dt><dd>${t.best}</dd></dl>
+      <a class="btn-ink" href="roads.html#${t.id}">See the route <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </article>
+</section>`; })()}
+
 </main>
 
 <div class="reservebar" data-slug="${c.slug}" data-price="${c.price}" data-prestige="0">
   <span class="rb-cluster"><span class="rb-price"><strong class="mono">${eur(c.price)}</strong>/day</span><span class="rb-total mono" id="rb-total"></span></span>
-  ${waLink(`Hello 24/7 Car Rental, is the ${c.name} available? ${c.year}, ${c.gear}, ${eur(c.price)} per day. ${site.base}/car-${c.slug}.html`, 'btn-wa rb-wa', 'WhatsApp')}
-  <a class="btn-paper rb-call" href="tel:${TEL}" aria-label="Call ${site.phone}">Call</a>
   <a class="btn-verde" href="book.html?car=${c.slug}">Book this car <span aria-hidden="true">→</span></a>
 </div>
 ${footer()}`;
@@ -461,16 +469,19 @@ ${nav()}
       <p class="step-hint" id="loc-hint">Choose where you would like to collect the car.</p>
       <div class="locgrid" id="locgrid">
         ${site.locations.map((l, i) => `<button class="loc" data-loc="${l.id}" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>${l.label}</strong><span class="sign">${l.sub}</span></button>`).join('')}
+        <button class="loc" data-loc="other" aria-pressed="false"><span class="loc-tick" aria-hidden="true"></span><strong>Other location</strong><span class="sign">Tell us where</span></button>
       </div>
+      <label class="dfield full" id="other-wrap" hidden><span class="sign">Where should we meet you?</span><input type="text" id="other-loc" placeholder="Hotel, address or district in Tirana" autocomplete="off"></label>
+      <label class="dfield full" id="other-wrap2" hidden><span class="sign">Where will you leave the car?</span><input type="text" id="other-loc2" placeholder="Hotel, address or district in Tirana" autocomplete="off"></label>
       <label class="dfield flight" id="flight-wrap" hidden><span class="sign">Flight number, so the car waits if you land late</span><input type="text" id="flight" placeholder="W6 3021" autocomplete="off"></label>
       <label class="tog oneway"><input type="checkbox" id="oneway"> Return to the other location <em id="oneway-note" hidden>no extra charge, they are ten minutes apart</em></label>
       <div class="locgrid" id="locgrid2" hidden></div>
 
       <h2 class="step-sub">When?</h2>
       <div class="dategrid">
-        <label class="dfield"><span class="sign">Pickup</span><input type="date" id="d-from"><select id="t-from">${TIMES.map(t => `<option${t === '10:00' ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
+        <label class="dfield"><span class="sign">Pickup</span><input type="date" id="d-from"><input type="time" id="t-from" value="10:00" step="1800" aria-label="Pick-up time"></label>
         <span class="garrow big" aria-hidden="true">→</span>
-        <label class="dfield"><span class="sign">Return</span><input type="date" id="d-to"><select id="t-to">${TIMES.map(t => `<option${t === '10:00' ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
+        <label class="dfield"><span class="sign">Return</span><input type="date" id="d-to"><input type="time" id="t-to" value="10:00" step="1800" aria-label="Return time"></label>
       </div>
       <p class="daysline"><span class="mono" id="days-chip">–</span><span id="season-note"></span></p>
     </section>
@@ -608,7 +619,7 @@ ${pageHero('We make finding the right car simple', 'Welcome to 24/7 Car Rental, 
   </article>
 </section>
 
-<section class="promises" data-bleed aria-label="Why choose us">
+<section class="promises" aria-label="Why choose us">
   <h2 class="sec-h">Why choose us?</h2>
   <ol class="prom-list">
     <!-- slop-lint-ignore 24/7 Car Rental's own About Us wording, verbatim on request -->${[
