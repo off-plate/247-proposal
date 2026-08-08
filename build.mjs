@@ -460,9 +460,6 @@ ${footer()}`;
 const bookPage = () => `${head('Book a car. Four questions, then a human', 'Pick up at Tirana airport or the city office, choose your car and dates, and send it. You get a written answer on WhatsApp.', 'book.html')}
 ${nav()}
 <main class="bookwrap">
-  <ol class="chiprail" id="chiprail" aria-label="Progress">
-    ${['Where and when', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip" aria-hidden="true">${i + 1}</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>${s}</li>`).join('')}
-  </ol>
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
       <h1 class="step-h">Where and when?</h1>
@@ -490,24 +487,24 @@ ${nav()}
       <h1 class="step-h" id="up-h">Before you send it</h1>
       <p class="step-hint" id="up-hint"></p>
       <div class="upgrade" id="upgrade" hidden>
-        <article class="up-card is-current" id="up-current">
+        <button type="button" class="up-card is-current is-on" id="up-current" aria-pressed="true">
+          <span class="up-tick" aria-hidden="true"></span>
           <span class="up-role">Your choice</span>
           <img id="up-cur-img" src="" alt="">
           <strong id="up-cur-nm"></strong>
           <span class="up-spec" id="up-cur-spec"></span>
           <span class="up-fig" id="up-cur-fig"></span>
-        </article>
-        <article class="up-card is-offer" id="up-offer">
-          <span class="up-role">For a little more</span>
+        </button>
+        <button type="button" class="up-card is-offer" id="up-offer" aria-pressed="false">
+          <span class="up-tick" aria-hidden="true"></span>
+          <span class="up-role">Upgrade</span>
           <img id="up-off-img" src="" alt="">
           <strong id="up-off-nm"></strong>
           <span class="up-spec" id="up-off-spec"></span>
           <span class="up-fig" id="up-off-fig"></span>
           <p class="up-diff" id="up-diff"></p>
-          <button class="btn-verde up-take" type="button" id="up-take">Take this one instead</button>
-        </article>
+        </button>
       </div>
-      <p class="up-keep"><button class="up-keep-btn" type="button" id="up-keep">Keep the one I chose</button></p>
     </section>
 
     <section class="step" data-step="2" aria-label="You" hidden>
@@ -521,16 +518,22 @@ ${nav()}
       </div>
     </section>
 
-    <section class="step" data-step="3" aria-label="Send" hidden>
-      <div class="gantry doneboard" id="doneboard">
-        <p class="gantry-top">${gantryChip('24/7')}<span class="openlight">Request ready</span></p>
-        <p class="done-ref mono" id="done-ref"></p>
-        <table class="done-t mono" id="done-t"></table>
-        <div class="done-send">
-          <a class="gantry-go" id="send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp <span aria-hidden="true">→</span></a>
-          <a class="btn-paper" id="send-call" href="tel:${TEL}">Or call now</a>
+    <section class="step done" data-step="3" aria-label="Send" hidden>
+      <h1 class="step-h">Thank you for choosing us</h1>
+      <p class="step-hint">Send this on WhatsApp and the office confirms it in writing. Your car will be waiting.</p>
+      <div class="doneboard" id="doneboard">
+        <figure class="done-car" id="done-car">
+          <img id="done-car-img" src="" alt="">
+          <figcaption><strong id="done-car-nm"></strong><span id="done-car-spec"></span></figcaption>
+        </figure>
+        <div class="done-detail">
+          <p class="done-ref" id="done-ref"></p>
+          <table class="done-t" id="done-t"></table>
+          <div class="done-send">
+            <a class="btn-verde" id="send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+            <a class="btn-paper" id="send-call" href="tel:${TEL}">Or call ${site.phone}</a>
+          </div>
         </div>
-        
       </div>
     </section>
 
@@ -550,8 +553,13 @@ ${nav()}
     </aside>
   </div>
   <div class="stepnav">
-    <button class="btn-paper" id="back" hidden>← Back</button>
-    <button class="btn-verde" id="next" disabled>Continue <span aria-hidden="true">→</span></button>
+    <div class="stepnav-btns">
+      <button class="btn-paper" id="back" hidden>← Back</button>
+      <button class="btn-verde" id="next" disabled>Continue <span aria-hidden="true">→</span></button>
+    </div>
+    <ol class="chiprail" id="chiprail" aria-label="Progress">
+      ${['Where and when', 'Car', 'You', 'Send'].map((s, i) => `<li class="pchip${i === 0 ? ' is-now' : ''}" data-step="${i}"><span class="gchip" aria-hidden="true">${i + 1}</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>${s}</li>`).join('')}
+    </ol>
   </div>
 </main>
 ${footer()}`;

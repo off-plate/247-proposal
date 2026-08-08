@@ -162,7 +162,7 @@ for (const [w, h] of [[1440, 760], [1600, 900], [1920, 1080]]) {
   await p.fill('#d-from', from); await p.$eval('#d-from', e => e.dispatchEvent(new Event('change')));
   await p.fill('#d-to', to); await p.$eval('#d-to', e => e.dispatchEvent(new Event('change')));
   await p.click('#next'); await p.waitForTimeout(250); await check('upgrade');
-  await p.click('#up-keep'); await p.waitForTimeout(250); await check('contact');
+  await p.click('#next'); await p.waitForTimeout(250); await check('contact');
   await p.close();
 }
 

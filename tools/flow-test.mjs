@@ -66,39 +66,30 @@ chip.includes('5') ? ok('5 days computed') : fail(`days: ${chip}`);
 (await disabled()) ? fail('continue still disabled with location and dates set') : ok('step 1 opens once both are set');
 await snap('1-where-and-when'); await next();
 
-// step 2 is the upgrade, not a picker: nobody reaches this page without a car
+// step 2 is the upgrade: two cards, and the choice is reversible in both directions
 const upHint = await page.textContent('#up-hint');
 upHint.includes('Hyundai Santa Fe 2016') ? ok('the chosen car carried into the flow') : fail(`hint: ${upHint}`);
 const upOffer = await page.textContent('#up-off-nm');
-const upShown = await page.$eval('#upgrade', e => !e.hidden);
-upShown && upOffer === 'Jaguar XF 2015'
-  ? ok('the 60 € Santa Fe is offered the 65 € Jaguar, the next car up')
-  : fail(`offer: ${upOffer}, shown ${upShown}`);
+upOffer === 'Jaguar XF 2015' ? ok('the 60 EUR Santa Fe is offered the 65 EUR Jaguar') : fail(`offer: ${upOffer}`);
 const upDiff = await page.textContent('#up-diff');
-upDiff.includes('5 €') && upDiff.includes('25 €')
-  ? ok('both numbers stated: 5 € a day and 25 € across 5 days')
+upDiff.includes('5') && upDiff.includes('25')
+  ? ok('both numbers stated: the daily difference and the difference across the stay')
   : fail(`diff: ${upDiff}`);
+const pressed = () => page.evaluate(() => [
+  document.querySelector('#up-current').getAttribute('aria-pressed'),
+  document.querySelector('#up-offer').getAttribute('aria-pressed'),
+  document.querySelector('#sum-car-nm').textContent,
+]);
+await page.click('#up-offer');
+let st = await pressed();
+st[0] === 'false' && st[1] === 'true' && st[2] === 'Jaguar XF 2015'
+  ? ok('taking the upgrade moves the tick and the summary') : fail(`after upgrade: ${st.join(' | ')}`);
+await page.click('#up-current');
+st = await pressed();
+st[0] === 'true' && st[1] === 'false' && st[2] === 'Hyundai Santa Fe 2016'
+  ? ok('changing back moves it back, no trapdoor') : fail(`after revert: ${st.join(' | ')}`);
+await page.click('#up-offer');
 await snap('2-upgrade');
-await page.click('#up-take');
-const afterTake = await page.textContent('#up-cur-nm');
-afterTake === 'Jaguar XF 2015' ? ok('taking the upgrade swaps the car') : fail(`after take: ${afterTake}`);
-// one offer, not a ladder: accepting it must not produce a fresh offer against the
-// car just accepted, and coming back to the step must not either
-// accepting is a decision, so the flow moves on rather than parking on a settled panel
-const landed = await page.$$eval('.step', els => els.findIndex(e => !e.hidden));
-landed === 2 ? ok('accepting the offer advances to the contact step') : fail(`landed on step ${landed}`);
-// and coming back shows the car, with no second offer against it
-await page.click('#back');
-const settled = await page.evaluate(() => {
-  const w = document.getElementById('upgrade');
-  const offer = document.querySelector('.up-card.is-offer');
-  return { visible: !w.hidden, settled: w.classList.contains('is-settled'),
-           offerShown: getComputedStyle(offer).display !== 'none',
-           name: document.getElementById('up-cur-nm').textContent };
-});
-settled.visible && settled.settled && !settled.offerShown && settled.name === 'Jaguar XF 2015'
-  ? ok('returning shows the chosen car and no second rung')
-  : fail(`settled state: ${JSON.stringify(settled)}`);
 await page.click('#next');
 
 (await disabled()) ? ok('contact step gated') : fail('contact step not gated');

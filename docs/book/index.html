@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" href="../img/icon.png">
 <link rel="preload" href="../fonts/switzer-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>window.BASE="../"</script>
-<link rel="stylesheet" href="../css/app.css?v=4923da92">
+<link rel="stylesheet" href="../css/app.css?v=cb559e0e">
 
 </head>
 <body data-page="book">
@@ -61,9 +61,6 @@
   <a class="sheet-wa" href="https://wa.me/355685000700?text=Hello%2024%2F7%20Car%20Rental%2C%20I%20would%20like%20to%20ask%20about%20renting%20a%20car%20in%20Tirana." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.84-.85 2.04 0 1.2.87 2.36.99 2.53.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>Ask on WhatsApp</span></a>
 </div>
 <main class="bookwrap">
-  <ol class="chiprail" id="chiprail" aria-label="Progress">
-    <li class="pchip is-now" data-step="0"><span class="gchip" aria-hidden="true">1</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>Where and when</li><li class="pchip" data-step="1"><span class="gchip" aria-hidden="true">2</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>Car</li><li class="pchip" data-step="2"><span class="gchip" aria-hidden="true">3</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>You</li><li class="pchip" data-step="3"><span class="gchip" aria-hidden="true">4</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>Send</li>
-  </ol>
   <div class="bookgrid">
     <section class="step is-now" data-step="0" aria-label="Where">
       <h1 class="step-h">Where and when?</h1>
@@ -91,24 +88,24 @@
       <h1 class="step-h" id="up-h">Before you send it</h1>
       <p class="step-hint" id="up-hint"></p>
       <div class="upgrade" id="upgrade" hidden>
-        <article class="up-card is-current" id="up-current">
+        <button type="button" class="up-card is-current is-on" id="up-current" aria-pressed="true">
+          <span class="up-tick" aria-hidden="true"></span>
           <span class="up-role">Your choice</span>
           <img id="up-cur-img" src="" alt="">
           <strong id="up-cur-nm"></strong>
           <span class="up-spec" id="up-cur-spec"></span>
           <span class="up-fig" id="up-cur-fig"></span>
-        </article>
-        <article class="up-card is-offer" id="up-offer">
-          <span class="up-role">For a little more</span>
+        </button>
+        <button type="button" class="up-card is-offer" id="up-offer" aria-pressed="false">
+          <span class="up-tick" aria-hidden="true"></span>
+          <span class="up-role">Upgrade</span>
           <img id="up-off-img" src="" alt="">
           <strong id="up-off-nm"></strong>
           <span class="up-spec" id="up-off-spec"></span>
           <span class="up-fig" id="up-off-fig"></span>
           <p class="up-diff" id="up-diff"></p>
-          <button class="btn-verde up-take" type="button" id="up-take">Take this one instead</button>
-        </article>
+        </button>
       </div>
-      <p class="up-keep"><button class="up-keep-btn" type="button" id="up-keep">Keep the one I chose</button></p>
     </section>
 
     <section class="step" data-step="2" aria-label="You" hidden>
@@ -122,16 +119,22 @@
       </div>
     </section>
 
-    <section class="step" data-step="3" aria-label="Send" hidden>
-      <div class="gantry doneboard" id="doneboard">
-        <p class="gantry-top"><span class="gchip">24/7</span><span class="openlight">Request ready</span></p>
-        <p class="done-ref mono" id="done-ref"></p>
-        <table class="done-t mono" id="done-t"></table>
-        <div class="done-send">
-          <a class="gantry-go" id="send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp <span aria-hidden="true">→</span></a>
-          <a class="btn-paper" id="send-call" href="tel:+355685000700">Or call now</a>
+    <section class="step done" data-step="3" aria-label="Send" hidden>
+      <h1 class="step-h">Thank you for choosing us</h1>
+      <p class="step-hint">Send this on WhatsApp and the office confirms it in writing. Your car will be waiting.</p>
+      <div class="doneboard" id="doneboard">
+        <figure class="done-car" id="done-car">
+          <img id="done-car-img" src="" alt="">
+          <figcaption><strong id="done-car-nm"></strong><span id="done-car-spec"></span></figcaption>
+        </figure>
+        <div class="done-detail">
+          <p class="done-ref" id="done-ref"></p>
+          <table class="done-t" id="done-t"></table>
+          <div class="done-send">
+            <a class="btn-verde" id="send-wa" href="#" target="_blank" rel="noopener">Send on WhatsApp <span class="x-arrow" aria-hidden="true">&rarr;</span></a>
+            <a class="btn-paper" id="send-call" href="tel:+355685000700">Or call +355 68 500 0700</a>
+          </div>
         </div>
-        
       </div>
     </section>
 
@@ -151,8 +154,13 @@
     </aside>
   </div>
   <div class="stepnav">
-    <button class="btn-paper" id="back" hidden>← Back</button>
-    <button class="btn-verde" id="next" disabled>Continue <span aria-hidden="true">→</span></button>
+    <div class="stepnav-btns">
+      <button class="btn-paper" id="back" hidden>← Back</button>
+      <button class="btn-verde" id="next" disabled>Continue <span aria-hidden="true">→</span></button>
+    </div>
+    <ol class="chiprail" id="chiprail" aria-label="Progress">
+      <li class="pchip is-now" data-step="0"><span class="gchip" aria-hidden="true">1</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>Where and when</li><li class="pchip" data-step="1"><span class="gchip" aria-hidden="true">2</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>Car</li><li class="pchip" data-step="2"><span class="gchip" aria-hidden="true">3</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>You</li><li class="pchip" data-step="3"><span class="gchip" aria-hidden="true">4</span><span class="pchip-tick" aria-hidden="true"><svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.4 5.6 10.5 11.5 3.9"/></svg></span>Send</li>
+    </ol>
   </div>
 </main>
 
@@ -204,5 +212,5 @@
   </div>
 </footer>
 <script src="../js/fleet-data.js" defer></script>
-<script src="../js/app.js?v=3d1fec9c" defer></script>
+<script src="../js/app.js?v=f6908db6" defer></script>
 </body></html>

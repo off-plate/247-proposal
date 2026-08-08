@@ -2892,7 +2892,7 @@ body[data-page="book"] { height: 100svh; overflow: hidden; }
 body[data-page="book"] .foot { display: none; }
 body[data-page="book"] main.bookwrap {
   height: 100svh; padding-block: calc(68px + 12px) 16px;
-  display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  display: grid; grid-template-rows: minmax(0, 1fr) auto;
   gap: clamp(10px, 1.2vh, 18px); min-height: 0;
 }
 body[data-page="book"] .chiprail { margin: 0; }
@@ -3311,3 +3311,63 @@ body[data-page^="car-"] main { padding-bottom: clamp(140px, 11vw, 190px); }
 @media (max-width: 1100px) { .specgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px)  { .tip-card { grid-template-columns: 1fr; } .tip-card > img { order: -1; min-height: 0; aspect-ratio: 16/10; } }
 @media (max-width: 620px)  { .specgrid { grid-template-columns: 1fr; } }
+
+/* ==========================================================================
+   THE UPGRADE IS A CHOICE, NOT A TRAPDOOR. Two cards, a tick on the chosen one,
+   and tapping the other moves it. Reversible in both directions, every time.
+   ========================================================================== */
+.up-card {
+  position: relative; text-align: left; width: 100%; cursor: pointer;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  transition: border-color 160ms var(--out);
+}
+.up-card:hover { border-color: var(--verde); }
+.up-card.is-on { border-color: var(--verde); box-shadow: inset 0 0 0 1px var(--verde); }
+.up-tick {
+  position: absolute; top: clamp(12px, 1.1vw, 16px); right: clamp(12px, 1.1vw, 16px);
+  width: 24px; height: 24px; border: 1.5px solid var(--line-2); border-radius: var(--r-sm);
+  display: grid; place-content: center; background: var(--card);
+}
+.up-card.is-on .up-tick { border-color: var(--verde); background: var(--verde); }
+.up-card.is-on .up-tick::after {
+  content: ''; width: 6px; height: 11px; border: solid #fff; border-width: 0 2px 2px 0;
+  rotate: 45deg; translate: 0 -1px;
+}
+.up-role { color: var(--dim); }
+.up-card.is-on .up-role { color: var(--verde-t); }
+
+/* ==========================================================================
+   THE CONFIRMATION. Full width, the car on it, everything that was entered,
+   and a line that reads like a person wrote it.
+   ========================================================================== */
+.step.done { display: grid; gap: clamp(16px, 1.8vw, 26px); }
+.doneboard {
+  display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: clamp(18px, 2vw, 36px); align-items: start;
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: clamp(20px, 2.2vw, 36px); background: var(--card); box-shadow: none;
+}
+.doneboard::after { display: none; }
+.done-car { margin: 0; display: grid; gap: 12px; }
+.done-car img { width: 100%; aspect-ratio: 3/2; object-fit: cover; border-radius: var(--r); background: var(--card-2); }
+.done-car figcaption { display: grid; gap: 3px; }
+.done-car strong { font-weight: 700; font-size: clamp(16px, 1.3vw, 19px); letter-spacing: -.02em; }
+.done-car span { color: var(--dim); font-size: 13.5px; }
+.done-detail { display: grid; gap: 14px; align-content: start; }
+.done-ref { font-weight: 700; font-size: clamp(19px, 1.7vw, 26px); letter-spacing: -.02em; color: var(--verde-t); margin: 0; }
+.done-t { width: 100%; border-collapse: collapse; }
+.done-t td { padding: 11px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+.done-t tr:first-child td { border-top: 0; }
+.done-t td:first-child { color: var(--dim); width: 34%; }
+.done-t td:last-child { text-align: right; font-weight: 600; }
+.done-send { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+
+/* the step rail sits with the controls, not jammed under the header */
+.stepnav { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+.stepnav-btns { display: flex; gap: 12px; }
+.stepnav .chiprail { margin: 0; }
+@media (max-width: 900px) {
+  .doneboard { grid-template-columns: 1fr; }
+  .stepnav { flex-direction: column-reverse; align-items: stretch; }
+  .stepnav .chiprail { justify-content: center; }
+}

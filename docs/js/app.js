@@ -248,7 +248,7 @@
     const main = $('#cargal-main');
     gal.addEventListener('click', e => {
       const t = e.target.closest('.cargal-t'); if (!t) return;
-      main.src = t.dataset.img;
+      main.src = (window.BASE || '') + t.dataset.img;
       $$('.cargal-t', gal).forEach(x => x.classList.toggle('is-on', x === t));
     });
   }
@@ -434,9 +434,7 @@
     df.addEventListener('change', dateChange); dt.addEventListener('change', dateChange);
     $('#t-from').addEventListener('change', dateChange); $('#t-to').addEventListener('change', dateChange);
 
-    /* step 2: the one place a better car is offered, and it says both numbers */
-    // The nearest car above the current one in price. Class first so an SUV is not
-    // offered a coupe, then the smallest step up. Null when nothing is dearer.
+    /* step 2: two cards, either of which can be the choice, and it stays reversible */
     const upsellFor = c => {
       if (!c) return null;
       const dearer = (window.FLEET || []).filter(x => x.price > c.price);
@@ -445,73 +443,51 @@
       const pool = sameCls.length ? sameCls : dearer;
       return pool.sort((a, z) => (a.price - c.price) - (z.price - c.price))[0];
     };
-    // The offer is made once, against the car the visitor arrived with. Taking it must
-    // not produce a fresh offer against the car they just accepted: that is a ladder,
-    // not a suggestion, and nobody trusts the second rung.
-    let offer = null, offerSettled = false;
+    // the car they arrived with, and the one offered against it. Both fixed for the
+    // whole visit, so switching back and forth never produces a new offer.
+    let baseCar = null, offer = null;
     const paintPicks = () => {
-      const cur = carOf(), n = days(b), wrap = $('#upgrade');
-      if (!wrap) return;
-      if (offer === null && cur) offer = upsellFor(cur) || false;
-      const up = offerSettled ? null : (offer || null);
-      const hint = $('#up-hint'), keep = $('#up-keep');
-      if (!cur || !up) {
-        // show the choice rather than an empty panel: the offer is over, the car is not
-        wrap.hidden = !cur;
-        wrap.classList.toggle('is-settled', true);
-        if (cur) {
-          $('#up-cur-img').src = `${window.BASE || ''}img/cars/${cur.slug}-s.webp`;
-          $('#up-cur-img').alt = cur.name;
-          const e = $('#up-cur-nm'); if (e) e.textContent = cur.name;
-          const sp = $('#up-cur-spec');
-          if (sp) sp.textContent = `${cur.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${cur.seats} seats, ${cur.clsLabel || cur.cls}`;
-          const fg = $('#up-cur-fig');
-          if (fg) fg.textContent = n > 0 ? `${eur(cur.price * n)} for ${n} day${n > 1 ? 's' : ''}` : `${eur(cur.price)} a day`;
-          const role = $('#up-current .up-role'); if (role) role.textContent = 'Your car';
+      const wrap = $('#upgrade'); if (!wrap) return;
+      const cur = carOf(), n = days(b);
+      if (!baseCar && cur) { baseCar = cur; offer = upsellFor(cur) || false; }
+      const hint = $('#up-hint');
+      if (!baseCar || !offer) {
+        wrap.hidden = !baseCar;
+        if (baseCar) {
+          $('#up-cur-img').src = `${window.BASE || ''}img/cars/${baseCar.slug}-s.webp`;
+          $('#up-cur-nm').textContent = baseCar.name;
         }
-        if (hint) hint.textContent = !cur ? 'Choose a car from the fleet first.'
-          : offerSettled ? `You are booking the ${cur.name}.`
-          : `Nothing in the fleet costs more than the ${cur.name}. Carry on.`;
-        if (keep) keep.textContent = 'Continue';
+        if (hint) hint.textContent = baseCar
+          ? `The ${baseCar.name} is the top of the fleet, so there is nothing to move up to.`
+          : 'Choose a car from the fleet first.';
         return;
       }
       wrap.hidden = false;
-      wrap.classList.remove('is-settled');
-      const roleEl = $('#up-current .up-role'); if (roleEl) roleEl.textContent = 'Your choice';
-      const perDay = up.price - cur.price;
-      const total = n > 0 ? perDay * n : 0;
       const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
-      $('#up-cur-img').src = `${window.BASE || ''}img/cars/${cur.slug}-s.webp`;
-      $('#up-cur-img').alt = cur.name;
-      $('#up-off-img').src = `${window.BASE || ''}img/cars/${up.slug}-s.webp`;
-      $('#up-off-img').alt = up.name;
-      set('#up-cur-nm', cur.name); set('#up-off-nm', up.name);
       const spec = c => `${c.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${c.seats} seats, ${c.clsLabel || c.cls}`;
-      set('#up-cur-spec', spec(cur)); set('#up-off-spec', spec(up));
-      set('#up-cur-fig', n > 0 ? `${eur(cur.price * n)} for ${n} day${n > 1 ? 's' : ''}` : `${eur(cur.price)} a day`);
-      set('#up-off-fig', n > 0 ? `${eur(up.price * n)} for ${n} day${n > 1 ? 's' : ''}` : `${eur(up.price)} a day`);
-      set('#up-hint', `You picked the ${cur.name}. The ${up.name} is the next car up.`);
-      // both numbers, always. The daily one flatters the offer and the total does not,
-      // so a visitor who is told only the first has been sold something.
+      const fig = c => n > 0 ? `${eur(c.price * n)} for ${n} day${n > 1 ? 's' : ''}` : `${eur(c.price)} a day`;
+      $('#up-cur-img').src = `${window.BASE || ''}img/cars/${baseCar.slug}-s.webp`;
+      $('#up-cur-img').alt = baseCar.name;
+      $('#up-off-img').src = `${window.BASE || ''}img/cars/${offer.slug}-s.webp`;
+      $('#up-off-img').alt = offer.name;
+      set('#up-cur-nm', baseCar.name); set('#up-off-nm', offer.name);
+      set('#up-cur-spec', spec(baseCar)); set('#up-off-spec', spec(offer));
+      set('#up-cur-fig', fig(baseCar)); set('#up-off-fig', fig(offer));
+      const perDay = offer.price - baseCar.price;
       set('#up-diff', n > 0
-        ? `${eur(perDay)} more a day, ${eur(total)} more across your ${n} days.`
+        ? `${eur(perDay)} more a day, ${eur(perDay * n)} more across your ${n} days.`
         : `${eur(perDay)} more a day.`);
-      set('#up-take', `Take the ${up.name}`);
-      if (keep) keep.textContent = `Keep the ${cur.name}`;
-      wrap.dataset.up = up.slug;
+      set('#up-hint', `You picked the ${baseCar.name}. Tap a card to change your mind, either way.`);
+      // the tick shows which one is chosen, and it moves
+      const onOffer = b.car === offer.slug;
+      const curEl = $('#up-current'), offEl = $('#up-offer');
+      curEl.classList.toggle('is-on', !onOffer); curEl.setAttribute('aria-pressed', String(!onOffer));
+      offEl.classList.toggle('is-on', onOffer); offEl.setAttribute('aria-pressed', String(onOffer));
     };
-    const upTake = $('#up-take'), upKeep = $('#up-keep');
-    if (upTake) upTake.addEventListener('click', () => {
-      const slug = $('#upgrade').dataset.up;
-      // one offer, and this was it
-      if (slug) {
-        b.car = slug; offerSettled = true; writeBook(b); paintPicks();
-        // a decision was made, so do not leave them looking at a settled panel
-        if (valid()) { step += 1; }
-        paint(); toStepTop();
-      }
-    });
-    if (upKeep) upKeep.addEventListener('click', () => { if (valid()) { step += 1; paint(); toStepTop(); } });
+    const choose = slug => { b.car = slug; writeBook(b); paintPicks(); paint(); };
+    const curBtn = $('#up-current'), offBtn = $('#up-offer');
+    if (curBtn) curBtn.addEventListener('click', () => { if (baseCar) choose(baseCar.slug); });
+    if (offBtn) offBtn.addEventListener('click', () => { if (offer) choose(offer.slug); });
 
     /* step 3: extras */
     /* nav */
@@ -535,6 +511,13 @@
       step = 3; paint();
       $('#next').hidden = true;
       $('#done-ref').textContent = ref;
+      const dc = $('#done-car');
+      if (dc && c) {
+        $('#done-car-img').src = `${window.BASE || ''}img/cars/${c.slug}-s.webp`;
+        $('#done-car-img').alt = c.name;
+        $('#done-car-nm').textContent = c.name;
+        $('#done-car-spec').textContent = `${c.gear === 'automatic' ? 'Automatic' : 'Manual'}, ${c.seats} seats, ${eur(c.price)} a day`;
+      }
       const pickup = locName(b.loc, b.otherLoc);
       const dropoff = b.loc2 && b.loc2 !== b.loc ? locName(b.loc2, b.otherLoc2) : pickup;
       const rows = [
