@@ -2879,7 +2879,9 @@ body[data-page^="car-"] main { padding-bottom: clamp(110px, 9vw, 150px); }
 body[data-page="book"] { height: 100svh; overflow: hidden; }
 body[data-page="book"] .foot { display: none; }
 body[data-page="book"] main.bookwrap {
-  height: 100svh; padding-block: calc(68px + 12px) 16px;
+  /* the nav sits fixed at 82px tall; give the steps room to breathe under it
+     instead of touching its bottom edge */
+  height: 100svh; padding-block: calc(82px + 26px) 16px;
   display: grid; grid-template-rows: minmax(0, 1fr) auto;
   gap: clamp(10px, 1.2vh, 18px); min-height: 0;
 }
