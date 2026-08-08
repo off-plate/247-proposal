@@ -55,10 +55,10 @@ for (const [w, want] of [[2560, 4], [1600, 4], [1300, 3], [1000, 2], [390, 1]]) 
     month: document.querySelector('#cal-m')?.textContent,
     free: document.querySelectorAll('.cal-d.is-free').length,
     busy: document.querySelectorAll('.cal-d.is-busy').length,
-    note: !!document.querySelector('.cal-note'),
+
     prevDisabled: document.querySelector('#cal-prev')?.disabled,
   }));
-  cal.month && cal.free > 0 && cal.note && cal.prevDisabled
+  cal.month && cal.free > 0 && cal.prevDisabled
     ? ok(`calendar opens on ${cal.month} with ${cal.free} free days, cannot go back past this month`)
     : fail(`calendar: ${JSON.stringify(cal)}`);
 
@@ -109,7 +109,7 @@ for (const [w, want] of [[2560, 4], [1600, 4], [1300, 3], [1000, 2], [390, 1]]) 
     await p.waitForTimeout(150);
     const spanned = await p.$$eval('.cal-d.is-in', e => e.length);
     spanned === 0 ? ok('a range across a booked night is refused, not spanned') : fail(`${spanned} days spanned a booked night`);
-    await p.click('#cal-reset');
+    await p.click(`button.cal-d[data-d="${across[0]}"]`);
   }
 
   // booked days are not selectable at all

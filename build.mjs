@@ -413,11 +413,8 @@ ${nav('fleet')}
       <div class="cal" id="cal" data-slug="${c.slug}" data-price="${c.price}"></div>
       <p class="cal-legend"><span class="cal-key cal-key-free"></span>Free<span class="cal-key cal-key-busy"></span>Booked</p>
       <p class="cal-pick" id="cal-pick">Pick your first day, then your last.</p>
-      <button class="cal-reset" type="button" id="cal-reset" hidden>Clear dates</button>
-      <p class="cal-note">Demo availability. The office confirms what is really free.</p>
     </aside>
   </div>
-  <p class="hero-tag">${c.note}</p>
 </section>
 
 <section class="specsheet" aria-label="Specification">

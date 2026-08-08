@@ -150,7 +150,7 @@
     const today = new Date(); today.setHours(0, 0, 0, 0);
     let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
     let from = null, to = null;
-    const pickEl = $('#cal-pick'), resetEl = $('#cal-reset'), monthEl = $('#cal-m');
+    const pickEl = $('#cal-pick'), monthEl = $('#cal-m');
     const rbTotal = $('#rb-total'), rbBook = document.querySelector('.reservebar .btn-verde');
     const rbHref = rbBook ? rbBook.getAttribute('href') : null;
 
@@ -195,7 +195,6 @@
         if (rbTotal && !from) rbTotal.textContent = '';
         if (rbBook && rbHref) rbBook.href = rbHref;
       }
-      resetEl.hidden = !from;
     };
 
     calEl.addEventListener('click', e => {
@@ -210,7 +209,6 @@
     });
     $('#cal-prev').addEventListener('click', () => { cursor.setMonth(cursor.getMonth() - 1); render(); });
     $('#cal-next').addEventListener('click', () => { cursor.setMonth(cursor.getMonth() + 1); render(); });
-    resetEl.addEventListener('click', () => { from = null; to = null; render(); });
     render();
   }
 

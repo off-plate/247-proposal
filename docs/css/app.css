@@ -3066,7 +3066,6 @@ body[data-page="index"] .pillnav:not(.is-pinned) .lang-btn { color: #fff; border
 .cal-d.is-free { background: #D9EFE1; color: #14532A; }
 .cal-d.is-busy { background: #F7DCDC; color: #7A1F1F; }
 .cal-d.is-past { color: #767471; }   /* passes AA on white; --line-2 was 1.89 */
-.cal-note { color: var(--dim); font-size: 14px; margin-top: clamp(14px, 1.4vw, 20px); max-width: 78ch; }
 
 
 
@@ -3180,7 +3179,7 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
    letterboxed across the full width, so a portrait shot sat in a wide grey box.
    ========================================================================== */
 .cargal.has-strip {
-  grid-template-columns: minmax(0, 50fr) minmax(0, 19fr) minmax(0, 31fr);
+  grid-template-columns: minmax(0, 60fr) minmax(0, 15fr) minmax(0, 25fr);
   gap: clamp(12px, 1.2vw, 20px); align-items: stretch;
 }
 .cargal.has-strip .hero-img {
@@ -3212,7 +3211,6 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
   justify-self: start; background: none; border: 0; padding: 0;
   color: var(--dim); font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px;
 }
-.carcal .cal-note { font-size: 12px; color: var(--dim); margin: 4px 0 0; }
 .carcal .cal-d { font-size: 12px; }
 
 /* the sticky bar shows what the calendar picked */
@@ -3230,6 +3228,5 @@ button.cal-d:hover { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
 /* the month arrows and the demo note were below the mobile floor */
 @media (max-width: 900px) {
   .calnav { width: 42px; height: 42px; }
-  .carcal .cal-note { font-size: 13px; }
   .carcal .cal-d { font-size: 13px; }
 }
